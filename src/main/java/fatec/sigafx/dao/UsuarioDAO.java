@@ -1,6 +1,7 @@
 package fatec.sigafx.dao;
 
 import fatec.sigafx.model.usuario.UsuarioModel;
+import fatec.sigafx.model.usuario.dto.UsuarioCriarRequest;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.EntityManagerFactory;
 import jakarta.persistence.Persistence;
@@ -8,9 +9,11 @@ import jakarta.persistence.Persistence;
 public class UsuarioDAO {
     private EntityManagerFactory emf = Persistence.createEntityManagerFactory("siga");
 
-    public void salvarUsuario(UsuarioModel usuario) {
+    public void salvarUsuario(UsuarioCriarRequest request) {
         EntityManager em = emf.createEntityManager();
         try {
+            UsuarioModel usuario = new UsuarioModel(request);
+
             em.getTransaction().begin();
             em.persist(usuario);
             em.getTransaction().commit();
@@ -18,7 +21,8 @@ public class UsuarioDAO {
             if (em.getTransaction().isActive()) {
                 em.getTransaction().rollback();
             }
-            e.printStackTrace();
+            System.out.println("deu ruim p salvar o usuario");
+            //e.printStackTrace();
         } finally {
             em.close();
         }

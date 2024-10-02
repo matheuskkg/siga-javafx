@@ -11,10 +11,17 @@ import java.io.IOException;
 
 public class SigaApplication extends Application {
 
+    private static Stage stage;
+
     @Override
     public void start(Stage stage) {
-        LoginView login = new LoginView(stage);
-        login.mostrarLogin();
+        SigaApplication.stage = stage;
+
+        LoginView.mostrarLogin();
+    }
+
+    public static Stage getStage() {
+        return stage;
     }
 
     public static void main(String[] args) {

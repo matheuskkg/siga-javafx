@@ -1,5 +1,6 @@
 package fatec.sigafx.model.usuario;
 
+import fatec.sigafx.model.usuario.dto.UsuarioCriarRequest;
 import jakarta.persistence.*;
 
 @Entity
@@ -16,6 +17,14 @@ public class UsuarioModel {
     private String email;
 
     private String senha;
+
+    public UsuarioModel() {}
+
+    public UsuarioModel(UsuarioCriarRequest request) {
+        this.nome = request.nome();
+        this.email = request.email();
+        this.senha = request.senha();
+    }
 
     public Integer getId() {
         return id;

@@ -7,6 +7,7 @@
 
         <!-- Mapeamento das entidades -->
         <class>fatec.sigafx.model.usuario.UsuarioModel</class>
+        <class>fatec.sigafx.model.admin.AdminModel</class>
         <class>fatec.sigafx.model.aluno.AlunoModel</class>
         <class>fatec.sigafx.model.disciplina.DisciplinaModel</class>
         <!-- Adicione outras classes de entidades se necessário -->
