@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import de.jensd.fx.glyphs.fontawesome.FontAwesomeIcon?>
+<?import javafx.scene.Cursor?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.PasswordField?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.text.Font?>
+<?import javafx.scene.text.Text?>
+
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="800.0" prefWidth="1280.0" xmlns="http://javafx.com/javafx/23" xmlns:fx="http://javafx.com/fxml/1" fx:controller="fatec.sigafx.controller.UsuarioController">
+   <left>
+      <AnchorPane prefHeight="800.0" prefWidth="640.0" styleClass="background" stylesheets="@../css/login.css" BorderPane.alignment="CENTER">
+         <children>
+            <Text fill="WHITE" layoutX="253.0" layoutY="415.0" strokeType="OUTSIDE" strokeWidth="0.0" text="SIGA">
+               <font>
+                  <Font name="Gabriola" size="86.0" />
+               </font>
+            </Text>
+            <FontAwesomeIcon fill="WHITE" glyphName="BOOK" layoutX="264.0" layoutY="289.0" size="120" />
+         </children>
+      </AnchorPane>
+   </left>
+   <right>
+      <AnchorPane prefHeight="800.0" prefWidth="879.0" stylesheets="@../css/login.css" BorderPane.alignment="CENTER">
+         <children>
+            <TextField fx:id="usuarioNome" layoutX="208.0" layoutY="354.0" prefHeight="25.0" prefWidth="230.0" promptText="Nome de Usuário" styleClass="login-input" stylesheets="@../css/login.css" />
+            <PasswordField fx:id="usuarioSenha" layoutX="208.0" layoutY="403.0" prefHeight="25.0" prefWidth="230.0" promptText="Senha" styleClass="login-input" stylesheets="@../css/login.css" />
+            <FontAwesomeIcon fill="#0598ff" glyphName="USER" layoutX="183.0" layoutY="375.0" size="15" />
+            <FontAwesomeIcon fill="#0598ff" glyphName="KEY" layoutX="181.0" layoutY="425.0" size="15" text="" />
+            <FontAwesomeIcon fill="#0598ff" glyphName="USERS" layoutX="296.0" layoutY="181.0" size="50" />
+            <Text fill="#0598ff" layoutX="147.0" layoutY="293.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Realize Login">
+               <font>
+                  <Font name="Gabriola" size="86.0" />
+               </font>
+            </Text>
+            <Button layoutX="278.0" layoutY="456.0" mnemonicParsing="false" onAction="#confirmarLogin" prefHeight="25.0" prefWidth="90.0" styleClass="background" stylesheets="@../css/login.css" text="Confirmar" textFill="WHITE" />
+         </children>
+      </AnchorPane>
+   </right>
+   <cursor>
+      <Cursor fx:constant="DEFAULT" />
+   </cursor>
+</BorderPane>

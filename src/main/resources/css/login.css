@@ -1,0 +1,14 @@
+.background {
+    -fx-background-color: #0598ff;
+}
+
+.login-input {
+    -fx-border-color: #0598ff;
+    -fx-border-width: 0 0 2px 0;
+    -fx-background-color: transparent;
+}
+
+.close-button {
+    -fx-border-width: 0 0 0 0;
+    -fx-background-color: transparent;
+}
