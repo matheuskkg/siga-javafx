@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.Tab?>
+<?import javafx.scene.control.TabPane?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+<?import javafx.scene.text.Text?>
+
+<TabPane id="tab-pane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity"
+         prefHeight="600.0" prefWidth="900.0" side="LEFT" stylesheets="@../css/tabPane.css"
+         tabClosingPolicy="UNAVAILABLE" xmlns="http://javafx.com/javafx/22">
+    <Tab text="Home">
+        <VBox alignment="TOP_CENTER" maxWidth="1.7976931348623157E308" minWidth="870.0" spacing="20.0"
+              style="-fx-padding: 20px; -fx-background-color: white; -fx-border-radius: 10; -fx-background-radius: 10;">
+            <Text strokeType="OUTSIDE" strokeWidth="0.0" styleClass="welcome-text" text="Bem Vindo, Aluno!">
+                <font>
+                    <Font size="64.0"/>
+                </font>
+            </Text>
+            <Text styleClass="info-text"
+                  text="Home"/>
+            <Button text="Teste" styleClass="info-button"/>
+        </VBox>
+    </Tab>
+
+    <Tab text="Notas">
+        <VBox id="notasContainer" alignment="TOP_CENTER" spacing="10" style="-fx-padding: 20px; -fx-background-color: white; -fx-border-radius: 10; -fx-background-radius: 10;">
+            <Label styleClass="info-text" text="Notas serão exibidas aqui."/>
+        </VBox>
+    </Tab>
+
+    <Tab text="Faltas">
+        <VBox id="faltasContainer" alignment="TOP_CENTER" spacing="10" style="-fx-padding: 20px; -fx-background-color: white; -fx-border-radius: 10; -fx-background-radius: 10;">
+            <Label styleClass="info-text" text="Faltas serão exibidas aqui."/>
+        </VBox>
+    </Tab>
+</TabPane>

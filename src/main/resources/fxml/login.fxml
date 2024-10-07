@@ -1,46 +1,79 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import de.jensd.fx.glyphs.fontawesome.FontAwesomeIcon?>
-<?import javafx.scene.Cursor?>
+<?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.PasswordField?>
 <?import javafx.scene.control.TextField?>
-<?import javafx.scene.layout.AnchorPane?>
-<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.ColumnConstraints?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.RowConstraints?>
+<?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="800.0" prefWidth="1280.0" xmlns="http://javafx.com/javafx/23" xmlns:fx="http://javafx.com/fxml/1" fx:controller="fatec.sigafx.controller.UsuarioController">
-   <left>
-      <AnchorPane prefHeight="800.0" prefWidth="640.0" styleClass="background" stylesheets="@../css/login.css" BorderPane.alignment="CENTER">
-         <children>
-            <Text fill="WHITE" layoutX="253.0" layoutY="415.0" strokeType="OUTSIDE" strokeWidth="0.0" text="SIGA">
-               <font>
-                  <Font name="Gabriola" size="86.0" />
-               </font>
-            </Text>
-            <FontAwesomeIcon fill="WHITE" glyphName="BOOK" layoutX="264.0" layoutY="289.0" size="120" />
-         </children>
-      </AnchorPane>
-   </left>
-   <right>
-      <AnchorPane prefHeight="800.0" prefWidth="879.0" stylesheets="@../css/login.css" BorderPane.alignment="CENTER">
-         <children>
-            <TextField fx:id="usuarioNome" layoutX="208.0" layoutY="354.0" prefHeight="25.0" prefWidth="230.0" promptText="Nome de Usuário" styleClass="login-input" stylesheets="@../css/login.css" />
-            <PasswordField fx:id="usuarioSenha" layoutX="208.0" layoutY="403.0" prefHeight="25.0" prefWidth="230.0" promptText="Senha" styleClass="login-input" stylesheets="@../css/login.css" />
-            <FontAwesomeIcon fill="#0598ff" glyphName="USER" layoutX="183.0" layoutY="375.0" size="15" />
-            <FontAwesomeIcon fill="#0598ff" glyphName="KEY" layoutX="181.0" layoutY="425.0" size="15" text="" />
-            <FontAwesomeIcon fill="#0598ff" glyphName="USERS" layoutX="296.0" layoutY="181.0" size="50" />
-            <Text fill="#0598ff" layoutX="147.0" layoutY="293.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Realize Login">
-               <font>
-                  <Font name="Gabriola" size="86.0" />
-               </font>
-            </Text>
-            <Button layoutX="278.0" layoutY="456.0" mnemonicParsing="false" onAction="#confirmarLogin" prefHeight="25.0" prefWidth="90.0" styleClass="background" stylesheets="@../css/login.css" text="Confirmar" textFill="WHITE" />
-         </children>
-      </AnchorPane>
-   </right>
-   <cursor>
-      <Cursor fx:constant="DEFAULT" />
-   </cursor>
-</BorderPane>
+<GridPane minHeight="600.0" minWidth="900.0" xmlns="http://javafx.com/javafx/22" xmlns:fx="http://javafx.com/fxml/1" fx:controller="fatec.sigafx.controller.UsuarioController">
+   <columnConstraints>
+      <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" />
+      <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+      <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+      <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+      <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+   </columnConstraints>
+   <rowConstraints>
+      <RowConstraints minHeight="10.0" vgrow="SOMETIMES" />
+   </rowConstraints>
+   <VBox alignment="CENTER" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="600.0" minWidth="540.0" style="-fx-background-color: #0598ff;" GridPane.columnSpan="3">
+      <Text fill="WHITE" strokeType="OUTSIDE" strokeWidth="0.0" text="SIGA">
+         <font>
+            <Font name="Gabriola" size="96.0" />
+         </font>
+      </Text>
+      <FontAwesomeIcon fill="WHITE" glyphName="BOOK" size="240" />
+   </VBox>
+   <VBox alignment="CENTER" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="600.0" minWidth="360.0" GridPane.columnIndex="3" GridPane.columnSpan="2">
+      <FontAwesomeIcon fill="#0598ff" glyphName="USERS" size="50" />
+      <Text fill="#0598ff" strokeType="OUTSIDE" strokeWidth="0.0" text="Realize Login">
+         <font>
+            <Font name="Gabriola" size="80.0" />
+         </font>
+         <VBox.margin>
+            <Insets top="10.0" />
+         </VBox.margin>
+      </Text>
+      <HBox alignment="CENTER">
+         <VBox.margin>
+            <Insets top="10.0" />
+         </VBox.margin>
+         <FontAwesomeIcon fill="#0598ff" glyphName="USER" size="15">
+            <HBox.margin>
+               <Insets right="10.0" top="10.0" />
+            </HBox.margin></FontAwesomeIcon>
+         <TextField fx:id="usuarioNome" minHeight="25.0" minWidth="300.0" promptText="Nome de Usuário" styleClass="login-input" stylesheets="@../css/login.css">
+            <font>
+               <Font name="System Italic" size="12.0" />
+            </font>
+         </TextField>
+      </HBox>
+      <HBox alignment="CENTER">
+         <VBox.margin>
+            <Insets top="20.0" />
+         </VBox.margin>
+         <FontAwesomeIcon fill="#0598ff" glyphName="KEY" size="15" text="">
+            <HBox.margin>
+               <Insets right="10.0" top="10.0" />
+            </HBox.margin></FontAwesomeIcon>
+         <PasswordField fx:id="usuarioSenha" minHeight="25.0" minWidth="300.0" promptText="Senha" styleClass="login-input" stylesheets="@../css/login.css">
+            <font>
+               <Font name="System Italic" size="12.0" />
+            </font>
+         </PasswordField>
+      </HBox>
+      <Button mnemonicParsing="false" onAction="#confirmarLogin" prefHeight="25.0" prefWidth="90.0" styleClass="background" stylesheets="@../css/login.css" text="Confirmar" textFill="WHITE">
+         <VBox.margin>
+            <Insets top="20.0" />
+         </VBox.margin>
+      </Button>
+   </VBox>
+</GridPane>

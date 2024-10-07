@@ -9,7 +9,8 @@ import javafx.stage.StageStyle;
 
 import java.io.IOException;
 
-public class SigaApplication extends Application {
+public class SigaApplication extends Application
+{
 
     private static Stage stage;
 
@@ -24,7 +25,8 @@ public class SigaApplication extends Application {
         return stage;
     }
 
-    public static void main(String[] args) {
+    public static void main(String[] args)
+    {
         launch();
     }
 }
