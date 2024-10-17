@@ -1,0 +1,111 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ListView?>
+<?import javafx.scene.control.Separator?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.StackPane?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+<?import javafx.scene.text.Text?>
+
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="900.0" xmlns="http://javafx.com/javafx/22" xmlns:fx="http://javafx.com/fxml/1" fx:controller="fatec.sigafx.controller.AdminController">
+
+    <left>
+        <VBox maxWidth="500.0" minWidth="200.0" spacing="20.0" style="-fx-background-color: #1E3A60; -fx-padding: 10px;" stylesheets="@../css/adm.css">
+            <Text style="-fx-font-size: 24; -fx-fill: white;" text="Administrador" textAlignment="CENTER" wrappingWidth="180.0">
+            <VBox.margin>
+               <Insets bottom="20.0" top="20.0" />
+            </VBox.margin></Text>
+            <Button alignment="TOP_LEFT" minWidth="186.0" onAction="#showInicio" styleClass="sidebar-button" text="Início" />
+            <Button alignment="TOP_LEFT" minWidth="186.0" onAction="#showGerenciarUsuarios" styleClass="sidebar-button" text="Gerenciar Usuários" />
+            <Button alignment="TOP_LEFT" minWidth="186.0" onAction="#showGerenciarDisciplinas" styleClass="sidebar-button" text="Gerenciar Disciplinas" />
+            <Button alignment="TOP_LEFT" minWidth="186.0" onAction="#showGerenciarTurmas" styleClass="sidebar-button" text="Gerenciar Turmas" />
+            <Separator orientation="VERTICAL" prefHeight="200.0" visible="false" VBox.vgrow="ALWAYS" />
+            <Button alignment="TOP_LEFT" minWidth="186.0" onAction="#onLogoutClicked" styleClass="sidebar-exit" text="Sair">
+                <VBox.margin>
+                    <Insets bottom="20.0" />
+                </VBox.margin></Button>
+        </VBox>
+    </left>
+
+    <center>
+        <StackPane>
+            <VBox fx:id="mainContent" alignment="TOP_CENTER" spacing="20" style="-fx-padding: 20px;" visible="false">
+                <Label styleClass="admin-header" text="Bem-vindo, Administrador!">
+                    <font>
+                        <Font size="28.0" />
+                    </font>
+                </Label>
+                <VBox alignment="CENTER" spacing="10">
+                    <Label text="Aqui serão mostradas mensagens padrões." />
+                </VBox>
+            </VBox>
+            <VBox fx:id="gUsuarios" alignment="TOP_CENTER" spacing="20" style="-fx-padding: 20px;">
+                <Label styleClass="admin-header" text="Gerenciador de Usuários">
+                    <font>
+                        <Font size="28.0" />
+                    </font>
+                </Label>
+                <VBox alignment="CENTER" spacing="10">
+                    <Label text="Total de Alunos" />
+                    <Label text="??" />
+                </VBox>
+                <StackPane>
+                    <VBox visible="false">
+                        <HBox alignment="TOP_CENTER" spacing="20.0">
+                            <Button minHeight="50.0" minWidth="100.0" mnemonicParsing="false" text="Adicionar"/>
+                            <Button minHeight="50.0" minWidth="100.0" mnemonicParsing="false"
+                                    text="Alterar/Excluir"/>
+                        </HBox>
+                    </VBox>
+                    <VBox maxWidth="1000.0" prefWidth="500.0">
+                        <ListView prefHeight="880.0" prefWidth="500.0"/>
+                        <HBox alignment="TOP_RIGHT" spacing="20.0">
+                            <VBox.margin>
+                                <Insets top="20.0"/>
+                            </VBox.margin>
+                            <Button minHeight="50.0" minWidth="100.0" mnemonicParsing="false" text="Alterar"/>
+                            <Button minHeight="50.0" minWidth="100.0" mnemonicParsing="false" text="Excluir"/>
+                        </HBox>
+                    </VBox>
+                </StackPane>
+            <StackPane.margin>
+               <Insets />
+            </StackPane.margin>
+            </VBox>
+            <VBox fx:id="gDisciplinas" alignment="TOP_CENTER" spacing="20" style="-fx-padding: 20px;" visible="false">
+                <Label styleClass="admin-header" text="Gerenciador de Disciplinas">
+                    <font>
+                        <Font size="28.0" />
+                    </font>
+                </Label>
+                <VBox alignment="CENTER" spacing="10">
+                    <Label text="Disciplinas Ativas" />
+                    <Label text="??" />
+                </VBox>
+            </VBox>
+            <VBox fx:id="gTurmas" alignment="TOP_CENTER" spacing="20" style="-fx-padding: 20px;" visible="false">
+                <Label styleClass="admin-header" text="Relatórios">
+                    <font>
+                        <Font size="28.0" />
+                    </font>
+                </Label>
+                <HBox alignment="CENTER" spacing="50">
+                    <VBox alignment="CENTER" spacing="10">
+                        <Label text="Total de Alunos" />
+                        <Label text="??" />
+                    </VBox>
+                    <VBox alignment="CENTER" spacing="10">
+                        <Label text="Disciplinas Ativas" />
+                        <Label text="??" />
+                    </VBox>
+                </HBox>
+            </VBox>
+        </StackPane>
+    </center>
+
+</BorderPane>

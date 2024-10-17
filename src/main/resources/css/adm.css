@@ -1,0 +1,26 @@
+.sidebar-button {
+    -fx-background-color: transparent;
+    -fx-text-fill: white;
+    -fx-font-size: 16px;
+    -fx-padding: 10 20;
+}
+
+.sidebar-button:hover {
+    -fx-background-color: #3B5998;
+}
+
+.admin-header {
+    -fx-font-size: 32px;
+    -fx-text-fill: #333;
+}
+
+.sidebar-exit {
+    -fx-background-color: #a52a2a;
+    -fx-text-fill: white;
+    -fx-font-size: 16px;
+    -fx-padding: 10 20;
+}
+
+.sidebar-exit:hover {
+    -fx-background-color: #bd3030;
+}
