@@ -1,39 +1,92 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
-<?import javafx.scene.control.Tab?>
-<?import javafx.scene.control.TabPane?>
+<?import javafx.scene.control.ListView?>
+<?import javafx.scene.control.Separator?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.StackPane?>
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-<TabPane id="tab-pane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity"
-         prefHeight="600.0" prefWidth="900.0" side="LEFT" stylesheets="@../css/tabPane.css"
-         tabClosingPolicy="UNAVAILABLE" xmlns="http://javafx.com/javafx/22">
-    <Tab text="Home">
-        <VBox alignment="TOP_CENTER" maxWidth="1.7976931348623157E308" minWidth="870.0" spacing="20.0"
-              style="-fx-padding: 20px; -fx-background-color: white; -fx-border-radius: 10; -fx-background-radius: 10;">
-            <Text strokeType="OUTSIDE" strokeWidth="0.0" styleClass="welcome-text" text="Bem Vindo, Aluno!">
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="900.0" xmlns="http://javafx.com/javafx/22" xmlns:fx="http://javafx.com/fxml/1" fx:controller="fatec.sigafx.controller.AlunoController">
+
+<left>
+    <VBox maxWidth="500.0" minWidth="200.0" spacing="20.0" style="-fx-background-color: #174871; -fx-padding: 10px;" stylesheets="@../css/aluno.css">
+        <Text style="-fx-font-size: 24; -fx-fill: white;" text="Aluno" textAlignment="CENTER" wrappingWidth="180.0">
+            <VBox.margin>
+                <Insets bottom="20.0" top="20.0" />
+            </VBox.margin></Text>
+        <Button alignment="TOP_CENTER" minWidth="186.0" styleClass="sidebar-button" text="Início" />
+        <Button alignment="TOP_CENTER" minWidth="186.0" styleClass="sidebar-button" text="Notas" />
+        <Button alignment="TOP_CENTER" minWidth="186.0" styleClass="sidebar-button" text="Faltas" />
+        <Separator orientation="VERTICAL" prefHeight="200.0" visible="false" VBox.vgrow="ALWAYS" />
+        <Button alignment="TOP_CENTER" minWidth="186.0" onAction="#onLogoutClicked" styleClass="sidebar-exit" text="Sair">
+            <VBox.margin>
+                <Insets bottom="20.0" />
+            </VBox.margin></Button>
+    </VBox>
+</left>
+
+<center>
+    <StackPane stylesheets="@../css/aluno.css">
+        <VBox fx:id="inicioAluno" alignment="TOP_CENTER" spacing="20" styleClass="vBox">
+            <Label styleClass="admin-header" text="Bem-vindo, Aluno!">
                 <font>
-                    <Font size="64.0"/>
+                    <Font size="28.0" />
                 </font>
-            </Text>
-            <Text styleClass="info-text"
-                  text="Home"/>
-            <Button text="Teste" styleClass="info-button"/>
+            </Label>
+            <VBox alignment="CENTER" spacing="10">
+                <Label text="Aqui serão mostradas mensagens padrões." />
+            </VBox>
         </VBox>
-    </Tab>
+        <VBox fx:id="notas" alignment="TOP_CENTER" spacing="20" styleClass="vBox" visible="false">
+            <Label styleClass="admin-header" text="Gerenciador de Usuários">
+                <font>
+                    <Font size="28.0" />
+                </font>
+            </Label>
+            <VBox alignment="CENTER" spacing="10">
+                <Label text="Total de Alunos" />
+                <Label text="??" />
+            </VBox>
+            <StackPane>
+                <VBox visible="false">
+                    <HBox alignment="TOP_CENTER" spacing="20.0">
+                        <Button minHeight="50.0" minWidth="100.0" mnemonicParsing="false" text="Adicionar" />
+                        <Button minHeight="50.0" minWidth="100.0" mnemonicParsing="false" text="Alterar/Excluir" />
+                    </HBox>
+                </VBox>
+                <VBox maxWidth="1000.0" prefWidth="500.0">
+                    <ListView prefHeight="880.0" prefWidth="500.0" />
+                    <HBox alignment="TOP_RIGHT" spacing="20.0">
+                        <VBox.margin>
+                            <Insets top="20.0" />
+                        </VBox.margin>
+                        <Button minHeight="50.0" minWidth="100.0" mnemonicParsing="false" text="Alterar" />
+                        <Button minHeight="50.0" minWidth="100.0" mnemonicParsing="false" text="Excluir" />
+                    </HBox>
+                </VBox>
+            </StackPane>
+            <StackPane.margin>
+                <Insets />
+            </StackPane.margin>
+        </VBox>
+        <VBox fx:id="faltas" alignment="TOP_CENTER" spacing="20" styleClass="vBox" visible="false">
+            <Label styleClass="admin-header" text="Gerenciador de Disciplinas">
+                <font>
+                    <Font size="28.0" />
+                </font>
+            </Label>
+            <VBox alignment="CENTER" spacing="10">
+                <Label text="Disciplinas Ativas" />
+                <Label text="??" />
+            </VBox>
+        </VBox>
+    </StackPane>
+</center>
 
-    <Tab text="Notas">
-        <VBox id="notasContainer" alignment="TOP_CENTER" spacing="10" style="-fx-padding: 20px; -fx-background-color: white; -fx-border-radius: 10; -fx-background-radius: 10;">
-            <Label styleClass="info-text" text="Notas serão exibidas aqui."/>
-        </VBox>
-    </Tab>
-
-    <Tab text="Faltas">
-        <VBox id="faltasContainer" alignment="TOP_CENTER" spacing="10" style="-fx-padding: 20px; -fx-background-color: white; -fx-border-radius: 10; -fx-background-radius: 10;">
-            <Label styleClass="info-text" text="Faltas serão exibidas aqui."/>
-        </VBox>
-    </Tab>
-</TabPane>
+</BorderPane>
