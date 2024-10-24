@@ -43,7 +43,7 @@
                     <Label text="Aqui serão mostradas mensagens padrões." />
                 </VBox>
             </VBox>
-            <VBox fx:id="turma" alignment="TOP_CENTER" spacing="20" styleClass="vBox" visible="false">
+            <VBox fx:id="gTurma" alignment="TOP_CENTER" spacing="20" styleClass="vBox" visible="false">
                 <Label styleClass="admin-header" text="Gerenciador de Usuários">
                     <font>
                         <Font size="28.0" />
@@ -75,7 +75,7 @@
                     <Insets />
                 </StackPane.margin>
             </VBox>
-            <VBox fx:id="presenca" alignment="TOP_CENTER" spacing="20" styleClass="vBox" visible="false">
+            <VBox fx:id="gPresenca" alignment="TOP_CENTER" spacing="20" styleClass="vBox" visible="false">
                 <Label styleClass="admin-header" text="Gerenciador de Disciplinas">
                     <font>
                         <Font size="28.0" />
