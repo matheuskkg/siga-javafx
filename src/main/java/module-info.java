@@ -20,5 +20,7 @@ module fatec.sigafx {
     opens fatec.sigafx.model.usuario to org.hibernate.orm.core;
     opens fatec.sigafx.model.aluno to org.hibernate.orm.core;
     opens fatec.sigafx.model.admin to org.hibernate.orm.core;
+    opens fatec.sigafx.model.professor to org.hibernate.orm.core;
+    opens fatec.sigafx.model.notas to org.hibernate.orm.core;
     opens fatec.sigafx.model.disciplina to org.hibernate.orm.core;
 }

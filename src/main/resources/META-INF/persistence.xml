@@ -7,8 +7,10 @@
 
         <!-- Mapeamento das entidades -->
         <class>fatec.sigafx.model.usuario.UsuarioModel</class>
-        <class>fatec.sigafx.model.admin.AdminModel</class>
         <class>fatec.sigafx.model.aluno.AlunoModel</class>
+        <class>fatec.sigafx.model.admin.AdminModel</class>
+        <class>fatec.sigafx.model.professor.ProfessorModel</class>
+        <class>fatec.sigafx.model.notas.NotaModel</class>
         <class>fatec.sigafx.model.disciplina.DisciplinaModel</class>
         <!-- Adicione outras classes de entidades se necessário -->
 
@@ -23,7 +25,7 @@
             <property name="jakarta.persistence.jdbc.password" value="password"/>
 
             <!-- Opções adicionais -->
-            <property name="hibernate.hbm2ddl.auto" value="update"/>
+            <property name="hibernate.hbm2ddl.auto" value="create-drop"/>
             <property name="hibernate.show_sql" value="true"/>
             <property name="hibernate.format_sql" value="true"/>
         </properties>

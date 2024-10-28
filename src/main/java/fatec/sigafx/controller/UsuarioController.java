@@ -1,13 +1,15 @@
 package fatec.sigafx.controller;
 
-import fatec.sigafx.model.usuario.dto.UsuarioLoginRequest;
-import fatec.sigafx.service.UsuarioService;
+import fatec.sigafx.dao.UsuarioDAO;
+import fatec.sigafx.model.usuario.UsuarioModel;
 import fatec.sigafx.view.HomeView;
 import javafx.fxml.FXML;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 
 public class UsuarioController {
+    private static final UsuarioDAO dao = new UsuarioDAO();
+
     @FXML
     private TextField usuarioNome;
 
@@ -16,12 +18,10 @@ public class UsuarioController {
 
     @FXML
     private void confirmarLogin() {
-        //Controller => UsuarioService => UsuarioDAO
-
-        if (UsuarioService.confirmarLogin(new UsuarioLoginRequest(usuarioNome.getText(), usuarioSenha.getText()))) {
+        UsuarioModel u = dao.buscarPorNome(usuarioNome.getText());
+        if (u != null && u.getSenha().equals(usuarioSenha.getText())) {
             HomeView.mostrarHome();
-        } else {
-            System.out.println("deu ruim");
         }
+        //Exibir erro caso o login falhe
     }
 }

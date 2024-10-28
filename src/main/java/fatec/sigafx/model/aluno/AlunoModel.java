@@ -1,21 +1,29 @@
 package fatec.sigafx.model.aluno;
 
-import fatec.sigafx.model.disciplina.DisciplinaModel;
+import fatec.sigafx.model.notas.NotaModel;
 import fatec.sigafx.model.usuario.UsuarioModel;
+import fatec.sigafx.model.usuario.dto.UsuarioCriarRequest;
 import jakarta.persistence.*;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Entity
 @Table(name = "alunos")
 public class AlunoModel extends UsuarioModel {
-    private String matricula;
+    @OneToMany(mappedBy = "aluno")
+    private List<NotaModel> notas = new ArrayList<>();
 
-    @ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-    @JoinTable(
-            name = "aluno_disciplinas",
-            joinColumns = @JoinColumn(name = "aluno_id"),
-            inverseJoinColumns = @JoinColumn(name = "disciplina_id")
-    )
-    private List<DisciplinaModel> disciplinasCursadas;
+    public AlunoModel() {}
+
+    public AlunoModel(UsuarioCriarRequest request) {
+        super(request);
+    }
+
+    @Override
+    public String toString() {
+        return "AlunoModel{" +
+                "notas=" + notas.toString() +
+                "} " + super.toString();
+    }
 }
