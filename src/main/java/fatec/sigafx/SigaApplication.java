@@ -22,7 +22,7 @@ public class SigaApplication extends Application
         //AdmView.mostraAdm();
 
         //Usar para testar a página de Aluno
-        AlunoView.mostraAluno();
+        //AlunoView.mostraAluno();
 
         //Usar para testar a página de Professor
         //ProfessorView.mostraProf();
