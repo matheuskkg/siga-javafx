@@ -7,7 +7,7 @@ import javafx.scene.layout.VBox;
 
 public class AlunoController {
     @FXML
-    private VBox mainContent;
+    private VBox gPrincipal;
 
     @FXML
     private VBox gNotas;
@@ -17,7 +17,7 @@ public class AlunoController {
 
     // Esconder todos os painéis
     private void hideAllPanes() {
-        mainContent.setVisible(false);
+        gPrincipal.setVisible(false);
         gNotas.setVisible(false);
         gFaltas.setVisible(false);
     }
@@ -26,7 +26,7 @@ public class AlunoController {
     @FXML
     public void mostrarInicio() {
         hideAllPanes();
-        mainContent.setVisible(true);
+        gPrincipal.setVisible(true);
     }
 
     // Mostrar "Notas"

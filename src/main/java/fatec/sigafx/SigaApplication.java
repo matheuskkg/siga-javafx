@@ -19,7 +19,7 @@ public class SigaApplication extends Application
         //LoginView.mostrarLogin();
 
         //Usar para testar a página de ADM
-        //AdmView.mostraAdm();
+        AdmView.mostraAdm();
 
         //Usar para testar a página de Aluno
         //AlunoView.mostraAluno();

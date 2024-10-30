@@ -33,7 +33,7 @@
 
     <center>
         <StackPane stylesheets="@../css/prof.css">
-            <VBox fx:id="mainContent" alignment="TOP_CENTER" spacing="20" styleClass="vBox">
+            <VBox fx:id="gPrincipal" alignment="TOP_CENTER" spacing="20" styleClass="vBox">
                 <Label styleClass="admin-header" text="Bem-vindo, Professor!">
                     <font>
                         <Font size="28.0" />

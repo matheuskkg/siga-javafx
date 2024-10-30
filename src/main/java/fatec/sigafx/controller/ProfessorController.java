@@ -8,7 +8,7 @@ import javafx.scene.layout.VBox;
 public class ProfessorController {
 
     @FXML
-    private VBox mainContent;
+    private VBox gPrincipal;
 
     @FXML
     private VBox gTurma;
@@ -18,7 +18,7 @@ public class ProfessorController {
 
     // Esconder todos os painéis
     private void esconderPaineis() {
-        mainContent.setVisible(false);
+        gPrincipal.setVisible(false);
         gTurma.setVisible(false);
         gPresenca.setVisible(false);
     }
@@ -27,7 +27,7 @@ public class ProfessorController {
     @FXML
     public void mostrarInicio() {
         esconderPaineis();
-        mainContent.setVisible(true);
+        gPrincipal.setVisible(true);
     }
 
     // Mostrar *Turma*

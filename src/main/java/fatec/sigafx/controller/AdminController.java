@@ -14,10 +14,16 @@ import java.util.List;
 public class AdminController
 {
     @FXML
-    private VBox mainContent;
+    private VBox gPrincipal;
 
     @FXML
     private VBox gUsuarios;
+    @FXML
+    private VBox gBotaoUsuario;
+    @FXML
+    private VBox gAdicionarUsuario;
+    @FXML
+    private VBox gAlterarExcluirUsuario;
 
     @FXML
     private VBox gDisciplinas;
@@ -42,9 +48,15 @@ public class AdminController
 
     // Esconder todos os painéis
     private void hideAllPanes() {
-        mainContent.setVisible(false);
+        gPrincipal.setVisible(false);
+
         gUsuarios.setVisible(false);
+        gBotaoUsuario.setVisible(false);
+        gAdicionarUsuario.setVisible(false);
+        gAlterarExcluirUsuario.setVisible(false);
+
         gDisciplinas.setVisible(false);
+
         gTurmas.setVisible(false);
     }
 
@@ -55,16 +67,29 @@ public class AdminController
 
     // Mostrar "Início"
     @FXML
-    public void showInicio() {
+    public void mostraInicio() {
         hideAllPanes();
-        mainContent.setVisible(true);
+        gPrincipal.setVisible(true);
     }
 
     // Mostrar "Gerenciar Usuários"
     @FXML
-    public void showGerenciarUsuarios() {
+    public void mostraGerenciarUsuarios() {
+        hideAllPanes();
+        gBotaoUsuario.setVisible(true);
+        gUsuarios.setVisible(true);
+    }
+    @FXML
+    public void mostraAdicionarUsuario() {
         hideAllPanes();
         gUsuarios.setVisible(true);
+        gAdicionarUsuario.setVisible(true);
+    }
+    @FXML
+    public void mostraAlterarExcluirUsuario() {
+        hideAllPanes();
+        gUsuarios.setVisible(true);
+        gAlterarExcluirUsuario.setVisible(true);
     }
 
     // Mostrar "Gerenciar Disciplinas"

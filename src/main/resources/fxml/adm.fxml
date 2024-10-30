@@ -24,8 +24,8 @@
             <VBox.margin>
                <Insets bottom="20.0" top="20.0" />
             </VBox.margin></Text>
-            <Button alignment="TOP_LEFT" minWidth="186.0" onAction="#showInicio" styleClass="sidebar-button" text="Início" />
-            <Button alignment="TOP_LEFT" minWidth="186.0" onAction="#showGerenciarUsuarios" styleClass="sidebar-button" text="Gerenciar Usuários" />
+            <Button alignment="TOP_LEFT" minWidth="186.0" onAction="#mostraInicio" styleClass="sidebar-button" text="Início" />
+            <Button alignment="TOP_LEFT" minWidth="186.0" onAction="#mostraGerenciarUsuarios" styleClass="sidebar-button" text="Gerenciar Usuários" />
             <Button alignment="TOP_LEFT" minWidth="186.0" onAction="#showGerenciarDisciplinas" styleClass="sidebar-button" text="Gerenciar Disciplinas" />
             <Button alignment="TOP_LEFT" minWidth="186.0" onAction="#showGerenciarTurmas" styleClass="sidebar-button" text="Gerenciar Turmas" />
             <Separator orientation="VERTICAL" prefHeight="200.0" visible="false" VBox.vgrow="ALWAYS" />
@@ -38,7 +38,7 @@
 
     <center>
         <StackPane>
-            <VBox fx:id="mainContent" alignment="TOP_CENTER" spacing="20" style="-fx-padding: 20px;">
+            <VBox fx:id="gPrincipal" alignment="TOP_CENTER" spacing="20" style="-fx-padding: 20px;">
                 <Label styleClass="admin-header" text="Bem-vindo, Administrador!">
                     <font>
                         <Font size="28.0" />
@@ -58,16 +58,14 @@
                     <Label text="Total de Usuários: ??" />
                 </VBox>
                 <StackPane VBox.vgrow="ALWAYS">
-                    <VBox>
+                    <VBox fx:id="gBotaoUsuario">
                         <HBox alignment="TOP_CENTER" spacing="20.0">
-                            <!-- Fazer um onAction nesse botão para mostrar a VBox de adição de usuário -->
-                            <Button minHeight="50.0" minWidth="100.0" mnemonicParsing="false" text="Adicionar" />
-                            <!-- Fazer um onAction nesse botão para mostrar a VBox de alterar e excluir usuário -->
-                            <Button minHeight="50.0" minWidth="100.0" mnemonicParsing="false" text="Alterar/Excluir" />
+                            <Button minHeight="50.0" minWidth="100.0" onAction="#mostraAdicionarUsuario" mnemonicParsing="false" text="Adicionar" />
+                            <Button minHeight="50.0" minWidth="100.0" onAction="#mostraAlterarExcluirUsuario" mnemonicParsing="false" text="Alterar/Excluir" />
                         </HBox>
                     </VBox>
                     <!-- Colocar um fx:id nessa VBox, nessa VBox temos os campos para adição de usuário -->
-                    <VBox alignment="TOP_CENTER" spacing="10.0" visible="false" StackPane.alignment="TOP_CENTER">
+                    <VBox fx:id="gAdicionarUsuario" alignment="TOP_CENTER" spacing="10.0" visible="false" StackPane.alignment="TOP_CENTER">
                         <Label alignment="TOP_CENTER" maxHeight="-Infinity" maxWidth="1.7976931348623157E308"
                                minHeight="40.0" minWidth="680.0" text="Adicionar novo usuário" VBox.vgrow="ALWAYS">
                             <font>
@@ -178,8 +176,7 @@
                             <Button minHeight="50.0" minWidth="100.0" mnemonicParsing="false" text="Limpar"/>
                         </HBox>
                     </VBox>
-                    <!-- Colocar um fx:id aqui, nessa VBox temos os campos para alterar e excluir usuário -->
-                    <VBox maxWidth="1000.0" prefWidth="500.0" visible="false">
+                    <VBox fx:id="gAlterarExcluirUsuario" maxWidth="1000.0" prefWidth="500.0" visible="false">
                       <TableView prefHeight="200.0" prefWidth="200.0">
                         <columns>
                             <TableColumn minWidth="150.0" prefWidth="-1.0" sortType="DESCENDING" text="RA" />
