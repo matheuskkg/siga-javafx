@@ -11,13 +11,17 @@ import java.util.List;
 @Entity
 @Table(name = "alunos")
 public class AlunoModel extends UsuarioModel {
-    @OneToMany(mappedBy = "aluno")
+    @OneToMany(fetch = FetchType.EAGER, mappedBy = "aluno")
     private List<NotaModel> notas = new ArrayList<>();
 
     public AlunoModel() {}
 
     public AlunoModel(UsuarioCriarRequest request) {
         super(request);
+    }
+
+    public List<NotaModel> getNotas() {
+        return notas;
     }
 
     @Override

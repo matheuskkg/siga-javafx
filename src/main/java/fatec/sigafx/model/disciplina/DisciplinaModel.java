@@ -22,4 +22,12 @@ public class DisciplinaModel {
     private String codigo;
 
     private Integer cargaHoraria;
+
+    public DisciplinaModel() {}
+
+    public DisciplinaModel(String nome, String codigo, Integer cargaHoraria) {
+        this.nome = nome;
+        this.codigo = codigo;
+        this.cargaHoraria = cargaHoraria;
+    }
 }

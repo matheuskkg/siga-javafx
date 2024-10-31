@@ -1,6 +1,7 @@
 package fatec.sigafx.dao;
 
 import fatec.sigafx.model.aluno.AlunoModel;
+import fatec.sigafx.model.usuario.UsuarioModel;
 import fatec.sigafx.model.usuario.dto.UsuarioCriarRequest;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.EntityManagerFactory;
