@@ -16,6 +16,7 @@
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
+<?import javafx.scene.layout.Region?>
 <BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="900.0" xmlns="http://javafx.com/javafx/22" xmlns:fx="http://javafx.com/fxml/1" fx:controller="fatec.sigafx.controller.AdminController">
 
     <left>
@@ -26,8 +27,8 @@
             </VBox.margin></Text>
             <Button alignment="TOP_LEFT" minWidth="186.0" onAction="#mostraInicio" styleClass="sidebar-button" text="Início" />
             <Button alignment="TOP_LEFT" minWidth="186.0" onAction="#mostraGerenciarUsuarios" styleClass="sidebar-button" text="Gerenciar Usuários" />
-            <Button alignment="TOP_LEFT" minWidth="186.0" onAction="#showGerenciarDisciplinas" styleClass="sidebar-button" text="Gerenciar Disciplinas" />
-            <Button alignment="TOP_LEFT" minWidth="186.0" onAction="#showGerenciarTurmas" styleClass="sidebar-button" text="Gerenciar Turmas" />
+            <Button alignment="TOP_LEFT" minWidth="186.0" onAction="#mostraGerenciarDisciplinas" styleClass="sidebar-button" text="Gerenciar Disciplinas" />
+            <Button alignment="TOP_LEFT" minWidth="186.0" onAction="#mostraGerenciarTurmas" styleClass="sidebar-button" text="Gerenciar Turmas" />
             <Separator orientation="VERTICAL" prefHeight="200.0" visible="false" VBox.vgrow="ALWAYS" />
             <Button alignment="TOP_LEFT" minWidth="186.0" onAction="#onLogoutClicked" styleClass="sidebar-exit" text="Sair">
                 <VBox.margin>
@@ -64,6 +65,7 @@
                             <Button minHeight="50.0" minWidth="100.0" onAction="#mostraAlterarExcluirUsuario" mnemonicParsing="false" text="Alterar/Excluir" />
                         </HBox>
                     </VBox>
+                    <!-- Tem que conectar tudo o formulario com o banco de dados -->
                     <VBox fx:id="gAdicionarUsuario" alignment="TOP_CENTER" spacing="10.0" visible="false" StackPane.alignment="TOP_CENTER">
                         <Label alignment="TOP_CENTER" maxHeight="-Infinity" maxWidth="1.7976931348623157E308"
                                minHeight="40.0" minWidth="680.0" text="Adicionar novo usuário" VBox.vgrow="ALWAYS">
@@ -74,7 +76,6 @@
                                 <Insets bottom="10.0"/>
                             </VBox.margin>
                         </Label>
-                        <!-- Aqui tem o campo do Nome para adição de usuário, talvez precise de fx:id no TextField para mandar pro banco de dados -->
                         <HBox alignment="TOP_CENTER" maxWidth="1000.0" minHeight="50.0">
                             <VBox.margin>
                                 <Insets left="20.0" right="20.0"/>
@@ -88,13 +89,12 @@
                                     <Font size="20.0"/>
                                 </font>
                             </Label>
-                            <TextField minHeight="30.0" promptText="Nome" HBox.hgrow="ALWAYS">
+                            <TextField fx:id="nomeUsuario" minHeight="30.0" promptText="Nome" HBox.hgrow="ALWAYS">
                                 <HBox.margin>
                                     <Insets top="10.0"/>
                                 </HBox.margin>
                             </TextField>
                         </HBox>
-                        <!-- Aqui tem o campo de Senha para adição de usuário, talvez precise de fx:id no PasswordField para mandar pro banco de dados -->
                         <HBox alignment="TOP_CENTER" maxWidth="1000.0" minHeight="50.0">
                             <VBox.margin>
                                 <Insets left="20.0" right="20.0"/>
@@ -107,13 +107,12 @@
                                     <Font size="20.0"/>
                                 </font>
                             </Label>
-                            <PasswordField minHeight="30.0" promptText="Senha" HBox.hgrow="ALWAYS">
+                            <PasswordField fx:id="senhaUsuario" minHeight="30.0" promptText="Senha" HBox.hgrow="ALWAYS">
                                 <HBox.margin>
                                     <Insets top="10.0"/>
                                 </HBox.margin>
                             </PasswordField>
                         </HBox>
-                        <!-- Aqui tem o campo de Confirmar Senha para adição de usuário, talvez precise de fx:id no PasswordField verificar se é igual ao campo de Senha -->
                         <HBox alignment="TOP_CENTER" maxWidth="1000.0" minHeight="50.0">
                             <VBox.margin>
                                 <Insets left="20.0" right="20.0"/>
@@ -126,13 +125,15 @@
                                     <Font size="20.0"/>
                                 </font>
                             </Label>
-                            <PasswordField minHeight="30.0" promptText="Confirmar Senha" HBox.hgrow="ALWAYS">
-                                <HBox.margin>
-                                    <Insets top="10.0"/>
-                                </HBox.margin>
-                            </PasswordField>
+                            <VBox alignment="TOP_LEFT" HBox.hgrow="ALWAYS">
+                                <PasswordField fx:id="confirmarSenhaUsuario" minHeight="30.0" promptText="Confirmar Senha">
+                                    <VBox.margin>
+                                        <Insets top="10.0"/>
+                                    </VBox.margin>
+                                </PasswordField>
+                                <Label fx:id="mensagemErroUsuarioSenhasDiferentes" textFill="red"/>
+                            </VBox>
                         </HBox>
-                        <!-- Aqui tem o campo do E-mail para adição de usuário, talvez precise de fx:id no TextField para mandar pro banco de dados -->
                         <HBox alignment="TOP_CENTER" maxWidth="1000.0" minHeight="50.0">
                             <VBox.margin>
                                 <Insets left="20.0" right="20.0"/>
@@ -145,13 +146,15 @@
                                     <Font size="20.0"/>
                                 </font>
                             </Label>
-                            <TextField minHeight="30.0" promptText="exemplo@exemplo.com" HBox.hgrow="ALWAYS">
-                                <HBox.margin>
-                                    <Insets top="10.0"/>
-                                </HBox.margin>
-                            </TextField>
+                            <VBox alignment="TOP_LEFT" HBox.hgrow="ALWAYS">
+                                <TextField fx:id="emailUsuario" minHeight="30.0" promptText="exemplo@exemplo.com" HBox.hgrow="ALWAYS">
+                                    <VBox.margin>
+                                        <Insets top="10.0"/>
+                                    </VBox.margin>
+                                </TextField>
+                                <Label fx:id="mensagemErroUsuarioEmail" textFill="red"/>
+                            </VBox>
                         </HBox>
-                        <!-- Aqui tem o campo de Tipo de Usuário para adição de usuário, talvez precise de fx:id no ComboBox para mandar pro banco de dados -->
                         <HBox alignment="TOP_RIGHT" maxWidth="1000.0">
                             <VBox.margin>
                                 <Insets left="20.0" right="20.0"/>
@@ -164,15 +167,14 @@
                                 </HBox.margin>
                             </ComboBox>
                         </HBox>
-
-                        <HBox alignment="TOP_RIGHT" maxWidth="1000.0" spacing="10.0">
+                        <HBox alignment="CENTER" maxWidth="1000.0" spacing="10.0">
                             <VBox.margin>
                                 <Insets left="20.0" right="20.0"/>
                             </VBox.margin>
-                            <!-- Fazer um onAction nesse botão para adicionar o usuário com os dados feitos nos campos -->
-                            <Button minHeight="50.0" minWidth="100.0" mnemonicParsing="false" text="Adicionar"/>
-                            <!-- Fazer um onAction nesse botão para limpar os campos -->
-                            <Button minHeight="50.0" minWidth="100.0" mnemonicParsing="false" text="Limpar"/>
+                        <Label fx:id="mensagemErroUsuarioCampos" textFill="red" minWidth="200.0"/>
+                        <Region HBox.hgrow="ALWAYS" />
+                        <Button minHeight="50.0" minWidth="100.0" onAction="#adicionarUsuario" mnemonicParsing="false" text="Adicionar"/>
+                        <Button minHeight="50.0" minWidth="100.0" onAction="#limparCampos" mnemonicParsing="false" text="Limpar"/>
                         </HBox>
                     </VBox>
                     <VBox fx:id="gAlterarExcluirUsuario" maxWidth="1000.0" prefWidth="500.0" visible="false">
@@ -208,17 +210,13 @@
                     <Label text="Disciplinas Ativas: ??" />
                 </VBox>
                 <StackPane>
-                    <!-- Colocar um fx:id nessa VBox, nessa VBox temos os botões para direcionar para adição, aletração e exclusão de disciplinas -->
-                    <VBox>
+                    <VBox fx:id="gBotaoDisciplinas">
                         <HBox alignment="TOP_CENTER" spacing="20.0">
-                            <!-- Fazer um onAction nesse botão para esconder a Vbox dele e mostrar a Vbox com os campos de adição da disciplina -->
-                            <Button minHeight="50.0" minWidth="100.0" mnemonicParsing="false" text="Adicionar"/>
-                            <!-- Fazer um onAction nesse botão para esconder a Vbox dele e mostrar a Vbox com os campos de alteração e exclusão da disciplina -->
-                            <Button minHeight="50.0" minWidth="100.0" mnemonicParsing="false" text="Alterar/Excluir"/>
+                            <Button minHeight="50.0" minWidth="100.0" onAction="#mostraAdicionarDisciplinas" mnemonicParsing="false" text="Adicionar"/>
+                            <Button minHeight="50.0" minWidth="100.0" onAction="#mostraAlterarExcluirDisciplinas" mnemonicParsing="false" text="Alterar/Excluir"/>
                         </HBox>
                     </VBox>
-                    <!-- Colocar um fx:id nessa VBox, nessa VBox temos os campos de adição de disciplina -->
-                    <VBox alignment="TOP_CENTER" spacing="10.0" visible="false" StackPane.alignment="TOP_CENTER">
+                    <VBox fx:id="gAdicionarDisciplinas" alignment="TOP_CENTER" spacing="10.0" visible="false" StackPane.alignment="TOP_CENTER">
                         <Label alignment="TOP_CENTER" maxHeight="-Infinity" maxWidth="1.7976931348623157E308"
                                minHeight="40.0" minWidth="680.0" text="Adicionar nova disciplina"
                                VBox.vgrow="ALWAYS">
@@ -272,8 +270,7 @@
                             <Button minHeight="50.0" minWidth="100.0" mnemonicParsing="false" text="Limpar"/>
                         </HBox>
                     </VBox>
-                    <!-- Colocar um fx:id nessa VBox, nessa VBox temos uma tabela com as disciplinas para alterar ou excluir -->
-                    <VBox maxWidth="1000.0" prefWidth="500.0" visible="false">
+                    <VBox fx:id="gAlterarExcluirDisciplinas" maxWidth="1000.0" prefWidth="500.0" visible="false">
                         <!-- Talvez precise colocar um fx:id nessa TableView, ou nos componentes dela para preencher com os dados de cada disciplina do banco de dados -->
                         <TableView prefHeight="200.0" prefWidth="200.0">
                             <columns>
@@ -312,19 +309,14 @@
                     </VBox>
                 </HBox>
                 <StackPane>
-                    <!-- Colocar um fx:id nessa VBox, nessa VBox temos os botões para direcionar para criação, alteração e exclusão de turmas e adição e remoção de alunos na turma -->
-                    <VBox spacing="20.0">
+                    <VBox fx:id="gBotaoTurmas" spacing="20.0">
                         <HBox alignment="TOP_CENTER" spacing="20.0">
-                            <!-- Fazer um onAction nesse botão para esconder a Vbox dele e mostrar a Vbox com os campos de adição da turma -->
-                            <Button minHeight="50.0" minWidth="100.0" mnemonicParsing="false" text="Criar"/>
-                            <!-- Fazer um onAction nesse botão para esconder a Vbox dele e mostrar a Vbox com os campos de alteração e exclusão de turmas -->
-                            <Button minHeight="50.0" minWidth="100.0" mnemonicParsing="false" text="Alterar/Excluir"/>
-                            <!-- Fazer um onAction nesse botão para esconder a Vbox dele e mostrar a Vbox com os campos de adição e remoção de alunos na turma -->
-                            <Button minHeight="50.0" minWidth="100.0" mnemonicParsing="false" text="Adicionar/Remover Aluno"/>
+                            <Button minHeight="50.0" minWidth="100.0" onAction="#mostraAdicionarTurmas" mnemonicParsing="false" text="Adicionar"/>
+                            <Button minHeight="50.0" minWidth="100.0" onAction="#mostraAlterarExcluirTurmas" mnemonicParsing="false" text="Alterar/Excluir"/>
+                            <Button minHeight="50.0" minWidth="100.0" onAction="#mostraAdicionarRemoverAlunosTurmas" mnemonicParsing="false" text="Adicionar/Remover Aluno"/>
                         </HBox>
                     </VBox>
-                    <!-- Colocar um fx:id nessa VBox, nessa VBox temos os campos de adição de turma -->
-                    <VBox alignment="CENTER" spacing="10.0" visible="false">
+                    <VBox fx:id="gAdicionarTurmas" alignment="CENTER" spacing="10.0" visible="false">
                         <Label alignment="TOP_CENTER" maxHeight="-Infinity" maxWidth="1.7976931348623157E308"
                                minHeight="40.0" minWidth="680.0" text="Criar nova turma" VBox.vgrow="ALWAYS">
                             <font>
@@ -415,8 +407,7 @@
                             <Button minHeight="50.0" minWidth="100.0" mnemonicParsing="false" text="Limpar"/>
                         </HBox>
                     </VBox>
-                    <!-- Colocar um fx:id nessa VBox, nessa VBox temos os campos de alteração e exclusão de turmas -->
-                    <VBox maxWidth="1000.0" prefWidth="500.0" visible="false">
+                    <VBox fx:id="gAlterarExcluirTurmas" maxWidth="1000.0" prefWidth="500.0" visible="false">
                         <TableView prefHeight="200.0" prefWidth="200.0">
                             <columns>
                                 <TableColumn editable="false" minWidth="130.0" prefWidth="130.0" text="Id"/>
@@ -431,8 +422,7 @@
                             <Button minHeight="50.0" minWidth="100.0" mnemonicParsing="false" text="Excluir"/>
                         </HBox>
                     </VBox>
-                    <!-- Colocar um fx:id nessa VBox, nessa VBox temos os campos de adição e remoção de alunos na turma -->
-                    <VBox maxHeight="-Infinity" maxWidth="1000.0" prefHeight="1080.0" prefWidth="1000.0"
+                    <VBox fx:id="gAdicionarRemoverAlunosTurmas" maxHeight="-Infinity" maxWidth="1000.0" prefHeight="1080.0" prefWidth="1000.0"
                           visible="false">
                         <HBox alignment="TOP_CENTER">
                             <VBox.margin>
