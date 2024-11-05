@@ -77,6 +77,7 @@ public class AdminController
         ObservableList<String> obsUsuarios = FXCollections.observableArrayList(usuarios);
 
         cbTipoUsuario.setItems(obsUsuarios);
+        cbTipoUsuario.getSelectionModel().selectFirst();
     }
 
     // Esconder todos os painéis
@@ -135,7 +136,7 @@ public class AdminController
             mensagemErroUsuarioSenhasDiferentes.setText("");
         }
         if (!emailUsuario.getText().matches(EMAIL_REGEX) && !emailUsuario.getText().isEmpty()) {
-            mensagemErroUsuarioEmail.setText("E-mail invalido!");
+            mensagemErroUsuarioEmail.setText("E-mail inválido!");
             verificar = false;
         } else {
             mensagemErroUsuarioEmail.setText("");
@@ -160,7 +161,7 @@ public class AdminController
         senhaUsuario.clear();
         confirmarSenhaUsuario.clear();
         emailUsuario.clear();
-        cbTipoUsuario.getSelectionModel().clearSelection();
+        cbTipoUsuario.getSelectionModel().clearAndSelect(0);
         mensagemErroUsuarioSenhasDiferentes.setText("");
         mensagemErroUsuarioCampos.setText("");
         mensagemErroUsuarioEmail.setText("");

@@ -11,16 +11,16 @@ public class ProfessorController {
     private VBox gPrincipal;
 
     @FXML
-    private VBox gTurma;
+    private VBox gNotas;
 
     @FXML
-    private VBox gPresenca;
+    private VBox gFaltas;
 
     // Esconder todos os painéis
     private void esconderPaineis() {
         gPrincipal.setVisible(false);
-        gTurma.setVisible(false);
-        gPresenca.setVisible(false);
+        gNotas.setVisible(false);
+        gFaltas.setVisible(false);
     }
 
     // Mostrar "Início"
@@ -30,18 +30,18 @@ public class ProfessorController {
         gPrincipal.setVisible(true);
     }
 
-    // Mostrar *Turma*
+    // Mostrar *Notas*
     @FXML
-    public void mostrarTurma() {
+    public void mostrarNotas() {
         esconderPaineis();
-        gTurma.setVisible(true);
+        gNotas.setVisible(true);
     }
 
-    // Mostrar *Precença*
+    // Mostrar *Faltas*
     @FXML
-    public void mostrarPrecenca() {
+    public void mostrarFaltas() {
         esconderPaineis();
-        gPresenca.setVisible(true);
+        gFaltas.setVisible(true);
     }
 
     @FXML
