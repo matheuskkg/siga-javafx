@@ -72,7 +72,7 @@
          </PasswordField>
       </HBox>
       <HBox alignment="CENTER">
-         <Label fx:id="mensagemErroLogin" minHeight="25.0" minWidth="273.0" prefHeight="25.0" prefWidth="273.0" text="Credenciais inválidas!" textFill="RED"/>
+         <Label fx:id="mensagemErroLogin" minHeight="25.0" minWidth="273.0" prefHeight="25.0" prefWidth="273.0" text="Credenciais inválidas!" textFill="RED" visible="false"/>
       </HBox>
       <Button mnemonicParsing="false" onAction="#confirmarLogin" prefHeight="25.0" prefWidth="90.0" styleClass="background" stylesheets="@../css/login.css" text="Confirmar" textFill="WHITE">
          <VBox.margin>
