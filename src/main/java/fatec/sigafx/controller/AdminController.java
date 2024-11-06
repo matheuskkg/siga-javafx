@@ -1,5 +1,8 @@
 package fatec.sigafx.controller;
 
+import fatec.sigafx.model.aluno.AlunoModel;
+import fatec.sigafx.model.usuario.UsuarioModel;
+import fatec.sigafx.model.usuario.dto.UsuarioCriarRequest;
 import fatec.sigafx.view.LoginView;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -70,8 +73,6 @@ public class AdminController
     private VBox gAlterarExcluirTurmas;
     @FXML
     private VBox gAdicionarRemoverAlunosTurmas;
-
-    private static final String EMAIL_REGEX = "^[A-Za-z0-9+_.-]+@[A-Za-z0-9.-]+\\.[A-Za-z]{2,6}$";
 
     private List<String> usuarios = new ArrayList<>();
 
@@ -161,18 +162,8 @@ public class AdminController
     @FXML
     public void adicionarUsuario() {
         boolean verificar = true;
-        if (!senhaAdicionarUsuario.getText().equals(confirmarSenhaAdicionarUsuario.getText()) && !confirmarSenhaAdicionarUsuario.getText().isEmpty()) {
-            mensagemErroSenhasDiferentes.setText("Senhas diferentes!");
-            verificar = false;
-        } else {
-            mensagemErroSenhasDiferentes.setText("");
-        }
-        if (!emailAdicionarUsuario.getText().matches(EMAIL_REGEX) && !emailAdicionarUsuario.getText().isEmpty()) {
-            mensagemErroEmail.setText("E-mail inválido!");
-            verificar = false;
-        } else {
-            mensagemErroEmail.setText("");
-        }
+
+        //Verificar campos vazios
         if (nomeAdicionarUsuario.getText().isEmpty() ||
                 senhaAdicionarUsuario.getText().isEmpty() ||
                 confirmarSenhaAdicionarUsuario.getText().isEmpty() ||
@@ -183,8 +174,28 @@ public class AdminController
         } else {
             mensagemErroCampos.setText("");
         }
+
+        if (!AlunoModel.verificarSenhasCoincidem(senhaAdicionarUsuario.getText(), confirmarSenhaAdicionarUsuario.getText())) {
+            mensagemErroSenhasDiferentes.setText("Senhas diferentes!");
+            verificar = false;
+        } else {
+            mensagemErroSenhasDiferentes.setText("");
+        }
+
+        if (!AlunoModel.verificarEmailValido(emailAdicionarUsuario.getText())) {
+            mensagemErroEmail.setText("E-mail inválido!");
+            verificar = false;
+        } else {
+            mensagemErroEmail.setText("");
+        }
+
         if(verificar){
-            System.out.println("Formulario enviado???");
+            UsuarioCriarRequest request = new UsuarioCriarRequest(
+                    nomeAdicionarUsuario.getText(),
+                    emailAdicionarUsuario.getText(),
+                    senhaAdicionarUsuario.getText());
+
+            UsuarioModel.criarUsuario(request, cbTipoAdicionarUsuario.getValue());
         }
     }
     @FXML

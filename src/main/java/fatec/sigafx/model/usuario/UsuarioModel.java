@@ -1,5 +1,9 @@
 package fatec.sigafx.model.usuario;
 
+import fatec.sigafx.dao.UsuarioDAO;
+import fatec.sigafx.model.admin.AdminModel;
+import fatec.sigafx.model.aluno.AlunoModel;
+import fatec.sigafx.model.professor.ProfessorModel;
 import fatec.sigafx.model.usuario.dto.UsuarioCriarRequest;
 import jakarta.persistence.*;
 
@@ -9,7 +13,7 @@ import jakarta.persistence.*;
 public class UsuarioModel {
 
     @Id
-    @GeneratedValue
+    @GeneratedValue(strategy = GenerationType.AUTO)
     private Integer id;
 
     private String nome;
@@ -18,12 +22,36 @@ public class UsuarioModel {
 
     private String senha;
 
+    private static final String EMAIL_REGEX = "^[A-Za-z0-9+_.-]+@[A-Za-z0-9.-]+\\.[A-Za-z]{2,6}$";
+
     public UsuarioModel() {}
 
     public UsuarioModel(UsuarioCriarRequest request) {
         this.nome = request.nome();
         this.email = request.email();
         this.senha = request.senha();
+    }
+
+    public static boolean verificarSenhasCoincidem(String senha, String confirmarSenha) {
+        return senha.equals(confirmarSenha) && !confirmarSenha.isEmpty();
+    }
+
+    public static boolean verificarEmailValido(String email) {
+        return email.matches(EMAIL_REGEX) ^ email.isEmpty();
+    }
+
+    public static void criarUsuario(UsuarioCriarRequest request, String tipo) {
+        UsuarioDAO usuarioDAO = new UsuarioDAO();
+
+        //TODO: Utilizar enum p/ definir a role
+        UsuarioModel u = switch (tipo) {
+            case "Administrador" -> new AdminModel(request);
+            case "Professor" -> new ProfessorModel(request);
+            case "Aluno" -> new AlunoModel(request);
+            default -> null;
+        };
+
+        usuarioDAO.salvarUsuario(u);
     }
 
     public Integer getId() {

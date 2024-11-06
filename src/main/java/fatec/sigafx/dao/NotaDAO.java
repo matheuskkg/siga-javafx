@@ -1,13 +1,13 @@
 package fatec.sigafx.dao;
 
+import fatec.sigafx.EMF;
 import fatec.sigafx.model.aluno.AlunoModel;
 import fatec.sigafx.model.notas.NotaModel;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.EntityManagerFactory;
-import jakarta.persistence.Persistence;
 
 public class NotaDAO {
-    private EntityManagerFactory emf = Persistence.createEntityManagerFactory("siga");
+    private EntityManagerFactory emf = EMF.getEmf();
 
     public void salvarNota(Double valorNota, AlunoModel aluno) {
         NotaModel nota = new NotaModel(valorNota, aluno);
