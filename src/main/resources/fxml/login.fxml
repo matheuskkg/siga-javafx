@@ -3,6 +3,7 @@
 <?import de.jensd.fx.glyphs.fontawesome.FontAwesomeIcon?>
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
 <?import javafx.scene.control.PasswordField?>
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.ColumnConstraints?>
@@ -70,9 +71,12 @@
             </font>
          </PasswordField>
       </HBox>
+      <HBox alignment="CENTER" visible="false">
+         <Label fx:id="mensagemErroLogin" minHeight="25.0" minWidth="273.0" prefHeight="25.0" prefWidth="273.0" text="Credenciais inválidas!" textFill="RED"/>
+      </HBox>
       <Button mnemonicParsing="false" onAction="#confirmarLogin" prefHeight="25.0" prefWidth="90.0" styleClass="background" stylesheets="@../css/login.css" text="Confirmar" textFill="WHITE">
          <VBox.margin>
-            <Insets top="20.0" />
+            <Insets top="10.0" />
          </VBox.margin>
       </Button>
    </VBox>
