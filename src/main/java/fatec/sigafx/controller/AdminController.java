@@ -1,7 +1,6 @@
 package fatec.sigafx.controller;
 
 import fatec.sigafx.view.LoginView;
-import javafx.application.Platform;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
@@ -9,6 +8,8 @@ import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
+import javafx.scene.layout.HBox;
+import javafx.scene.layout.Priority;
 import javafx.scene.layout.VBox;
 import javafx.event.ActionEvent;
 
@@ -45,6 +46,8 @@ public class AdminController
     private ComboBox<String> cbTipoAdicionarUsuario;
     @FXML
     private VBox gAlterarExcluirUsuario;
+    @FXML
+    private HBox hTipoUsuario;
 
     @FXML
     private VBox gDisciplinas;
@@ -115,8 +118,16 @@ public class AdminController
         confirmarSenhaAdicionarUsuario.clear();
         emailAdicionarUsuario.clear();
 
-        cbTipoAdicionarUsuario.getSelectionModel().clearSelection();
-//Marcelo
+        // Criar uma ComboBox com as mesmas propriedades e itens
+        ComboBox<String> novaComboBox = new ComboBox<>(cbTipoAdicionarUsuario.getItems());
+        novaComboBox.setMaxSize(Double.MAX_VALUE, Double.MAX_VALUE);
+        HBox.setHgrow(novaComboBox, Priority.ALWAYS);
+        novaComboBox.setPromptText(cbTipoAdicionarUsuario.getPromptText());
+
+        // Substituir a ComboBox original pela nova
+        hTipoUsuario.getChildren().remove(cbTipoAdicionarUsuario);
+        hTipoUsuario.getChildren().add(novaComboBox);
+        cbTipoAdicionarUsuario = novaComboBox;
 
         mensagemErroSenhasDiferentes.setText("");
         mensagemErroCampos.setText("");
