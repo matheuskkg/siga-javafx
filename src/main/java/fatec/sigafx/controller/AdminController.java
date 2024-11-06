@@ -116,8 +116,7 @@ public class AdminController
         emailAdicionarUsuario.clear();
 
         cbTipoAdicionarUsuario.getSelectionModel().clearSelection();
-
-
+//Marcelo
 
         mensagemErroSenhasDiferentes.setText("");
         mensagemErroCampos.setText("");
