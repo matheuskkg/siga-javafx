@@ -87,7 +87,7 @@
                                     <Font size="20.0" />
                                 </font>
                             </Label>
-                            <TextField fx:id="nomeUsuario" minHeight="30.0" promptText="Nome" HBox.hgrow="ALWAYS">
+                            <TextField fx:id="nomeAdicionarUsuario" minHeight="30.0" promptText="Nome" HBox.hgrow="ALWAYS">
                                 <HBox.margin>
                                     <Insets top="10.0" />
                                 </HBox.margin>
@@ -105,7 +105,7 @@
                                     <Font size="20.0" />
                                 </font>
                             </Label>
-                            <PasswordField fx:id="senhaUsuario" minHeight="30.0" promptText="Senha" HBox.hgrow="ALWAYS">
+                            <PasswordField fx:id="senhaAdicionarUsuario" minHeight="30.0" promptText="Senha" HBox.hgrow="ALWAYS">
                                 <HBox.margin>
                                     <Insets top="10.0" />
                                 </HBox.margin>
@@ -124,12 +124,12 @@
                                 </font>
                             </Label>
                             <VBox HBox.hgrow="ALWAYS">
-                                <PasswordField fx:id="confirmarSenhaUsuario" minHeight="30.0" promptText="Confirmar Senha">
+                                <PasswordField fx:id="confirmarSenhaAdicionarUsuario" minHeight="30.0" promptText="Confirmar Senha">
                                     <VBox.margin>
                                         <Insets top="10.0" />
                                     </VBox.margin>
                                 </PasswordField>
-                                <Label fx:id="mensagemErroUsuarioSenhasDiferentes" textFill="red" />
+                                <Label fx:id="mensagemErroSenhasDiferentes" textFill="red" />
                             </VBox>
                         </HBox>
                         <HBox alignment="TOP_CENTER" maxWidth="1000.0" minHeight="50.0">
@@ -145,37 +145,37 @@
                                 </font>
                             </Label>
                             <VBox HBox.hgrow="ALWAYS">
-                                <TextField fx:id="emailUsuario" minHeight="30.0" promptText="exemplo@exemplo.com" HBox.hgrow="ALWAYS">
+                                <TextField fx:id="emailAdicionarUsuario" minHeight="30.0" promptText="exemplo@exemplo.com" HBox.hgrow="ALWAYS">
                                     <VBox.margin>
                                         <Insets top="10.0" />
                                     </VBox.margin>
                                 </TextField>
-                                <Label fx:id="mensagemErroUsuarioEmail" textFill="red" />
+                                <Label fx:id="mensagemErroEmail" textFill="red" />
                             </VBox>
                         </HBox>
                         <HBox alignment="TOP_RIGHT" maxWidth="1000.0">
                             <VBox.margin>
                                 <Insets left="20.0" right="20.0" />
                             </VBox.margin>
-                     <Label minHeight="50.0" prefWidth="188.0" text="Tipo Usuário:" HBox.hgrow="ALWAYS">
-                        <font>
-                           <Font size="20.0" />
-                        </font>
-                        <HBox.margin>
-                           <Insets right="10.0" />
-                        </HBox.margin>
-                     </Label>
-                            <ComboBox fx:id="cbTipoUsuario" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="35.0" promptText="Tipo de Usuário" HBox.hgrow="ALWAYS">
+                            <Label minHeight="50.0" prefWidth="188.0" text="Tipo Usuário:" HBox.hgrow="ALWAYS">
+                                <font>
+                                   <Font size="20.0" />
+                                </font>
                                 <HBox.margin>
-                                    <Insets />
+                                   <Insets right="10.0" />
                                 </HBox.margin>
-                            </ComboBox>
+                            </Label>
+                                <ComboBox fx:id="cbTipoAdicionarUsuario" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="35.0" promptText="Tipo de Usuário" HBox.hgrow="ALWAYS">
+                                    <HBox.margin>
+                                            <Insets />
+                                    </HBox.margin>
+                                </ComboBox>
                         </HBox>
                         <HBox alignment="CENTER" maxWidth="1000.0" spacing="10.0">
                             <VBox.margin>
                                 <Insets left="20.0" right="20.0" />
                             </VBox.margin>
-                        <Label fx:id="mensagemErroUsuarioCampos" minWidth="200.0" textFill="red" />
+                        <Label fx:id="mensagemErroCampos" minWidth="200.0" textFill="red" />
                         <Region HBox.hgrow="ALWAYS" />
                         <Button minHeight="50.0" minWidth="100.0" mnemonicParsing="false" onAction="#adicionarUsuario" text="Adicionar" />
                         <Button minHeight="50.0" minWidth="100.0" mnemonicParsing="false" onAction="#limparCampos" text="Limpar" />
@@ -194,9 +194,9 @@
                                 <Insets top="20.0" />
                             </VBox.margin>
                             <!-- Fazer um onAction nesse botão para alterar os dados do usuário selecionado na TableView (Como fazer isso ? Não sei, chatgpt neles) -->
-                            <Button minHeight="50.0" minWidth="100.0" mnemonicParsing="false" text="Alterar" />
+                            <Button minHeight="50.0" minWidth="100.0" onAction="#alerarUsuario" mnemonicParsing="false" text="Alterar" />
                             <!-- Fazer um onAction nesse botão para excluir os dados do usuário selecionado na TableView (Como fazer isso ? Não sei, chatgpt neles) -->
-                            <Button minHeight="50.0" minWidth="100.0" mnemonicParsing="false" text="Excluir" />
+                            <Button minHeight="50.0" minWidth="100.0" onAction="#excluirUsuario" mnemonicParsing="false" text="Excluir" />
                         </HBox>
                     </VBox>
                 </StackPane>
@@ -229,7 +229,6 @@
                                 <Insets bottom="10.0" />
                             </VBox.margin>
                         </Label>
-                        <!-- Aqui tem o campo do Nome para adição de disciplina, talvez precise de fx:id no TextField para mandar pro banco de dados -->
                         <HBox alignment="TOP_CENTER" maxWidth="1000.0" minHeight="50.0">
                             <VBox.margin>
                                 <Insets left="20.0" right="20.0" />
@@ -242,7 +241,7 @@
                                     <Font size="20.0" />
                                 </font>
                             </Label>
-                            <TextField minHeight="30.0" promptText="Nome" HBox.hgrow="ALWAYS">
+                            <TextField fx:id="nomeAdicionarDisciplina" minHeight="30.0" promptText="Nome" HBox.hgrow="ALWAYS">
                                 <HBox.margin>
                                     <Insets top="10.0" />
                                 </HBox.margin>
@@ -263,14 +262,11 @@
                             <VBox.margin>
                                 <Insets left="20.0" right="20.0" />
                             </VBox.margin>
-                            <!-- Fazer um onAction nesse botão para adicionar a disciplina com os dados feitos nos campos -->
-                            <Button minHeight="50.0" minWidth="100.0" mnemonicParsing="false" text="Adicionar" />
-                            <!-- Fazer um onAction nesse botão para limpar os campos -->
-                            <Button minHeight="50.0" minWidth="100.0" mnemonicParsing="false" text="Limpar" />
+                            <Button minHeight="50.0" minWidth="100.0" onAction="#adicionarDiciplina" mnemonicParsing="false" text="Adicionar" />
+                            <Button minHeight="50.0" minWidth="100.0" onAction="#limparCampos" mnemonicParsing="false" text="Limpar" />
                         </HBox>
                     </VBox>
                     <VBox fx:id="gAlterarExcluirDisciplinas" maxWidth="1000.0" prefWidth="500.0" visible="false">
-                        <!-- Talvez precise colocar um fx:id nessa TableView, ou nos componentes dela para preencher com os dados de cada disciplina do banco de dados -->
                         <TableView prefHeight="200.0" prefWidth="200.0">
                             <columns>
                                 <TableColumn minWidth="70.0" prefWidth="70.0" sortType="DESCENDING" text="Id" />
@@ -285,10 +281,8 @@
                             <VBox.margin>
                                 <Insets top="20.0" />
                             </VBox.margin>
-                            <!-- Fazer um onAction nesse botão para voltar a tela de adição de disciplina com os campos já preenchidos com os dados da disciplina selecionada na tabela -->
-                            <Button minHeight="50.0" minWidth="100.0" mnemonicParsing="false" text="Alterar" />
-                            <!-- Fazer um onAction nesse botão para excluir a disciplina selecionada na tabela do banco de dados -->
-                            <Button minHeight="50.0" minWidth="100.0" mnemonicParsing="false" text="Excluir" />
+                            <Button minHeight="50.0" minWidth="100.0" onAction="#mostraAlterarDisciplina" mnemonicParsing="false" text="Alterar" />
+                            <Button minHeight="50.0" minWidth="100.0" onAction="#excluirDisciplina" mnemonicParsing="false" text="Excluir" />
                         </HBox>
                     </VBox>
                 </StackPane>
