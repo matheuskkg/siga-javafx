@@ -6,6 +6,7 @@ import fatec.sigafx.dao.UsuarioDAO;
 import fatec.sigafx.model.admin.AdminModel;
 import fatec.sigafx.model.aluno.AlunoModel;
 import fatec.sigafx.model.professor.ProfessorModel;
+import fatec.sigafx.model.usuario.UsuarioModel;
 import fatec.sigafx.model.usuario.dto.UsuarioCriarRequest;
 import fatec.sigafx.view.AdmView;
 import fatec.sigafx.view.AlunoView;
@@ -42,14 +43,9 @@ public class SigaApplication extends Application
         //Apenas para testes
         UsuarioDAO usuarioDAO = new UsuarioDAO();
 
-        AlunoModel a = new AlunoModel(new UsuarioCriarRequest("aluno", "aluno@aluno", "aluno"));
-        usuarioDAO.salvarUsuario(a);
-
-        AdminModel b = new AdminModel(new UsuarioCriarRequest("admin", "admin@admin", "admin"));
-        usuarioDAO.salvarUsuario(b);
-
-        ProfessorModel c = new ProfessorModel(new UsuarioCriarRequest("professor", "professor@professor", "professor"));
-        usuarioDAO.salvarUsuario(c);
+        UsuarioModel.criarUsuario(new UsuarioCriarRequest("aluno", "aluno@aluno", "aluno"), "Aluno");
+        UsuarioModel.criarUsuario(new UsuarioCriarRequest("admin", "admin@admin", "admin"), "Administrador");
+        UsuarioModel.criarUsuario(new UsuarioCriarRequest("professor", "professor@professor", "professor"), "Professor");
     }
 
     public static Stage getStage() {

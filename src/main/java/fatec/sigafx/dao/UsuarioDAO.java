@@ -2,7 +2,6 @@ package fatec.sigafx.dao;
 
 import fatec.sigafx.EMF;
 import fatec.sigafx.model.usuario.UsuarioModel;
-import jakarta.persistence.EntityExistsException;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.EntityManagerFactory;
 import jakarta.persistence.NoResultException;

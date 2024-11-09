@@ -175,14 +175,21 @@ public class AdminController
             mensagemErroCampos.setText("");
         }
 
-        if (!AlunoModel.verificarSenhasCoincidem(senhaAdicionarUsuario.getText(), confirmarSenhaAdicionarUsuario.getText())) {
+        if (!UsuarioModel.verificarSenhasCoincidem(senhaAdicionarUsuario.getText(), confirmarSenhaAdicionarUsuario.getText())) {
             mensagemErroSenhasDiferentes.setText("Senhas diferentes!");
             verificar = false;
         } else {
             mensagemErroSenhasDiferentes.setText("");
         }
 
-        if (!AlunoModel.verificarEmailValido(emailAdicionarUsuario.getText())) {
+        //TODO: criar mensagem de erro "email em uso"
+        if (UsuarioModel.verificarEmailEmUso(emailAdicionarUsuario.getText())) {
+
+        } else {
+
+        }
+
+        if (!UsuarioModel.verificarEmailValido(emailAdicionarUsuario.getText())) {
             mensagemErroEmail.setText("E-mail inválido!");
             verificar = false;
         } else {

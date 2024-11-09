@@ -40,6 +40,12 @@ public class UsuarioModel {
         return email.matches(EMAIL_REGEX) ^ email.isEmpty();
     }
 
+    public static boolean verificarEmailEmUso(String email) {
+        UsuarioDAO usuarioDAO = new UsuarioDAO();
+
+        return usuarioDAO.buscarPorEmail(email) != null;
+    }
+
     public static void criarUsuario(UsuarioCriarRequest request, String tipo) {
         UsuarioDAO usuarioDAO = new UsuarioDAO();
 
