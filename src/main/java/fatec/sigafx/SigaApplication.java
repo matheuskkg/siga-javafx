@@ -26,9 +26,9 @@ public class SigaApplication extends Application
 
     @Override
     public void start(Stage stage) {
-        //SigaApplication.stage = stage;
+        SigaApplication.stage = stage;
 
-        //LoginView.mostrarLogin();
+        LoginView.mostrarLogin();
 
         //Usar para testar a página de ADM
         //AdmView.mostraAdm();
@@ -42,13 +42,13 @@ public class SigaApplication extends Application
         //Apenas para testes
         UsuarioDAO usuarioDAO = new UsuarioDAO();
 
-        AlunoModel a = new AlunoModel(new UsuarioCriarRequest("aluno", "email@email", "aluno"));
+        AlunoModel a = new AlunoModel(new UsuarioCriarRequest("aluno", "aluno@aluno", "aluno"));
         usuarioDAO.salvarUsuario(a);
 
-        AdminModel b = new AdminModel(new UsuarioCriarRequest("admin", "email@email", "admin"));
+        AdminModel b = new AdminModel(new UsuarioCriarRequest("admin", "admin@admin", "admin"));
         usuarioDAO.salvarUsuario(b);
 
-        ProfessorModel c = new ProfessorModel(new UsuarioCriarRequest("professor", "email@email", "professor"));
+        ProfessorModel c = new ProfessorModel(new UsuarioCriarRequest("professor", "professor@professor", "professor"));
         usuarioDAO.salvarUsuario(c);
     }
 

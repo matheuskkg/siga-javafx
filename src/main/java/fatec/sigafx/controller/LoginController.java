@@ -28,7 +28,11 @@ public class LoginController {
     @FXML
     private void confirmarLogin() {
 
-        //TODO: mover validação para o Model
+        /**
+         * TODO: mover validação para o model
+         *       alterar login para email e senha
+         */
+
         UsuarioModel u = dao.buscarPorNome(usuarioNome.getText());
         if (u != null && u.getSenha().equals(usuarioSenha.getText())) {
             if (u instanceof AdminModel) {
