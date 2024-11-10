@@ -85,6 +85,7 @@ public class AdminController
     public void initialize() {
         carregarTableViewUsuarios();
         carregarComboBoxTipoUsuario();
+        definirUsuarioSelecionado();
     }
 
     private void atualizarTableViewUsuarios() {
@@ -110,58 +111,6 @@ public class AdminController
 
         cbTipoAdicionarUsuario.setItems(obsUsuarios);
         cbTipoAdicionarUsuario.getSelectionModel();
-    }
-
-    private boolean verificarCamposVazios() {
-        return nomeAdicionarUsuario.getText().isEmpty()
-                || senhaAdicionarUsuario.getText().isEmpty()
-                || confirmarSenhaAdicionarUsuario.getText().isEmpty()
-                || emailAdicionarUsuario.getText().isEmpty()
-                || cbTipoAdicionarUsuario.getSelectionModel().getSelectedItem() == null;
-    }
-
-    @FXML
-    public void adicionarUsuario() {
-        boolean verificar = true;
-
-        if (verificarCamposVazios()) {
-            mensagemErroCampos.setText("Todos campos devem ser preenchidos!");
-            verificar = false;
-        } else {
-            mensagemErroCampos.setText("");
-        }
-
-        if (!UsuarioModel.verificarSenhasCoincidem(senhaAdicionarUsuario.getText(), confirmarSenhaAdicionarUsuario.getText())) {
-            mensagemErroSenhasDiferentes.setText("Senhas diferentes!");
-            verificar = false;
-        } else {
-            mensagemErroSenhasDiferentes.setText("");
-        }
-
-        //TODO: criar mensagem de erro "email em uso"
-        if (UsuarioModel.verificarEmailEmUso(emailAdicionarUsuario.getText())) {
-
-            verificar = false;
-        } else {
-
-        }
-
-        if (!UsuarioModel.verificarEmailValido(emailAdicionarUsuario.getText())) {
-            mensagemErroEmail.setText("E-mail inválido!");
-            verificar = false;
-        } else {
-            mensagemErroEmail.setText("");
-        }
-
-        if(verificar){
-            UsuarioCriarRequest request = new UsuarioCriarRequest(
-                    nomeAdicionarUsuario.getText(),
-                    emailAdicionarUsuario.getText(),
-                    senhaAdicionarUsuario.getText());
-
-            UsuarioModel.criarUsuario(request, cbTipoAdicionarUsuario.getValue());
-            atualizarTableViewUsuarios();
-        }
     }
 
     @FXML
@@ -220,23 +169,92 @@ public class AdminController
         gAdicionarUsuario.setVisible(true);
     }
 
+    private boolean verificarCamposVazios() {
+        return nomeAdicionarUsuario.getText().isEmpty()
+                || senhaAdicionarUsuario.getText().isEmpty()
+                || confirmarSenhaAdicionarUsuario.getText().isEmpty()
+                || emailAdicionarUsuario.getText().isEmpty()
+                || cbTipoAdicionarUsuario.getSelectionModel().getSelectedItem() == null;
+    }
+
+    //TODO: exibir mensagem de sucesso ao criar usuário
+    @FXML
+    private void adicionarUsuario() {
+        boolean verificar = true;
+
+        if (verificarCamposVazios()) {
+            mensagemErroCampos.setText("Todos campos devem ser preenchidos!");
+            verificar = false;
+        } else {
+            mensagemErroCampos.setText("");
+        }
+
+        if (!UsuarioModel.verificarSenhasCoincidem(senhaAdicionarUsuario.getText(), confirmarSenhaAdicionarUsuario.getText())) {
+            mensagemErroSenhasDiferentes.setText("Senhas diferentes!");
+            verificar = false;
+        } else {
+            mensagemErroSenhasDiferentes.setText("");
+        }
+
+        //TODO: criar mensagem de erro "email em uso"
+        if (UsuarioModel.verificarEmailEmUso(emailAdicionarUsuario.getText())) {
+
+            verificar = false;
+        } else {
+
+        }
+
+        if (!UsuarioModel.verificarEmailValido(emailAdicionarUsuario.getText())) {
+            mensagemErroEmail.setText("E-mail inválido!");
+            verificar = false;
+        } else {
+            mensagemErroEmail.setText("");
+        }
+
+        if(verificar){
+            UsuarioCriarRequest request = new UsuarioCriarRequest(
+                    nomeAdicionarUsuario.getText(),
+                    emailAdicionarUsuario.getText(),
+                    senhaAdicionarUsuario.getText());
+
+            UsuarioModel.criarUsuario(request, cbTipoAdicionarUsuario.getValue());
+            atualizarTableViewUsuarios();
+        }
+    }
+
     private void mostrarAlterarExcluirUsuario() {
         gUsuarios.setVisible(true);
         gAlterarExcluirUsuario.setVisible(true);
     }
 
-    @FXML
-    public void alterarUsuario(){
-        System.out.println("usuario alterado?");
+    private UsuarioModel usuarioSelecionado;
+
+    private void definirUsuarioSelecionado() {
+        tableViewAlterarExcluirUsuario.setOnMouseClicked((MouseEvent) -> {
+            usuarioSelecionado = tableViewAlterarExcluirUsuario.getSelectionModel().getSelectedItem();
+            System.out.println(usuarioSelecionado);
+        });
+    }
+
+    private UsuarioModel getUsuarioSelecionado() {
+        return usuarioSelecionado;
     }
 
     @FXML
-    public void excluirUsuario(){
-        System.out.println("usuario excluido?");
+    private void alterarUsuario(){
+        //TODO: exibir formulário com o usuário selecionado para alterações
+        //UsuarioModel.atualizarUsuario(getUsuarioSelecionado());
     }
 
     @FXML
-    public void mostrarGerenciarDisciplinas() {
+    private void excluirUsuario(){
+        //TODO: exibir mensagem de confirmação da exclusão do usuário X
+        UsuarioModel.excluirUsuario(getUsuarioSelecionado());
+        atualizarTableViewUsuarios();
+    }
+
+    @FXML
+    private void mostrarGerenciarDisciplinas() {
         gDisciplinas.setVisible(true);
         gBotaoDisciplinas.setVisible(true);
     }
@@ -312,19 +330,16 @@ public class AdminController
     }
 
     private void mostrarAdicionarTurmas() {
-        esconderPaineis();
         gTurmas.setVisible(true);
         gAdicionarTurmas.setVisible(true);
     }
 
     private void mostrarAlterarExcluirTurmas() {
-        esconderPaineis();
         gTurmas.setVisible(true);
         gAlterarExcluirTurmas.setVisible(true);
     }
 
     private void mostraAdicionarRemoverAlunosTurmas() {
-        esconderPaineis();
         gTurmas.setVisible(true);
         gAdicionarRemoverAlunosTurmas.setVisible(true);
     }

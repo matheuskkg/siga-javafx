@@ -1,16 +1,14 @@
 package fatec.sigafx;
 
-import fatec.sigafx.dao.UsuarioDAO;
-import fatec.sigafx.model.usuario.UsuarioModel;
-import fatec.sigafx.model.usuario.dto.UsuarioCriarRequest;
-import fatec.sigafx.view.LoginView;
 import javafx.application.Application;
 import javafx.stage.Stage;
+import fatec.sigafx.view.LoginView;
 
-/**
- * Turma -> Disciplina, professor, alunos
- * aluno -> Disciplina -> Nota
- */
+import fatec.sigafx.model.usuario.UsuarioModel;
+import fatec.sigafx.model.usuario.dto.UsuarioCriarRequest;
+import fatec.sigafx.view.AlunoView;
+import fatec.sigafx.view.ProfessorView;
+import fatec.sigafx.view.AdminView;
 
 public class SigaApplication extends Application
 {
@@ -24,17 +22,15 @@ public class SigaApplication extends Application
         LoginView.mostrarLogin();
 
         //Usar para testar a página de ADM
-        //AdminView.mostraAdm();
+        //AdminView.mostrarHomeAdmin();
 
         //Usar para testar a página de Aluno
-        //AlunoView.mostraAluno();
+        //AlunoView.mostrarHomeAluno();
 
         //Usar para testar a página de Professor
-        //ProfessorView.mostraProf();
+        //ProfessorView.mostrarHomeProf();
 
         //Apenas para testes
-        UsuarioDAO usuarioDAO = new UsuarioDAO();
-
         if (!UsuarioModel.verificarEmailEmUso("aluno@aluno")) {
             UsuarioModel.criarUsuario(new UsuarioCriarRequest("aluno", "aluno@aluno", "aluno"), "Aluno");
             UsuarioModel.criarUsuario(new UsuarioCriarRequest("admin", "admin@admin", "admin"), "Administrador");

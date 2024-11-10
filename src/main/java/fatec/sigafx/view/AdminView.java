@@ -7,7 +7,7 @@ import javafx.scene.Scene;
 import java.io.IOException;
 
 public class AdminView {
-    public static void mostraAdm(){
+    public static void mostrarHomeAdmin(){
         try{
             FXMLLoader fxmlLoader = new FXMLLoader(SigaApplication.class.getResource("/fxml/admin.fxml"));
             Scene scene = new Scene(fxmlLoader.load(), 1280, 800);

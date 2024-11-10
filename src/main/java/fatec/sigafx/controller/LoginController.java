@@ -36,15 +36,15 @@ public class LoginController {
         UsuarioModel u = dao.buscarPorNome(usuarioNome.getText());
         if (u != null && u.getSenha().equals(usuarioSenha.getText())) {
             if (u instanceof AdminModel) {
-                AdminView.mostraAdm();
+                AdminView.mostrarHomeAdmin();
             }
 
             if (u instanceof AlunoModel) {
-                AlunoView.mostraAluno();
+                AlunoView.mostrarHomeAluno();
             }
 
             if (u instanceof ProfessorModel) {
-                ProfessorView.mostraProf();
+                ProfessorView.mostrarHomeProf();
             }
         } else {
             mensagemErroLogin.setVisible(true);

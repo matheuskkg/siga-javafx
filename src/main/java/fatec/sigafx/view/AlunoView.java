@@ -7,7 +7,7 @@ import javafx.scene.Scene;
 import java.io.IOException;
 
 public class AlunoView {
-    public static void mostraAluno(){
+    public static void mostrarHomeAluno(){
         try{
             FXMLLoader fxmlLoader = new FXMLLoader(SigaApplication.class.getResource("/fxml/aluno.fxml"));
             Scene scene = new Scene(fxmlLoader.load(), 1280, 800);

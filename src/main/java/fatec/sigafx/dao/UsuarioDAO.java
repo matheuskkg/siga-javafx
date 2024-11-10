@@ -30,6 +30,30 @@ public class UsuarioDAO {
         }
     }
 
+    public void excluirUsuario(UsuarioModel request) {
+        EntityManager em = emf.createEntityManager();
+
+        try {
+            em.getTransaction().begin();
+
+            if (!em.contains(request)) {
+                request = em.merge(request);
+            }
+
+            em.remove(request);
+            em.getTransaction().commit();
+        } catch (Exception e) {
+            if (em.getTransaction().isActive()) {
+                em.getTransaction().rollback();
+            }
+
+            System.out.println("Falha ao excluir usuário.");
+            e.printStackTrace();
+        } finally {
+            em.close();
+        }
+    }
+
     public ObservableList<UsuarioModel> buscarTodos() {
         ObservableList<UsuarioModel> res = FXCollections.observableArrayList();
 

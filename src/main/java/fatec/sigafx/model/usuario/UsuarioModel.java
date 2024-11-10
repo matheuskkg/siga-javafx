@@ -60,6 +60,18 @@ public class UsuarioModel {
         usuarioDAO.salvarUsuario(u);
     }
 
+    public static void atualizarUsuario(UsuarioModel request) {
+        UsuarioDAO usuarioDAO = new UsuarioDAO();
+
+        usuarioDAO.salvarUsuario(request);
+    }
+
+    public static void excluirUsuario(UsuarioModel request) {
+        UsuarioDAO usuarioDAO = new UsuarioDAO();
+
+        usuarioDAO.excluirUsuario(request);
+    }
+
     public Integer getId() {
         return id;
     }
