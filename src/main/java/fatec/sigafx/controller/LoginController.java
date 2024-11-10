@@ -17,7 +17,7 @@ public class LoginController {
     private static final UsuarioDAO dao = new UsuarioDAO();
 
     @FXML
-    private TextField usuarioNome;
+    private TextField usuarioEmail;
 
     @FXML
     private PasswordField usuarioSenha;
@@ -33,7 +33,7 @@ public class LoginController {
          *       alterar login para email e senha
          */
 
-        UsuarioModel u = dao.buscarPorNome(usuarioNome.getText());
+        UsuarioModel u = dao.buscarPorEmail(usuarioEmail.getText());
         if (u != null && u.getSenha().equals(usuarioSenha.getText())) {
             if (u instanceof AdminModel) {
                 AdminView.mostrarHomeAdmin();

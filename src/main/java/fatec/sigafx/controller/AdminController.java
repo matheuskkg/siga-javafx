@@ -53,7 +53,7 @@ public class AdminController
     @FXML
     private VBox gAlterarExcluirUsuario;
     @FXML
-    public VBox gAlterarUsuario; //Começa aqui
+    public VBox gAlterarUsuario;
     @FXML
     public TextField nomeAlterarUsuario;
     @FXML
@@ -73,9 +73,9 @@ public class AdminController
     @FXML
     public Label mErroAlterarCampos;
     @FXML
-    public VBox gConfirmaExclusao; //Termina aqui
+    public VBox gConfirmaExclusao;
+
     @FXML
-    private HBox hTipoUsuario;
     private TableView<UsuarioModel> tableViewAlterarExcluirUsuario;
     @FXML
     private TableColumn<UsuarioModel, Integer> usuarioId;
@@ -138,33 +138,6 @@ public class AdminController
         cbTipoAlterarUsuario.setItems(obsUsuarios);
     }
 
-    // Esconder todos os painéis
-    private void hideAllPanes() {
-        gPrincipal.setVisible(false);
-
-        gUsuarios.setVisible(false);
-        gBotaoUsuario.setVisible(false);
-        gAdicionarUsuario.setVisible(false);
-        gAlterarExcluirUsuario.setVisible(false);
-        gAlterarUsuario.setVisible(false);
-        gConfirmaExclusao.setVisible(false);
-
-        gDisciplinas.setVisible(false);
-        gBotaoDisciplinas.setVisible(false);
-        gAdicionarDisciplinas.setVisible(false);
-        gAlterarExcluirDisciplinas.setVisible(false);
-
-        gTurmas.setVisible(false);
-        gBotaoTurmas.setVisible(false);
-        gAdicionarTurmas.setVisible(false);
-        gAdicionarRemoverAlunosTurmas.setVisible(false);
-        gAlterarExcluirTurmas.setVisible(false);
-    }
-
-    @FXML
-    public void initialize() {
-        carregarComboBox();
-    }
     @FXML
     public void limparCampos(){
         nomeAdicionarUsuario.clear();
@@ -179,20 +152,25 @@ public class AdminController
 
 
         // Criar uma ComboBox com as mesmas propriedades e itens
-        ComboBox<String> novaComboBox = new ComboBox<>(cbTipoAdicionarUsuario.getItems());
-        novaComboBox.setMaxSize(Double.MAX_VALUE, Double.MAX_VALUE);
-        HBox.setHgrow(novaComboBox, Priority.ALWAYS);
-        novaComboBox.setPromptText(cbTipoAdicionarUsuario.getPromptText());
+        ComboBox<String> novaAdicionarCB = new ComboBox<>(cbTipoAdicionarUsuario.getItems());
+        novaAdicionarCB.setMaxSize(Double.MAX_VALUE, Double.MAX_VALUE);
+        HBox.setHgrow(novaAdicionarCB, Priority.ALWAYS);
+        novaAdicionarCB.setPromptText(cbTipoAdicionarUsuario.getPromptText());
+
+        ComboBox<String> novaAlterarCB = new ComboBox<>(cbTipoAlterarUsuario.getItems());
+        novaAlterarCB.setMaxSize(Double.MAX_VALUE, Double.MAX_VALUE);
+        HBox.setHgrow(novaAlterarCB, Priority.ALWAYS);
+        novaAlterarCB.setPromptText(cbTipoAlterarUsuario.getPromptText());
 
         // Substituir a ComboBox original pela nova
         hTipoUsuario.getChildren().remove(cbTipoAdicionarUsuario);
-        hTipoUsuario.getChildren().add(novaComboBox);
-        cbTipoAdicionarUsuario = novaComboBox;
+        hTipoUsuario.getChildren().add(novaAdicionarCB);
+        cbTipoAdicionarUsuario = novaAdicionarCB;
 
         // Substituir a ComboBox original pela nova
         hTipoUsuarioAlterar.getChildren().remove(cbTipoAlterarUsuario);
-        hTipoUsuarioAlterar.getChildren().add(novaComboBox);
-        cbTipoAlterarUsuario = novaComboBox;
+        hTipoUsuarioAlterar.getChildren().add(novaAlterarCB);
+        cbTipoAlterarUsuario = novaAlterarCB;
 
         mensagemErroSenhasDiferentes.setText("");
         mensagemErroCampos.setText("");
@@ -270,6 +248,14 @@ public class AdminController
                 || cbTipoAdicionarUsuario.getSelectionModel().getSelectedItem() == null;
     }
 
+    private boolean verificarCamposVaziosAlterados() {
+        return nomeAlterarUsuario.getText().isEmpty()
+                || senhaAlterarUsuario.getText().isEmpty()
+                || confirmarSenhaAlterarUsuario.getText().isEmpty()
+                || emailAlterarUsuario.getText().isEmpty()
+                || cbTipoAlterarUsuario.getSelectionModel().getSelectedItem() == null;
+    }
+
     //TODO: exibir mensagem de sucesso ao criar usuário
     @FXML
     private void adicionarUsuario() {
@@ -341,58 +327,70 @@ public class AdminController
     }
 
     @FXML
-    public void mostraAlterarUsuario(){
-        // Fazer uma verificação aqui checando se tem algum item da tabela selecionado antes de mostrar a tela de alterar
-        hideAllPanes();
+    public void mostrarAlterarUsuario(){
+        esconderPaineis();
         gUsuarios.setVisible(true);
         gAlterarUsuario.setVisible(true);
     }
     @FXML
     public void alterarUsuario() {
         boolean verificar = true;
-        if (!senhaAlterarUsuario.getText().equals(confirmarSenhaAlterarUsuario.getText()) && !confirmarSenhaAlterarUsuario.getText().isEmpty()) {
-            meAlterarSenhasDiferentes.setText("Senhas diferentes!");
-            verificar = false;
-        } else {
-            meAlterarSenhasDiferentes.setText("");
-        }
-        if (!emailAlterarUsuario.getText().matches(EMAIL_REGEX) && !emailAlterarUsuario.getText().isEmpty()) {
-            meAlterarEmail.setText("E-mail inválido!");
-            verificar = false;
-        } else {
-            meAlterarEmail.setText("");
-        }
-        if (nomeAlterarUsuario.getText().isEmpty() ||
-                senhaAlterarUsuario.getText().isEmpty() ||
-                confirmarSenhaAlterarUsuario.getText().isEmpty() ||
-                emailAlterarUsuario.getText().isEmpty() ||
-                cbTipoAlterarUsuario.getSelectionModel().getSelectedItem() == null) {
+
+        if (verificarCamposVaziosAlterados()) {
             mErroAlterarCampos.setText("Todos campos devem ser preenchidos!");
             verificar = false;
         } else {
             mErroAlterarCampos.setText("");
         }
-        if (verificar) {
-            mErroAlterarCampos.setText("Usuário alterado com sucesso!");
+
+        if (!UsuarioModel.verificarSenhasCoincidem(senhaAlterarUsuario.getText(), confirmarSenhaAlterarUsuario.getText())) {
+            meAlterarSenhasDiferentes.setText("Senhas diferentes!");
+            verificar = false;
+        } else {
+            meAlterarSenhasDiferentes.setText("");
+        }
+
+        //TODO: criar mensagem de erro "email em uso"
+        if (UsuarioModel.verificarEmailEmUso(emailAlterarUsuario.getText())) {
+
+            verificar = false;
+        } else {
+
+        }
+
+        if (!UsuarioModel.verificarEmailValido(emailAlterarUsuario.getText())) {
+            meAlterarEmail.setText("E-mail inválido!");
+            verificar = false;
+        } else {
+            meAlterarEmail.setText("");
+        }
+
+        if(verificar){
+            UsuarioCriarRequest request = new UsuarioCriarRequest(
+                    nomeAlterarUsuario.getText(),
+                    emailAlterarUsuario.getText(),
+                    senhaAlterarUsuario.getText());
+
+            UsuarioModel.criarUsuario(request, cbTipoAlterarUsuario.getValue());
+            atualizarTableViewUsuarios();
+            mErroAlterarCampos.setText("Usuário cadastrado com sucesso!");
             System.out.println("Formulario enviado???");
 
             // Cria uma pausa para o texto voltar a seu estado vazio após 2 segundos
             PauseTransition pause = new PauseTransition(Duration.seconds(2));
-            pause.setOnFinished(event -> {
-                mErroAlterarCampos.setText("");
-            });
+            pause.setOnFinished(event -> {mErroAlterarCampos.setText("");});
             pause.play();
         }
     }
 
     @FXML
-    public void excluirUsuario(){
+    public void mostrarExcluirUsuario(){
         gConfirmaExclusao.setVisible(true);
-        UsuarioModel.excluirUsuario(getUsuarioSelecionado());
-        atualizarTableViewUsuarios();
     }
     @FXML
     public void confirmaExclusao(){
+        UsuarioModel.excluirUsuario(getUsuarioSelecionado());
+        atualizarTableViewUsuarios();
         System.out.println("usuario excluido?");
         gConfirmaExclusao.setVisible(false);
     }
@@ -403,8 +401,8 @@ public class AdminController
 
     // Mostrar "Gerenciar Disciplinas"
     @FXML
-    public void mostraGerenciarDisciplinas() {
-        hideAllPanes();
+    public void mostrarGerenciarDisciplinas() {
+        esconderPaineis();
         limparCampos();
         gDisciplinas.setVisible(true);
         gBotaoDisciplinas.setVisible(true);
@@ -502,6 +500,8 @@ public class AdminController
         gBotaoUsuario.setVisible(false);
         gAdicionarUsuario.setVisible(false);
         gAlterarExcluirUsuario.setVisible(false);
+        gAlterarUsuario.setVisible(false);
+        gConfirmaExclusao.setVisible(false);
 
         gDisciplinas.setVisible(false);
         gBotaoDisciplinas.setVisible(false);
@@ -513,31 +513,6 @@ public class AdminController
         gAdicionarTurmas.setVisible(false);
         gAdicionarRemoverAlunosTurmas.setVisible(false);
         gAlterarExcluirTurmas.setVisible(false);
-    }
-
-    @FXML
-    private void limparCampos(){
-        nomeAdicionarUsuario.clear();
-        senhaAdicionarUsuario.clear();
-        confirmarSenhaAdicionarUsuario.clear();
-        emailAdicionarUsuario.clear();
-
-        // Criar uma ComboBox com as mesmas propriedades e itens
-        ComboBox<String> novaComboBox = new ComboBox<>(cbTipoAdicionarUsuario.getItems());
-        novaComboBox.setMaxSize(Double.MAX_VALUE, Double.MAX_VALUE);
-        HBox.setHgrow(novaComboBox, Priority.ALWAYS);
-        novaComboBox.setPromptText(cbTipoAdicionarUsuario.getPromptText());
-
-        // Substituir a ComboBox original pela nova
-        hTipoUsuario.getChildren().remove(cbTipoAdicionarUsuario);
-        hTipoUsuario.getChildren().add(novaComboBox);
-        cbTipoAdicionarUsuario = novaComboBox;
-
-        mensagemErroSenhasDiferentes.setText("");
-        mensagemErroCampos.setText("");
-        mensagemErroEmail.setText("");
-
-        nomeAdicionarDisciplina.clear();
     }
 
     @FXML

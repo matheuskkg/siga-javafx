@@ -25,10 +25,10 @@
             <VBox.margin>
                <Insets bottom="20.0" top="20.0" />
             </VBox.margin></Text>
-            <Button alignment="TOP_CENTER" minWidth="186.0" onAction="#mostraInicio" styleClass="sidebar-button" text="Início" />
-            <Button alignment="TOP_CENTER" minWidth="186.0" onAction="#mostraGerenciarUsuarios" styleClass="sidebar-button" text="Gerenciar Usuários" />
-            <Button alignment="TOP_CENTER" minWidth="186.0" onAction="#mostraGerenciarDisciplinas" styleClass="sidebar-button" text="Gerenciar Disciplinas" />
-            <Button alignment="TOP_CENTER" minWidth="186.0" onAction="#mostraGerenciarTurmas" styleClass="sidebar-button" text="Gerenciar Turmas" />
+            <Button alignment="TOP_CENTER" minWidth="186.0" onAction="#mudarTelaGeral" styleClass="sidebar-button" text="Início" />
+            <Button alignment="TOP_CENTER" minWidth="186.0" onAction="#mudarTelaGeral" styleClass="sidebar-button" text="Gerenciar Usuários" />
+            <Button alignment="TOP_CENTER" minWidth="186.0" onAction="#mudarTelaGeral" styleClass="sidebar-button" text="Gerenciar Disciplinas" />
+            <Button alignment="TOP_CENTER" minWidth="186.0" onAction="#mudarTelaGeral" styleClass="sidebar-button" text="Gerenciar Turmas" />
             <Separator orientation="VERTICAL" prefHeight="200.0" visible="false" VBox.vgrow="ALWAYS" />
             <Button alignment="TOP_CENTER" minWidth="186.0" onAction="#onLogoutClicked" styleClass="sidebar-exit" text="Sair">
                 <VBox.margin>
@@ -61,24 +61,21 @@
                 <StackPane VBox.vgrow="ALWAYS">
                     <StackPane>
                         <VBox fx:id="gAlterarExcluirUsuario" maxWidth="1000.0" prefWidth="500.0" visible="false">
-                          <TableView prefHeight="903.0" prefWidth="1000.0">
-                              <columns>
-                                  <TableColumn minWidth="150.0" prefWidth="-1.0" sortType="DESCENDING" text="RA" />
-                                  <TableColumn minWidth="200.0" prefWidth="-1.0" text="Nome" />
-                                  <TableColumn minWidth="325.0" prefWidth="-1.0" text="E-mail" />
-                              </columns>
-                              <columnResizePolicy>
-                                  <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
-                              </columnResizePolicy>
-                          </TableView>
+                            <TableView fx:id="tableViewAlterarExcluirUsuario" prefHeight="200.0" prefWidth="200.0">
+                                <columns>
+                                    <TableColumn fx:id="usuarioId" minWidth="150.0" prefWidth="-1.0" sortType="DESCENDING" text="RA" />
+                                    <TableColumn fx:id="usuarioNome" minWidth="200.0" prefWidth="-1.0" text="Nome" />
+                                    <TableColumn fx:id="usuarioEmail" minWidth="325.0" prefWidth="-1.0" text="E-mail" />
+                                </columns>
+                            </TableView>
                             <HBox alignment="TOP_RIGHT" spacing="20.0">
                                 <VBox.margin>
                                     <Insets top="20.0" />
                                 </VBox.margin>
-                                <!-- Fazer um onAction nesse botão para alterar os dados do usuário selecionado na TableView (Como fazer isso? Não sei, chatgpt neles) -->
-                                <Button minHeight="50.0" minWidth="100.0" mnemonicParsing="false" onAction="#mostraAlterarUsuario" text="Alterar" />
-                                <!-- Fazer um onAction nesse botão para excluir os dados do usuário selecionado na TableView (Como fazer isso? Não sei, chatgpt neles) -->
-                                <Button minHeight="50.0" minWidth="100.0" mnemonicParsing="false" onAction="#excluirUsuario" text="Excluir" />
+                                <!-- Fazer um onAction nesse botão para alterar os dados do usuário selecionado na TableView (Como fazer isso ? Não sei, chatgpt neles) -->
+                                <Button minHeight="50.0" minWidth="100.0" onAction="#mostrarAlterarUsuario" mnemonicParsing="false" text="Alterar" />
+                                <!-- Fazer um onAction nesse botão para excluir os dados do usuário selecionado na TableView (Como fazer isso ? Não sei, chatgpt neles) -->
+                                <Button minHeight="50.0" minWidth="100.0" onAction="#mostrarExcluirUsuario" mnemonicParsing="false" text="Excluir" />
                             </HBox>
                         </VBox>
                         <VBox fx:id="gConfirmaExclusao" alignment="CENTER" maxHeight="200.0" maxWidth="400.0" visible="false">
@@ -98,8 +95,8 @@
                     </StackPane>
                     <VBox fx:id="gBotaoUsuario">
                         <HBox alignment="TOP_CENTER" spacing="20.0">
-                            <Button minHeight="50.0" minWidth="100.0" mnemonicParsing="false" onAction="#mostraAdicionarUsuario" text="Adicionar" />
-                            <Button minHeight="50.0" minWidth="100.0" mnemonicParsing="false" onAction="#mostraAlterarExcluirUsuario" text="Alterar/Excluir" />
+                            <Button minHeight="50.0" minWidth="100.0" mnemonicParsing="false" onAction="#mudarTelaUsuarios" text="Adicionar" />
+                            <Button minHeight="50.0" minWidth="100.0" mnemonicParsing="false" onAction="#mudarTelaUsuarios" text="Alterar/Excluir" />
                         </HBox>
                     </VBox>
                     <!-- Tem que conectar tudo o formulario com o banco de dados -->
@@ -190,7 +187,7 @@
                                 <Label fx:id="mensagemErroEmail" textFill="red" />
                             </VBox>
                         </HBox>
-                        <HBox fx:id="hTipoUsuario" alignment="TOP_RIGHT" maxWidth="1000.0">
+                        <HBox alignment="TOP_RIGHT" maxWidth="1000.0" fx:id="hTipoUsuario">
                             <VBox.margin>
                                 <Insets left="20.0" right="20.0" />
                             </VBox.margin>
@@ -350,8 +347,8 @@
                 <StackPane>
                     <VBox fx:id="gBotaoDisciplinas">
                         <HBox alignment="TOP_CENTER" spacing="20.0">
-                            <Button minHeight="50.0" minWidth="100.0" mnemonicParsing="false" onAction="#mostraAdicionarDisciplinas" text="Adicionar" />
-                            <Button minHeight="50.0" minWidth="100.0" mnemonicParsing="false" onAction="#mostraAlterarExcluirDisciplinas" text="Alterar/Excluir" />
+                            <Button minHeight="50.0" minWidth="100.0" mnemonicParsing="false" onAction="#mudarTelaDisciplinas" text="Adicionar" />
+                            <Button minHeight="50.0" minWidth="100.0" mnemonicParsing="false" onAction="#mudarTelaDisciplinas" text="Alterar/Excluir" />
                         </HBox>
                     </VBox>
                     <VBox fx:id="gAdicionarDisciplinas" alignment="TOP_CENTER" spacing="10.0" visible="false" StackPane.alignment="TOP_CENTER">
@@ -396,8 +393,8 @@
                             <VBox.margin>
                                 <Insets left="20.0" right="20.0" />
                             </VBox.margin>
-                            <Button minHeight="50.0" minWidth="100.0" mnemonicParsing="false" onAction="#adicionarDiciplina" text="Adicionar" />
-                            <Button minHeight="50.0" minWidth="100.0" mnemonicParsing="false" onAction="#limparCampos" text="Limpar" />
+                            <Button minHeight="50.0" minWidth="100.0" onAction="#adicionarDisciplina" mnemonicParsing="false" text="Adicionar" />
+                            <Button minHeight="50.0" minWidth="100.0" onAction="#limparCampos" mnemonicParsing="false" text="Limpar" />
                         </HBox>
                     </VBox>
                     <VBox fx:id="gAlterarExcluirDisciplinas" maxWidth="1000.0" prefWidth="500.0" visible="false">
@@ -415,8 +412,8 @@
                             <VBox.margin>
                                 <Insets top="20.0" />
                             </VBox.margin>
-                            <Button minHeight="50.0" minWidth="100.0" mnemonicParsing="false" onAction="#mostraAlterarDisciplina" text="Alterar" />
-                            <Button minHeight="50.0" minWidth="100.0" mnemonicParsing="false" onAction="#excluirDisciplina" text="Excluir" />
+                            <Button minHeight="50.0" minWidth="100.0" onAction="#alterarDisciplina" mnemonicParsing="false" text="Alterar" />
+                            <Button minHeight="50.0" minWidth="100.0" onAction="#excluirDisciplina" mnemonicParsing="false" text="Excluir" />
                         </HBox>
                     </VBox>
                 </StackPane>
@@ -438,9 +435,9 @@
                 <StackPane>
                     <VBox fx:id="gBotaoTurmas" spacing="20.0" visible="false">
                         <HBox alignment="TOP_CENTER" spacing="20.0">
-                            <Button minHeight="50.0" minWidth="100.0" mnemonicParsing="false" onAction="#mostraAdicionarTurmas" text="Adicionar" />
-                            <Button minHeight="50.0" minWidth="100.0" mnemonicParsing="false" onAction="#mostraAlterarExcluirTurmas" text="Alterar/Excluir" />
-                            <Button minHeight="50.0" minWidth="100.0" mnemonicParsing="false" onAction="#mostraAdicionarRemoverAlunosTurmas" text="Adicionar/Remover Aluno" />
+                            <Button minHeight="50.0" minWidth="100.0" mnemonicParsing="false" onAction="#mudarTelaTurmas" text="Adicionar" />
+                            <Button minHeight="50.0" minWidth="100.0" mnemonicParsing="false" onAction="#mudarTelaTurmas" text="Alterar/Excluir" />
+                            <Button minHeight="50.0" minWidth="100.0" mnemonicParsing="false" onAction="#mudarTelaTurmas" text="Adicionar/Remover Aluno" />
                         </HBox>
                     </VBox>
                     <VBox fx:id="gAdicionarTurmas" alignment="TOP_CENTER" spacing="10.0" visible="false">
