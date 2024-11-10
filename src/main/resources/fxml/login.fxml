@@ -51,7 +51,7 @@
             <HBox.margin>
                <Insets right="10.0" top="10.0" />
             </HBox.margin></FontAwesomeIcon>
-         <TextField fx:id="usuarioNome" minHeight="25.0" minWidth="300.0" promptText="Nome de Usuário" styleClass="login-input" stylesheets="@../css/login.css">
+         <TextField fx:id="usuarioNome" minHeight="25.0" minWidth="300.0" promptText="E-mail" styleClass="login-input" stylesheets="@../css/login.css">
             <font>
                <Font name="System Italic" size="12.0" />
             </font>

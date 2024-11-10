@@ -12,6 +12,8 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.Priority;
 import javafx.scene.layout.VBox;
 import javafx.event.ActionEvent;
+import javafx.animation.PauseTransition;
+import javafx.util.Duration;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -46,6 +48,28 @@ public class AdminController
     private ComboBox<String> cbTipoAdicionarUsuario;
     @FXML
     private VBox gAlterarExcluirUsuario;
+    @FXML
+    public VBox gAlterarUsuario; //Começa aqui
+    @FXML
+    public TextField nomeAlterarUsuario;
+    @FXML
+    public PasswordField senhaAlterarUsuario;
+    @FXML
+    public PasswordField confirmarSenhaAlterarUsuario;
+    @FXML
+    public Label meAlterarSenhasDiferentes;
+    @FXML
+    public TextField emailAlterarUsuario;
+    @FXML
+    public Label meAlterarEmail;
+    @FXML
+    public HBox hTipoUsuarioAlterar;
+    @FXML
+    public ComboBox<String> cbTipoAlterarUsuario;
+    @FXML
+    public Label mErroAlterarCampos;
+    @FXML
+    public VBox gConfirmaExclusao; //Termina aqui
     @FXML
     private HBox hTipoUsuario;
 
@@ -83,7 +107,7 @@ public class AdminController
         ObservableList<String> obsUsuarios = FXCollections.observableArrayList(usuarios);
 
         cbTipoAdicionarUsuario.setItems(obsUsuarios);
-        cbTipoAdicionarUsuario.getSelectionModel();
+        cbTipoAlterarUsuario.setItems(obsUsuarios);
     }
 
     // Esconder todos os painéis
@@ -94,6 +118,8 @@ public class AdminController
         gBotaoUsuario.setVisible(false);
         gAdicionarUsuario.setVisible(false);
         gAlterarExcluirUsuario.setVisible(false);
+        gAlterarUsuario.setVisible(false);
+        gConfirmaExclusao.setVisible(false);
 
         gDisciplinas.setVisible(false);
         gBotaoDisciplinas.setVisible(false);
@@ -118,6 +144,12 @@ public class AdminController
         confirmarSenhaAdicionarUsuario.clear();
         emailAdicionarUsuario.clear();
 
+        nomeAlterarUsuario.clear();
+        senhaAlterarUsuario.clear();
+        confirmarSenhaAlterarUsuario.clear();
+        emailAlterarUsuario.clear();
+
+
         // Criar uma ComboBox com as mesmas propriedades e itens
         ComboBox<String> novaComboBox = new ComboBox<>(cbTipoAdicionarUsuario.getItems());
         novaComboBox.setMaxSize(Double.MAX_VALUE, Double.MAX_VALUE);
@@ -129,9 +161,18 @@ public class AdminController
         hTipoUsuario.getChildren().add(novaComboBox);
         cbTipoAdicionarUsuario = novaComboBox;
 
+        // Substituir a ComboBox original pela nova
+        hTipoUsuarioAlterar.getChildren().remove(cbTipoAlterarUsuario);
+        hTipoUsuarioAlterar.getChildren().add(novaComboBox);
+        cbTipoAlterarUsuario = novaComboBox;
+
         mensagemErroSenhasDiferentes.setText("");
         mensagemErroCampos.setText("");
         mensagemErroEmail.setText("");
+
+        meAlterarSenhasDiferentes.setText("");
+        mErroAlterarCampos.setText("");
+        meAlterarEmail.setText("");
 
         nomeAdicionarDisciplina.clear();
     }
@@ -184,7 +225,13 @@ public class AdminController
             mensagemErroCampos.setText("");
         }
         if(verificar){
+            mensagemErroCampos.setText("Usuário cadastrado com sucesso!");
             System.out.println("Formulario enviado???");
+
+            // Cria uma pausa para o texto voltar a seu estado vazio após 2 segundos
+            PauseTransition pause = new PauseTransition(Duration.seconds(2));
+            pause.setOnFinished(event -> {mensagemErroCampos.setText("");});
+            pause.play();
         }
     }
     @FXML
@@ -194,12 +241,61 @@ public class AdminController
         gAlterarExcluirUsuario.setVisible(true);
     }
     @FXML
-    public void alerarUsuario(){
-        System.out.println("usuario alterado?");
+    public void mostraAlterarUsuario(){
+        // Fazer uma verificação aqui checando se tem algum item da tabela selecionado antes de mostrar a tela de alterar
+        hideAllPanes();
+        gUsuarios.setVisible(true);
+        gAlterarUsuario.setVisible(true);
+    }
+    @FXML
+    public void alterarUsuario() {
+        boolean verificar = true;
+        if (!senhaAlterarUsuario.getText().equals(confirmarSenhaAlterarUsuario.getText()) && !confirmarSenhaAlterarUsuario.getText().isEmpty()) {
+            meAlterarSenhasDiferentes.setText("Senhas diferentes!");
+            verificar = false;
+        } else {
+            meAlterarSenhasDiferentes.setText("");
+        }
+        if (!emailAlterarUsuario.getText().matches(EMAIL_REGEX) && !emailAlterarUsuario.getText().isEmpty()) {
+            meAlterarEmail.setText("E-mail inválido!");
+            verificar = false;
+        } else {
+            meAlterarEmail.setText("");
+        }
+        if (nomeAlterarUsuario.getText().isEmpty() ||
+                senhaAlterarUsuario.getText().isEmpty() ||
+                confirmarSenhaAlterarUsuario.getText().isEmpty() ||
+                emailAlterarUsuario.getText().isEmpty() ||
+                cbTipoAlterarUsuario.getSelectionModel().getSelectedItem() == null) {
+            mErroAlterarCampos.setText("Todos campos devem ser preenchidos!");
+            verificar = false;
+        } else {
+            mErroAlterarCampos.setText("");
+        }
+        if (verificar) {
+            mErroAlterarCampos.setText("Usuário alterado com sucesso!");
+            System.out.println("Formulario enviado???");
+
+            // Cria uma pausa para o texto voltar a seu estado vazio após 2 segundos
+            PauseTransition pause = new PauseTransition(Duration.seconds(2));
+            pause.setOnFinished(event -> {
+                mErroAlterarCampos.setText("");
+            });
+            pause.play();
+        }
     }
     @FXML
     public void excluirUsuario(){
+        gConfirmaExclusao.setVisible(true);
+    }
+    @FXML
+    public void confirmaExclusao(){
         System.out.println("usuario excluido?");
+        gConfirmaExclusao.setVisible(false);
+    }
+    @FXML
+    public void voltaConfirmaExclusao(){
+        gConfirmaExclusao.setVisible(false);
     }
 
     // Mostrar "Gerenciar Disciplinas"

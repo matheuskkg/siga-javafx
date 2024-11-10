@@ -24,3 +24,8 @@
 .sidebar-exit:hover {
     -fx-background-color: #bd3030;
 }
+
+#gConfirmaExclusao{
+    -fx-background-color: #3B5998;
+    -fx-background-radius: 10px;
+}
