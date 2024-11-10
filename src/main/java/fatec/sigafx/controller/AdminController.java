@@ -1,13 +1,14 @@
 package fatec.sigafx.controller;
 
+import fatec.sigafx.dao.UsuarioDAO;
+import fatec.sigafx.model.usuario.UsuarioModel;
+import fatec.sigafx.model.usuario.dto.UsuarioCriarRequest;
 import fatec.sigafx.view.LoginView;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
-import javafx.scene.control.ComboBox;
-import javafx.scene.control.Label;
-import javafx.scene.control.PasswordField;
-import javafx.scene.control.TextField;
+import javafx.scene.control.*;
+import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Priority;
 import javafx.scene.layout.VBox;
@@ -47,6 +48,9 @@ public class AdminController
     @FXML
     private ComboBox<String> cbTipoAdicionarUsuario;
     @FXML
+    private HBox hTipoUsuario;
+
+    @FXML
     private VBox gAlterarExcluirUsuario;
     @FXML
     public VBox gAlterarUsuario; //Começa aqui
@@ -72,6 +76,13 @@ public class AdminController
     public VBox gConfirmaExclusao; //Termina aqui
     @FXML
     private HBox hTipoUsuario;
+    private TableView<UsuarioModel> tableViewAlterarExcluirUsuario;
+    @FXML
+    private TableColumn<UsuarioModel, Integer> usuarioId;
+    @FXML
+    private TableColumn<UsuarioModel, String> usuarioNome;
+    @FXML
+    private TableColumn<UsuarioModel, String> usuarioEmail;
 
     @FXML
     private VBox gDisciplinas;
@@ -95,11 +106,28 @@ public class AdminController
     @FXML
     private VBox gAdicionarRemoverAlunosTurmas;
 
-    private static final String EMAIL_REGEX = "^[A-Za-z0-9+_.-]+@[A-Za-z0-9.-]+\\.[A-Za-z]{2,6}$";
+    @FXML
+    public void initialize() {
+        carregarTableViewUsuarios();
+        carregarComboBoxTipoUsuario();
+        definirUsuarioSelecionado();
+    }
 
-    private List<String> usuarios = new ArrayList<>();
+    private void atualizarTableViewUsuarios() {
+        UsuarioDAO usuarioDAO = new UsuarioDAO();
+        tableViewAlterarExcluirUsuario.setItems(usuarioDAO.buscarTodos());
+    }
 
-    public void carregarComboBox(){
+    private void carregarTableViewUsuarios() {
+        //TableView alteração e exclusão de usuários
+        usuarioId.setCellValueFactory(new PropertyValueFactory<>("id"));
+        usuarioNome.setCellValueFactory(new PropertyValueFactory<>("nome"));
+        usuarioEmail.setCellValueFactory(new PropertyValueFactory<>("email"));
+        atualizarTableViewUsuarios();
+    }
+
+    private void carregarComboBoxTipoUsuario(){
+        List<String> usuarios = new ArrayList<>();
         usuarios.add("Administrador");
         usuarios.add("Professor");
         usuarios.add("Aluno");
@@ -179,52 +207,111 @@ public class AdminController
 
     // Mostrar "Início"
     @FXML
-    public void mostraInicio() {
-        hideAllPanes();
+    private void mudarTelaGeral(ActionEvent event) {
+        esconderPaineis();
         limparCampos();
+
+        String textoBotao = ((Button) event.getSource()).getText();
+        switch (textoBotao) {
+            case "Início":
+                mostrarInicio();
+                break;
+            case "Gerenciar Usuários":
+                mostrarGerenciarUsuarios();
+                break;
+            case "Gerenciar Disciplinas":
+                mostrarGerenciarDisciplinas();
+                break;
+            case "Gerenciar Turmas":
+                mostrarGerenciarTurmas();
+                break;
+            default:
+                break;
+        }
+    }
+
+    private void mostrarInicio() {
         gPrincipal.setVisible(true);
     }
 
-    // Mostrar "Gerenciar Usuários"
-    @FXML
-    public void mostraGerenciarUsuarios() {
-        hideAllPanes();
-        limparCampos();
+    private void mostrarGerenciarUsuarios() {
         gUsuarios.setVisible(true);
         gBotaoUsuario.setVisible(true);
     }
+
     @FXML
-    public void mostraAdicionarUsuario() {
-        hideAllPanes();
+    private void mudarTelaUsuarios(ActionEvent event) {
+        esconderPaineis();
+        limparCampos();
+
+        String textoBotao = ((Button) event.getSource()).getText();
+        switch (textoBotao) {
+            case "Adicionar":
+                mostrarAdicionarUsuario();
+                break;
+            case "Alterar/Excluir":
+                mostrarAlterarExcluirUsuario();
+                break;
+            default:
+                break;
+        }
+    }
+
+    private void mostrarAdicionarUsuario() {
         gUsuarios.setVisible(true);
         gAdicionarUsuario.setVisible(true);
     }
+
+    private boolean verificarCamposVazios() {
+        return nomeAdicionarUsuario.getText().isEmpty()
+                || senhaAdicionarUsuario.getText().isEmpty()
+                || confirmarSenhaAdicionarUsuario.getText().isEmpty()
+                || emailAdicionarUsuario.getText().isEmpty()
+                || cbTipoAdicionarUsuario.getSelectionModel().getSelectedItem() == null;
+    }
+
+    //TODO: exibir mensagem de sucesso ao criar usuário
     @FXML
-    public void adicionarUsuario() {
+    private void adicionarUsuario() {
         boolean verificar = true;
-        if (!senhaAdicionarUsuario.getText().equals(confirmarSenhaAdicionarUsuario.getText()) && !confirmarSenhaAdicionarUsuario.getText().isEmpty()) {
-            mensagemErroSenhasDiferentes.setText("Senhas diferentes!");
-            verificar = false;
-        } else {
-            mensagemErroSenhasDiferentes.setText("");
-        }
-        if (!emailAdicionarUsuario.getText().matches(EMAIL_REGEX) && !emailAdicionarUsuario.getText().isEmpty()) {
-            mensagemErroEmail.setText("E-mail inválido!");
-            verificar = false;
-        } else {
-            mensagemErroEmail.setText("");
-        }
-        if (nomeAdicionarUsuario.getText().isEmpty() ||
-                senhaAdicionarUsuario.getText().isEmpty() ||
-                confirmarSenhaAdicionarUsuario.getText().isEmpty() ||
-                emailAdicionarUsuario.getText().isEmpty() ||
-                cbTipoAdicionarUsuario.getSelectionModel().getSelectedItem() == null) {
+
+        if (verificarCamposVazios()) {
             mensagemErroCampos.setText("Todos campos devem ser preenchidos!");
             verificar = false;
         } else {
             mensagemErroCampos.setText("");
         }
+
+        if (!UsuarioModel.verificarSenhasCoincidem(senhaAdicionarUsuario.getText(), confirmarSenhaAdicionarUsuario.getText())) {
+            mensagemErroSenhasDiferentes.setText("Senhas diferentes!");
+            verificar = false;
+        } else {
+            mensagemErroSenhasDiferentes.setText("");
+        }
+
+        //TODO: criar mensagem de erro "email em uso"
+        if (UsuarioModel.verificarEmailEmUso(emailAdicionarUsuario.getText())) {
+
+            verificar = false;
+        } else {
+
+        }
+
+        if (!UsuarioModel.verificarEmailValido(emailAdicionarUsuario.getText())) {
+            mensagemErroEmail.setText("E-mail inválido!");
+            verificar = false;
+        } else {
+            mensagemErroEmail.setText("");
+        }
+
         if(verificar){
+            UsuarioCriarRequest request = new UsuarioCriarRequest(
+                    nomeAdicionarUsuario.getText(),
+                    emailAdicionarUsuario.getText(),
+                    senhaAdicionarUsuario.getText());
+
+            UsuarioModel.criarUsuario(request, cbTipoAdicionarUsuario.getValue());
+            atualizarTableViewUsuarios();
             mensagemErroCampos.setText("Usuário cadastrado com sucesso!");
             System.out.println("Formulario enviado???");
 
@@ -234,12 +321,25 @@ public class AdminController
             pause.play();
         }
     }
-    @FXML
-    public void mostraAlterarExcluirUsuario() {
-        hideAllPanes();
+
+    private void mostrarAlterarExcluirUsuario() {
         gUsuarios.setVisible(true);
         gAlterarExcluirUsuario.setVisible(true);
     }
+
+    private UsuarioModel usuarioSelecionado;
+
+    private void definirUsuarioSelecionado() {
+        tableViewAlterarExcluirUsuario.setOnMouseClicked((MouseEvent) -> {
+            usuarioSelecionado = tableViewAlterarExcluirUsuario.getSelectionModel().getSelectedItem();
+            System.out.println(usuarioSelecionado);
+        });
+    }
+
+    private UsuarioModel getUsuarioSelecionado() {
+        return usuarioSelecionado;
+    }
+
     @FXML
     public void mostraAlterarUsuario(){
         // Fazer uma verificação aqui checando se tem algum item da tabela selecionado antes de mostrar a tela de alterar
@@ -284,9 +384,12 @@ public class AdminController
             pause.play();
         }
     }
+
     @FXML
     public void excluirUsuario(){
         gConfirmaExclusao.setVisible(true);
+        UsuarioModel.excluirUsuario(getUsuarioSelecionado());
+        atualizarTableViewUsuarios();
     }
     @FXML
     public void confirmaExclusao(){
@@ -306,55 +409,139 @@ public class AdminController
         gDisciplinas.setVisible(true);
         gBotaoDisciplinas.setVisible(true);
     }
+
     @FXML
-    public void mostraAdicionarDisciplinas() {
-        hideAllPanes();
+    private void mudarTelaDisciplinas(ActionEvent event) {
+        esconderPaineis();
+        limparCampos();
+
+        String textoBotao = ((Button) event.getSource()).getText();
+        switch (textoBotao) {
+            case "Adicionar":
+                mostrarAdicionarDisciplinas();
+                break;
+            case "Alterar/Excluir":
+                mostrarAlterarExcluirDisciplinas();
+                break;
+            default:
+                break;
+        }
+    }
+
+    private void mostrarAdicionarDisciplinas() {
         gDisciplinas.setVisible(true);
         gAdicionarDisciplinas.setVisible(true);
     }
-    @FXML
-    public void adicionarDiciplina(){
-        System.out.println("diciplina adicionada?");
-    }
-    public void mostraAlterarExcluirDisciplinas() {
-        hideAllPanes();
+
+    private void mostrarAlterarExcluirDisciplinas() {
         gDisciplinas.setVisible(true);
         gAlterarExcluirDisciplinas.setVisible(true);
     }
-    public void mostraAlterarDisciplina() {
+
+    @FXML
+    private void adicionarDisciplina(){
+        System.out.println("diciplina adicionada?");
+    }
+
+    @FXML
+    private void alterarDisciplina() {
         System.out.println("diciplina alterada?");
     }
-    public void excluirDisciplina(){
+
+    @FXML
+    private void excluirDisciplina(){
         System.out.println("disciplina excluida?");
     }
 
-    // Mostrar "Gerenciar Turmas"
     @FXML
-    public void mostraGerenciarTurmas() {
-        hideAllPanes();
-        limparCampos();
+    private void mostrarGerenciarTurmas() {
         gTurmas.setVisible(true);
         gBotaoTurmas.setVisible(true);
     }
-    public void mostraAdicionarTurmas() {
-        hideAllPanes();
+
+    @FXML
+    private void mudarTelaTurmas(ActionEvent event) {
+        esconderPaineis();
+        limparCampos();
+
+        String textoBotao = ((Button) event.getSource()).getText();
+        switch (textoBotao) {
+            case "Adicionar":
+                mostrarAdicionarTurmas();
+                break;
+            case "Alterar/Excluir":
+                mostrarAlterarExcluirTurmas();
+                break;
+            case "Adicionar/Remover Aluno":
+                mostraAdicionarRemoverAlunosTurmas();
+                break;
+            default:
+                break;
+        }
+    }
+
+    private void mostrarAdicionarTurmas() {
         gTurmas.setVisible(true);
         gAdicionarTurmas.setVisible(true);
     }
-    public void mostraAlterarExcluirTurmas() {
-        hideAllPanes();
+
+    private void mostrarAlterarExcluirTurmas() {
         gTurmas.setVisible(true);
         gAlterarExcluirTurmas.setVisible(true);
     }
-    public void mostraAdicionarRemoverAlunosTurmas() {
-        hideAllPanes();
+
+    private void mostraAdicionarRemoverAlunosTurmas() {
         gTurmas.setVisible(true);
         gAdicionarRemoverAlunosTurmas.setVisible(true);
     }
 
+    private void esconderPaineis() {
+        gPrincipal.setVisible(false);
+
+        gUsuarios.setVisible(false);
+        gBotaoUsuario.setVisible(false);
+        gAdicionarUsuario.setVisible(false);
+        gAlterarExcluirUsuario.setVisible(false);
+
+        gDisciplinas.setVisible(false);
+        gBotaoDisciplinas.setVisible(false);
+        gAdicionarDisciplinas.setVisible(false);
+        gAlterarExcluirDisciplinas.setVisible(false);
+
+        gTurmas.setVisible(false);
+        gBotaoTurmas.setVisible(false);
+        gAdicionarTurmas.setVisible(false);
+        gAdicionarRemoverAlunosTurmas.setVisible(false);
+        gAlterarExcluirTurmas.setVisible(false);
+    }
+
     @FXML
-    public void onLogoutClicked(ActionEvent event) {
-        // Redireciona para a página de login
+    private void limparCampos(){
+        nomeAdicionarUsuario.clear();
+        senhaAdicionarUsuario.clear();
+        confirmarSenhaAdicionarUsuario.clear();
+        emailAdicionarUsuario.clear();
+
+        // Criar uma ComboBox com as mesmas propriedades e itens
+        ComboBox<String> novaComboBox = new ComboBox<>(cbTipoAdicionarUsuario.getItems());
+        novaComboBox.setMaxSize(Double.MAX_VALUE, Double.MAX_VALUE);
+        HBox.setHgrow(novaComboBox, Priority.ALWAYS);
+        novaComboBox.setPromptText(cbTipoAdicionarUsuario.getPromptText());
+
+        // Substituir a ComboBox original pela nova
+        hTipoUsuario.getChildren().remove(cbTipoAdicionarUsuario);
+        hTipoUsuario.getChildren().add(novaComboBox);
+        cbTipoAdicionarUsuario = novaComboBox;
+
+        mensagemErroSenhasDiferentes.setText("");
+        mensagemErroCampos.setText("");
+        mensagemErroEmail.setText("");
+
+        nomeAdicionarDisciplina.clear();
+    }
+
+    @FXML
+    private void onLogoutClicked(ActionEvent event) {
         LoginView.mostrarLogin();
     }
 }

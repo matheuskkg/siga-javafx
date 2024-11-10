@@ -7,7 +7,7 @@ import javafx.scene.Scene;
 import java.io.IOException;
 
 public class ProfessorView {
-    public static void mostraProf(){
+    public static void mostrarHomeProf(){
         try{
             FXMLLoader fxmlLoader = new FXMLLoader(SigaApplication.class.getResource("/fxml/prof.fxml"));
             Scene scene = new Scene(fxmlLoader.load(), 1280, 800);

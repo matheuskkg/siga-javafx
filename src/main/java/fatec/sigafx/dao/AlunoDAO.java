@@ -1,36 +1,14 @@
 package fatec.sigafx.dao;
 
+import fatec.sigafx.EMF;
 import fatec.sigafx.model.aluno.AlunoModel;
-import fatec.sigafx.model.usuario.UsuarioModel;
-import fatec.sigafx.model.usuario.dto.UsuarioCriarRequest;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.EntityManagerFactory;
-import jakarta.persistence.Persistence;
 
 import java.util.List;
 
 public class AlunoDAO {
-    private EntityManagerFactory emf = Persistence.createEntityManagerFactory("siga");
-
-    public void salvarAluno(UsuarioCriarRequest request) {
-        EntityManager em = emf.createEntityManager();
-
-        try {
-            AlunoModel aluno = new AlunoModel(request);
-
-            em.getTransaction().begin();
-            em.persist(aluno);
-            em.getTransaction().commit();
-        } catch (Exception e) {
-            if (em.getTransaction().isActive()) {
-                em.getTransaction().rollback();
-            }
-
-            System.out.println("Falha ao salvar aluno.");
-        } finally {
-            em.close();
-        }
-    }
+    private EntityManagerFactory emf = EMF.getEmf();
 
     public void buscarTodosAlunos() {
         try (EntityManager em = emf.createEntityManager()) {
@@ -45,6 +23,16 @@ public class AlunoDAO {
             }
         } catch (Exception e) {
             System.out.println("Falha ao buscar todos os alunos.");
+        }
+    }
+
+    public AlunoModel buscarAlunoPorNome(String nome) {
+        try (EntityManager em = emf.createEntityManager()) {
+            return em.createQuery("FROM AlunoModel WHERE nome = :nome", AlunoModel.class)
+                    .setParameter("nome", nome)
+                    .getSingleResult();
+        } catch (Exception e) {
+            return null;
         }
     }
 }
