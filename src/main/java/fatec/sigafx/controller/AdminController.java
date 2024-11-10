@@ -1,16 +1,14 @@
 package fatec.sigafx.controller;
 
-import fatec.sigafx.model.aluno.AlunoModel;
+import fatec.sigafx.dao.UsuarioDAO;
 import fatec.sigafx.model.usuario.UsuarioModel;
 import fatec.sigafx.model.usuario.dto.UsuarioCriarRequest;
 import fatec.sigafx.view.LoginView;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
-import javafx.scene.control.ComboBox;
-import javafx.scene.control.Label;
-import javafx.scene.control.PasswordField;
-import javafx.scene.control.TextField;
+import javafx.scene.control.*;
+import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Priority;
 import javafx.scene.layout.VBox;
@@ -48,9 +46,18 @@ public class AdminController
     @FXML
     private ComboBox<String> cbTipoAdicionarUsuario;
     @FXML
+    private HBox hTipoUsuario;
+
+    @FXML
     private VBox gAlterarExcluirUsuario;
     @FXML
-    private HBox hTipoUsuario;
+    private TableView<UsuarioModel> tableViewAlterarExcluirUsuario;
+    @FXML
+    private TableColumn<UsuarioModel, Integer> usuarioId;
+    @FXML
+    private TableColumn<UsuarioModel, String> usuarioNome;
+    @FXML
+    private TableColumn<UsuarioModel, String> usuarioEmail;
 
     @FXML
     private VBox gDisciplinas;
@@ -74,9 +81,27 @@ public class AdminController
     @FXML
     private VBox gAdicionarRemoverAlunosTurmas;
 
-    private List<String> usuarios = new ArrayList<>();
+    @FXML
+    public void initialize() {
+        carregarTableViewUsuarios();
+        carregarComboBox();
+    }
 
-    public void carregarComboBox(){
+    private void atualizarTableViewUsuarios() {
+        UsuarioDAO usuarioDAO = new UsuarioDAO();
+        tableViewAlterarExcluirUsuario.setItems(usuarioDAO.buscarTodos());
+    }
+
+    private void carregarTableViewUsuarios() {
+        //TableView alteração e exclusão de usuários
+        usuarioId.setCellValueFactory(new PropertyValueFactory<>("id"));
+        usuarioNome.setCellValueFactory(new PropertyValueFactory<>("nome"));
+        usuarioEmail.setCellValueFactory(new PropertyValueFactory<>("email"));
+        atualizarTableViewUsuarios();
+    }
+
+    private void carregarComboBox(){
+        List<String> usuarios = new ArrayList<>();
         usuarios.add("Administrador");
         usuarios.add("Professor");
         usuarios.add("Aluno");
@@ -108,10 +133,6 @@ public class AdminController
         gAlterarExcluirTurmas.setVisible(false);
     }
 
-    @FXML
-    public void initialize() {
-        carregarComboBox();
-    }
     @FXML
     public void limparCampos(){
         nomeAdicionarUsuario.clear();
@@ -159,16 +180,20 @@ public class AdminController
         gUsuarios.setVisible(true);
         gAdicionarUsuario.setVisible(true);
     }
+
+    private boolean verificarCamposVazios() {
+        return nomeAdicionarUsuario.getText().isEmpty()
+                || senhaAdicionarUsuario.getText().isEmpty()
+                || confirmarSenhaAdicionarUsuario.getText().isEmpty()
+                || emailAdicionarUsuario.getText().isEmpty()
+                || cbTipoAdicionarUsuario.getSelectionModel().getSelectedItem() == null;
+    }
+
     @FXML
     public void adicionarUsuario() {
         boolean verificar = true;
 
-        //Verificar campos vazios
-        if (nomeAdicionarUsuario.getText().isEmpty() ||
-                senhaAdicionarUsuario.getText().isEmpty() ||
-                confirmarSenhaAdicionarUsuario.getText().isEmpty() ||
-                emailAdicionarUsuario.getText().isEmpty() ||
-                cbTipoAdicionarUsuario.getSelectionModel().getSelectedItem() == null) {
+        if (verificarCamposVazios()) {
             mensagemErroCampos.setText("Todos campos devem ser preenchidos!");
             verificar = false;
         } else {
@@ -185,6 +210,7 @@ public class AdminController
         //TODO: criar mensagem de erro "email em uso"
         if (UsuarioModel.verificarEmailEmUso(emailAdicionarUsuario.getText())) {
 
+            verificar = false;
         } else {
 
         }
@@ -203,6 +229,7 @@ public class AdminController
                     senhaAdicionarUsuario.getText());
 
             UsuarioModel.criarUsuario(request, cbTipoAdicionarUsuario.getValue());
+            atualizarTableViewUsuarios();
         }
     }
     @FXML

@@ -6,10 +6,10 @@ import javafx.scene.Scene;
 
 import java.io.IOException;
 
-public class AdmView {
+public class AdminView {
     public static void mostraAdm(){
         try{
-            FXMLLoader fxmlLoader = new FXMLLoader(SigaApplication.class.getResource("/fxml/adm.fxml"));
+            FXMLLoader fxmlLoader = new FXMLLoader(SigaApplication.class.getResource("/fxml/admin.fxml"));
             Scene scene = new Scene(fxmlLoader.load(), 1280, 800);
 
             SigaApplication.getStage().setTitle("SIGA - Administrador");

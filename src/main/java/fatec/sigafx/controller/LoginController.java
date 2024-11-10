@@ -5,7 +5,7 @@ import fatec.sigafx.model.admin.AdminModel;
 import fatec.sigafx.model.aluno.AlunoModel;
 import fatec.sigafx.model.professor.ProfessorModel;
 import fatec.sigafx.model.usuario.UsuarioModel;
-import fatec.sigafx.view.AdmView;
+import fatec.sigafx.view.AdminView;
 import fatec.sigafx.view.AlunoView;
 import fatec.sigafx.view.ProfessorView;
 import javafx.fxml.FXML;
@@ -36,7 +36,7 @@ public class LoginController {
         UsuarioModel u = dao.buscarPorNome(usuarioNome.getText());
         if (u != null && u.getSenha().equals(usuarioSenha.getText())) {
             if (u instanceof AdminModel) {
-                AdmView.mostraAdm();
+                AdminView.mostraAdm();
             }
 
             if (u instanceof AlunoModel) {

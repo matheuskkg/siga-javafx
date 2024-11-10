@@ -182,11 +182,11 @@
                         </HBox>
                     </VBox>
                     <VBox fx:id="gAlterarExcluirUsuario" maxWidth="1000.0" prefWidth="500.0" visible="false">
-                      <TableView prefHeight="200.0" prefWidth="200.0">
+                      <TableView fx:id="tableViewAlterarExcluirUsuario" prefHeight="200.0" prefWidth="200.0">
                         <columns>
-                            <TableColumn minWidth="150.0" prefWidth="-1.0" sortType="DESCENDING" text="RA" />
-                            <TableColumn minWidth="200.0" prefWidth="-1.0" text="Nome" />
-                            <TableColumn minWidth="325.0" prefWidth="-1.0" text="E-mail" />
+                            <TableColumn fx:id="usuarioId" minWidth="150.0" prefWidth="-1.0" sortType="DESCENDING" text="RA" />
+                            <TableColumn fx:id="usuarioNome" minWidth="200.0" prefWidth="-1.0" text="Nome" />
+                            <TableColumn fx:id="usuarioEmail" minWidth="325.0" prefWidth="-1.0" text="E-mail" />
                         </columns>
                       </TableView>
                         <HBox alignment="TOP_RIGHT" spacing="20.0">

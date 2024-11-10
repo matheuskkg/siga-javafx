@@ -4,18 +4,16 @@ import fatec.sigafx.EMF;
 import fatec.sigafx.model.usuario.UsuarioModel;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.EntityManagerFactory;
-import jakarta.persistence.NoResultException;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
+
+import java.util.List;
 
 public class UsuarioDAO {
     private EntityManagerFactory emf = EMF.getEmf();
 
     public void salvarUsuario(UsuarioModel request) {
         EntityManager em = emf.createEntityManager();
-
-        UsuarioModel u = buscarPorEmail(request.getEmail());
-        if (u != null) {
-            request.setId(u.getId());
-        }
 
         try {
             em.getTransaction().begin();
@@ -29,6 +27,21 @@ public class UsuarioDAO {
             System.out.println("Falha ao salvar usuário.");
         } finally {
             em.close();
+        }
+    }
+
+    public ObservableList<UsuarioModel> buscarTodos() {
+        ObservableList<UsuarioModel> res = FXCollections.observableArrayList();
+
+        try (EntityManager em = emf.createEntityManager()) {
+            List<UsuarioModel> l = em.createQuery("FROM UsuarioModel", UsuarioModel.class)
+                    .getResultList();
+
+            res.addAll(l);
+            return res;
+        } catch (Exception e) {
+            e.printStackTrace();
+            return null;
         }
     }
 
@@ -47,11 +60,7 @@ public class UsuarioDAO {
             return em.createQuery("FROM UsuarioModel WHERE email = :email", UsuarioModel.class)
                     .setParameter("email", email)
                     .getSingleResult();
-        } catch (NoResultException e) {
-            System.out.println("Usuário com email " + email + " não encontrado.");
-            return null;
         } catch (Exception e) {
-            e.printStackTrace();
             return null;
         }
     }
@@ -65,9 +74,6 @@ public class UsuarioDAO {
             return em.createQuery("FROM UsuarioModel WHERE nome = :nome", UsuarioModel.class)
                     .setParameter("nome", nome)
                     .getSingleResult();
-        } catch (NoResultException e) {
-            System.out.println("Usuário com nome " + nome + " não encontrado.");
-            return null;
         } catch (Exception e) {
             e.printStackTrace();
             return null;
