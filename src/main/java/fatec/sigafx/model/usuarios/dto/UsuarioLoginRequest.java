@@ -1,4 +1,4 @@
-package fatec.sigafx.model.usuario.dto;
+package fatec.sigafx.model.usuarios.dto;
 
 public record UsuarioLoginRequest(
        String nome,

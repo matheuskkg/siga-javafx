@@ -1,8 +1,7 @@
-package fatec.sigafx.model.aluno;
+package fatec.sigafx.model.usuarios;
 
-import fatec.sigafx.model.notas.NotaModel;
-import fatec.sigafx.model.usuario.UsuarioModel;
-import fatec.sigafx.model.usuario.dto.UsuarioCriarRequest;
+import fatec.sigafx.model.aulas.NotaModel;
+import fatec.sigafx.model.usuarios.dto.UsuarioCriarRequest;
 import jakarta.persistence.*;
 
 import java.util.ArrayList;
@@ -11,9 +10,6 @@ import java.util.List;
 @Entity
 @Table(name = "alunos")
 public class AlunoModel extends UsuarioModel {
-    public List<NotaModel> getNotas() {
-        return notas;
-    }
 
     @OneToMany(fetch = FetchType.EAGER, mappedBy = "aluno")
     private List<NotaModel> notas = new ArrayList<>();

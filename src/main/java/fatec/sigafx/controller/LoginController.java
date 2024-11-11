@@ -1,10 +1,10 @@
 package fatec.sigafx.controller;
 
 import fatec.sigafx.dao.UsuarioDAO;
-import fatec.sigafx.model.admin.AdminModel;
-import fatec.sigafx.model.aluno.AlunoModel;
-import fatec.sigafx.model.professor.ProfessorModel;
-import fatec.sigafx.model.usuario.UsuarioModel;
+import fatec.sigafx.model.usuarios.AdminModel;
+import fatec.sigafx.model.usuarios.AlunoModel;
+import fatec.sigafx.model.usuarios.ProfessorModel;
+import fatec.sigafx.model.usuarios.UsuarioModel;
 import fatec.sigafx.view.AdminView;
 import fatec.sigafx.view.AlunoView;
 import fatec.sigafx.view.ProfessorView;

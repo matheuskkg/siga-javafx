@@ -1,7 +1,6 @@
-package fatec.sigafx.model.admin;
+package fatec.sigafx.model.usuarios;
 
-import fatec.sigafx.model.usuario.UsuarioModel;
-import fatec.sigafx.model.usuario.dto.UsuarioCriarRequest;
+import fatec.sigafx.model.usuarios.dto.UsuarioCriarRequest;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Table;
 

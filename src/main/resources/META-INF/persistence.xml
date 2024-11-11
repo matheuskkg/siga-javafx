@@ -6,12 +6,12 @@
         <provider>org.hibernate.jpa.HibernatePersistenceProvider</provider>
 
         <!-- Mapeamento das entidades -->
-        <class>fatec.sigafx.model.usuario.UsuarioModel</class>
-        <class>fatec.sigafx.model.aluno.AlunoModel</class>
-        <class>fatec.sigafx.model.admin.AdminModel</class>
-        <class>fatec.sigafx.model.professor.ProfessorModel</class>
-        <class>fatec.sigafx.model.notas.NotaModel</class>
-        <class>fatec.sigafx.model.disciplina.DisciplinaModel</class>
+        <class>fatec.sigafx.model.usuarios.UsuarioModel</class>
+        <class>fatec.sigafx.model.usuarios.AlunoModel</class>
+        <class>fatec.sigafx.model.usuarios.AdminModel</class>
+        <class>fatec.sigafx.model.usuarios.ProfessorModel</class>
+        <class>fatec.sigafx.model.aulas.NotaModel</class>
+        <class>fatec.sigafx.model.aulas.DisciplinaModel</class>
         <!-- Adicione outras classes de entidades se necessário -->
 
         <!-- Propriedades de conexão com o banco de dados -->

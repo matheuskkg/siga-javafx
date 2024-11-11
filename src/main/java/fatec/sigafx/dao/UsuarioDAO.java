@@ -1,7 +1,7 @@
 package fatec.sigafx.dao;
 
 import fatec.sigafx.EMF;
-import fatec.sigafx.model.usuario.UsuarioModel;
+import fatec.sigafx.model.usuarios.UsuarioModel;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.EntityManagerFactory;
 import javafx.collections.FXCollections;
@@ -54,6 +54,9 @@ public class UsuarioDAO {
         }
     }
 
+    /**
+     * Caso deseje retornar especificamente alunos, admins ou professores, utilizar seus respectivos DAOs.
+     */
     public ObservableList<UsuarioModel> buscarTodos() {
         ObservableList<UsuarioModel> res = FXCollections.observableArrayList();
 
@@ -85,21 +88,6 @@ public class UsuarioDAO {
                     .setParameter("email", email)
                     .getSingleResult();
         } catch (Exception e) {
-            return null;
-        }
-    }
-
-    /**
-     * Utilizado para realizar o login.<br>
-     * Caso deseje retornar especificamente alunos, admins ou professores, utilizar seus respectivos DAOs.
-     */
-    public UsuarioModel buscarPorNome(String nome) {
-        try (EntityManager em = emf.createEntityManager()) {
-            return em.createQuery("FROM UsuarioModel WHERE nome = :nome", UsuarioModel.class)
-                    .setParameter("nome", nome)
-                    .getSingleResult();
-        } catch (Exception e) {
-            e.printStackTrace();
             return null;
         }
     }

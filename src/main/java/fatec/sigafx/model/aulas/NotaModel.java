@@ -1,6 +1,6 @@
-package fatec.sigafx.model.notas;
+package fatec.sigafx.model.aulas;
 
-import fatec.sigafx.model.aluno.AlunoModel;
+import fatec.sigafx.model.usuarios.AlunoModel;
 import jakarta.persistence.*;
 
 @Entity
@@ -8,10 +8,14 @@ import jakarta.persistence.*;
 public class NotaModel {
 
     @Id
-    @GeneratedValue
+    @GeneratedValue(strategy = GenerationType.AUTO)
     private Integer id;
 
     private Double nota;
+
+    @ManyToOne
+    @JoinColumn(name = "disciplina_id")
+    private DisciplinaModel disciplina;
 
     @ManyToOne
     @JoinColumn(name = "aluno_id")

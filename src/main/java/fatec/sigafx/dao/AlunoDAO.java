@@ -1,7 +1,7 @@
 package fatec.sigafx.dao;
 
 import fatec.sigafx.EMF;
-import fatec.sigafx.model.aluno.AlunoModel;
+import fatec.sigafx.model.usuarios.AlunoModel;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.EntityManagerFactory;
 

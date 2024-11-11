@@ -1,8 +1,12 @@
 package fatec.sigafx.controller;
 
+import fatec.sigafx.dao.ProfessorDAO;
 import fatec.sigafx.dao.UsuarioDAO;
-import fatec.sigafx.model.usuario.UsuarioModel;
-import fatec.sigafx.model.usuario.dto.UsuarioCriarRequest;
+import fatec.sigafx.model.aulas.DisciplinaModel;
+import fatec.sigafx.model.aulas.dto.DisciplinaCriarRequest;
+import fatec.sigafx.model.usuarios.ProfessorModel;
+import fatec.sigafx.model.usuarios.UsuarioModel;
+import fatec.sigafx.model.usuarios.dto.UsuarioCriarRequest;
 import fatec.sigafx.view.LoginView;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -93,6 +97,8 @@ public class AdminController
     @FXML
     private TextField nomeAdicionarDisciplina;
     @FXML
+    private ComboBox<String> cbProfRespon;
+    @FXML
     private VBox gAlterarExcluirDisciplinas;
 
     @FXML
@@ -111,6 +117,7 @@ public class AdminController
         carregarTableViewUsuarios();
         carregarComboBoxTipoUsuario();
         definirUsuarioSelecionado();
+        carregarComboBoxProfessorResponsavel();
     }
 
     private void atualizarTableViewUsuarios() {
@@ -136,6 +143,20 @@ public class AdminController
 
         cbTipoAdicionarUsuario.setItems(obsUsuarios);
         cbTipoAlterarUsuario.setItems(obsUsuarios);
+    }
+
+    private void carregarComboBoxProfessorResponsavel() {
+        ProfessorDAO professorDAO = new ProfessorDAO();
+
+        List<ProfessorModel> professores = professorDAO.buscarTodosProfessores();
+
+        ObservableList<String> obsProfessores = FXCollections.observableArrayList();
+
+        for (ProfessorModel p : professores) {
+            obsProfessores.add(p.getEmail());
+        }
+
+        cbProfRespon.setItems(obsProfessores);
     }
 
     @FXML
@@ -240,7 +261,7 @@ public class AdminController
         gAdicionarUsuario.setVisible(true);
     }
 
-    private boolean verificarCamposVazios() {
+    private boolean verificarCamposVaziosAdicionarUsuario() {
         return nomeAdicionarUsuario.getText().isEmpty()
                 || senhaAdicionarUsuario.getText().isEmpty()
                 || confirmarSenhaAdicionarUsuario.getText().isEmpty()
@@ -248,7 +269,7 @@ public class AdminController
                 || cbTipoAdicionarUsuario.getSelectionModel().getSelectedItem() == null;
     }
 
-    private boolean verificarCamposVaziosAlterados() {
+    private boolean verificarCamposVaziosAlterarUsuario() {
         return nomeAlterarUsuario.getText().isEmpty()
                 || senhaAlterarUsuario.getText().isEmpty()
                 || confirmarSenhaAlterarUsuario.getText().isEmpty()
@@ -261,7 +282,7 @@ public class AdminController
     private void adicionarUsuario() {
         boolean verificar = true;
 
-        if (verificarCamposVazios()) {
+        if (verificarCamposVaziosAdicionarUsuario()) {
             mensagemErroCampos.setText("Todos campos devem ser preenchidos!");
             verificar = false;
         } else {
@@ -336,7 +357,7 @@ public class AdminController
     public void alterarUsuario() {
         boolean verificar = true;
 
-        if (verificarCamposVaziosAlterados()) {
+        if (verificarCamposVaziosAlterarUsuario()) {
             mErroAlterarCampos.setText("Todos campos devem ser preenchidos!");
             verificar = false;
         } else {
@@ -399,11 +420,8 @@ public class AdminController
         gConfirmaExclusao.setVisible(false);
     }
 
-    // Mostrar "Gerenciar Disciplinas"
     @FXML
     public void mostrarGerenciarDisciplinas() {
-        esconderPaineis();
-        limparCampos();
         gDisciplinas.setVisible(true);
         gBotaoDisciplinas.setVisible(true);
     }
@@ -431,14 +449,38 @@ public class AdminController
         gAdicionarDisciplinas.setVisible(true);
     }
 
-    private void mostrarAlterarExcluirDisciplinas() {
-        gDisciplinas.setVisible(true);
-        gAlterarExcluirDisciplinas.setVisible(true);
+    private boolean verificarCamposVaziosAdicionarDisciplina() {
+        return nomeAdicionarDisciplina.getText().isEmpty()
+                || cbProfRespon.getSelectionModel().getSelectedItem() == null;
     }
 
     @FXML
     private void adicionarDisciplina(){
-        System.out.println("diciplina adicionada?");
+        boolean verificar = true;
+
+        /**
+         * TODO:
+         *  mensagem erro input invalido
+         *  mensagem sucesso ao cadastrar disciplina
+         *  botao limpar não limpa o campo de selecionar professor
+         */
+
+        if (verificarCamposVaziosAdicionarDisciplina()) {
+
+        }
+
+        if (verificar) {
+            ProfessorModel professorResponsavel = ProfessorModel.buscarProfessorPorEmail(cbProfRespon.getSelectionModel().getSelectedItem());
+
+            DisciplinaCriarRequest request = new DisciplinaCriarRequest(nomeAdicionarDisciplina.getText(), professorResponsavel);
+
+            DisciplinaModel.criarDisciplina(request);
+        }
+    }
+
+    private void mostrarAlterarExcluirDisciplinas() {
+        gDisciplinas.setVisible(true);
+        gAlterarExcluirDisciplinas.setVisible(true);
     }
 
     @FXML

@@ -1,14 +1,12 @@
 package fatec.sigafx;
 
+import fatec.sigafx.view.AdminView;
 import javafx.application.Application;
 import javafx.stage.Stage;
 import fatec.sigafx.view.LoginView;
 
-import fatec.sigafx.model.usuario.UsuarioModel;
-import fatec.sigafx.model.usuario.dto.UsuarioCriarRequest;
-import fatec.sigafx.view.AlunoView;
-import fatec.sigafx.view.ProfessorView;
-import fatec.sigafx.view.AdminView;
+import fatec.sigafx.model.usuarios.UsuarioModel;
+import fatec.sigafx.model.usuarios.dto.UsuarioCriarRequest;
 
 public class SigaApplication extends Application
 {
@@ -19,10 +17,10 @@ public class SigaApplication extends Application
     public void start(Stage stage) {
         SigaApplication.stage = stage;
 
-        LoginView.mostrarLogin();
+        //LoginView.mostrarLogin();
 
         //Usar para testar a página de ADM
-        //AdminView.mostrarHomeAdmin();
+        AdminView.mostrarHomeAdmin();
 
         //Usar para testar a página de Aluno
         //AlunoView.mostrarHomeAluno();
