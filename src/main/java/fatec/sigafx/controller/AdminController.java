@@ -29,13 +29,6 @@ public class AdminController
     private VBox gPrincipal;
 
     @FXML
-    private Label mensagemErroSenhasDiferentes;
-    @FXML
-    private Label mensagemErroCampos;
-    @FXML
-    private Label mensagemErroEmail;
-
-    @FXML
     private VBox gUsuarios;
     @FXML
     private VBox gBotaoUsuario;
@@ -53,29 +46,15 @@ public class AdminController
     private ComboBox<String> cbTipoAdicionarUsuario;
     @FXML
     private HBox hTipoUsuario;
+    @FXML
+    private Label meAdicionarUsuarioErroSenhasDiferentes;
+    @FXML
+    private Label meAdicionarUsuarioErroCampos;
+    @FXML
+    private Label meAdicionarUsuarioErroEmail;
 
     @FXML
     private VBox gAlterarExcluirUsuario;
-    @FXML
-    public VBox gAlterarUsuario;
-    @FXML
-    public TextField nomeAlterarUsuario;
-    @FXML
-    public PasswordField senhaAlterarUsuario;
-    @FXML
-    public PasswordField confirmarSenhaAlterarUsuario;
-    @FXML
-    public Label meAlterarSenhasDiferentes;
-    @FXML
-    public TextField emailAlterarUsuario;
-    @FXML
-    public Label meAlterarEmail;
-    @FXML
-    public HBox hTipoUsuarioAlterar;
-    @FXML
-    public ComboBox<String> cbTipoAlterarUsuario;
-    @FXML
-    public Label mErroAlterarCampos;
     @FXML
     public VBox gConfirmaExclusao;
 
@@ -95,9 +74,9 @@ public class AdminController
     @FXML
     private VBox gAdicionarDisciplinas;
     @FXML
-    private TextField nomeAdicionarDisciplina;
+    private Label meAdicionarDisciplinas;
     @FXML
-    private ComboBox<String> cbProfRespon;
+    private TextField nomeAdicionarDisciplina;
     @FXML
     private VBox gAlterarExcluirDisciplinas;
 
@@ -107,6 +86,10 @@ public class AdminController
     private VBox gBotaoTurmas;
     @FXML
     private VBox gAdicionarTurmas;
+    @FXML
+    private ComboBox<String> cbProfRespon;
+    @FXML
+    private Label meTurmas;
     @FXML
     private VBox gAlterarExcluirTurmas;
     @FXML
@@ -144,7 +127,6 @@ public class AdminController
         ObservableList<String> obsUsuarios = FXCollections.observableArrayList(usuarios);
 
         cbTipoAdicionarUsuario.setItems(obsUsuarios);
-        cbTipoAlterarUsuario.setItems(obsUsuarios);
     }
 
     private void carregarComboBoxProfessorResponsavel() {
@@ -168,42 +150,22 @@ public class AdminController
         confirmarSenhaAdicionarUsuario.clear();
         emailAdicionarUsuario.clear();
 
-        nomeAlterarUsuario.clear();
-        senhaAlterarUsuario.clear();
-        confirmarSenhaAlterarUsuario.clear();
-        emailAlterarUsuario.clear();
-
-
         // Criar uma ComboBox com as mesmas propriedades e itens
         ComboBox<String> novaAdicionarCB = new ComboBox<>(cbTipoAdicionarUsuario.getItems());
-        novaAdicionarCB.setMaxSize(Double.MAX_VALUE, Double.MAX_VALUE);
+        novaAdicionarCB.setMaxSize(Double.MAX_VALUE,30);
         HBox.setHgrow(novaAdicionarCB, Priority.ALWAYS);
         novaAdicionarCB.setPromptText(cbTipoAdicionarUsuario.getPromptText());
-
-        ComboBox<String> novaAlterarCB = new ComboBox<>(cbTipoAlterarUsuario.getItems());
-        novaAlterarCB.setMaxSize(Double.MAX_VALUE, Double.MAX_VALUE);
-        HBox.setHgrow(novaAlterarCB, Priority.ALWAYS);
-        novaAlterarCB.setPromptText(cbTipoAlterarUsuario.getPromptText());
-
         // Substituir a ComboBox original pela nova
         hTipoUsuario.getChildren().remove(cbTipoAdicionarUsuario);
         hTipoUsuario.getChildren().add(novaAdicionarCB);
         cbTipoAdicionarUsuario = novaAdicionarCB;
 
-        // Substituir a ComboBox original pela nova
-        hTipoUsuarioAlterar.getChildren().remove(cbTipoAlterarUsuario);
-        hTipoUsuarioAlterar.getChildren().add(novaAlterarCB);
-        cbTipoAlterarUsuario = novaAlterarCB;
-
-        mensagemErroSenhasDiferentes.setText("");
-        mensagemErroCampos.setText("");
-        mensagemErroEmail.setText("");
-
-        meAlterarSenhasDiferentes.setText("");
-        mErroAlterarCampos.setText("");
-        meAlterarEmail.setText("");
+        meAdicionarUsuarioErroSenhasDiferentes.setText("");
+        meAdicionarUsuarioErroCampos.setText("");
+        meAdicionarUsuarioErroEmail.setText("");
 
         nomeAdicionarDisciplina.clear();
+        meAdicionarDisciplinas.setText("");
     }
 
     // Mostrar "Início"
@@ -271,31 +233,22 @@ public class AdminController
                 || cbTipoAdicionarUsuario.getSelectionModel().getSelectedItem() == null;
     }
 
-    private boolean verificarCamposVaziosAlterarUsuario() {
-        return nomeAlterarUsuario.getText().isEmpty()
-                || senhaAlterarUsuario.getText().isEmpty()
-                || confirmarSenhaAlterarUsuario.getText().isEmpty()
-                || emailAlterarUsuario.getText().isEmpty()
-                || cbTipoAlterarUsuario.getSelectionModel().getSelectedItem() == null;
-    }
-
-    //TODO: exibir mensagem de sucesso ao criar usuário
     @FXML
     private void adicionarUsuario() {
         boolean verificar = true;
 
         if (verificarCamposVaziosAdicionarUsuario()) {
-            mensagemErroCampos.setText("Todos campos devem ser preenchidos!");
+            meAdicionarUsuarioErroCampos.setText("Todos campos devem ser preenchidos!");
             verificar = false;
         } else {
-            mensagemErroCampos.setText("");
+            meAdicionarUsuarioErroCampos.setText("");
         }
 
         if (!UsuarioModel.verificarSenhasCoincidem(senhaAdicionarUsuario.getText(), confirmarSenhaAdicionarUsuario.getText())) {
-            mensagemErroSenhasDiferentes.setText("Senhas diferentes!");
+            meAdicionarUsuarioErroSenhasDiferentes.setText("Senhas diferentes!");
             verificar = false;
         } else {
-            mensagemErroSenhasDiferentes.setText("");
+            meAdicionarUsuarioErroSenhasDiferentes.setText("");
         }
 
         //TODO: criar mensagem de erro "email em uso"
@@ -307,10 +260,10 @@ public class AdminController
         }
 
         if (!UsuarioModel.verificarEmailValido(emailAdicionarUsuario.getText())) {
-            mensagemErroEmail.setText("E-mail inválido!");
+            meAdicionarUsuarioErroEmail.setText("E-mail inválido!");
             verificar = false;
         } else {
-            mensagemErroEmail.setText("");
+            meAdicionarUsuarioErroEmail.setText("");
         }
 
         if(verificar){
@@ -320,13 +273,15 @@ public class AdminController
                     senhaAdicionarUsuario.getText());
 
             UsuarioModel.criarUsuario(request, cbTipoAdicionarUsuario.getValue());
-            initialize();
-            mensagemErroCampos.setText("Usuário cadastrado com sucesso!");
-            System.out.println("Formulario enviado???");
 
+            limparCampos();
+            initialize();
+
+            meAdicionarUsuarioErroCampos.setText("Usuário cadastrado com sucesso!");
             // Cria uma pausa para o texto voltar a seu estado vazio após 2 segundos
             PauseTransition pause = new PauseTransition(Duration.seconds(2));
-            pause.setOnFinished(event -> {mensagemErroCampos.setText("");});
+            pause.setOnFinished(event -> {
+                meAdicionarUsuarioErroCampos.setText("");});
             pause.play();
         }
     }
@@ -353,57 +308,6 @@ public class AdminController
     public void mostrarAlterarUsuario(){
         esconderPaineis();
         gUsuarios.setVisible(true);
-        gAlterarUsuario.setVisible(true);
-    }
-    @FXML
-    public void alterarUsuario() {
-        boolean verificar = true;
-
-        if (verificarCamposVaziosAlterarUsuario()) {
-            mErroAlterarCampos.setText("Todos campos devem ser preenchidos!");
-            verificar = false;
-        } else {
-            mErroAlterarCampos.setText("");
-        }
-
-        if (!UsuarioModel.verificarSenhasCoincidem(senhaAlterarUsuario.getText(), confirmarSenhaAlterarUsuario.getText())) {
-            meAlterarSenhasDiferentes.setText("Senhas diferentes!");
-            verificar = false;
-        } else {
-            meAlterarSenhasDiferentes.setText("");
-        }
-
-        //TODO: criar mensagem de erro "email em uso"
-        if (UsuarioModel.verificarEmailEmUso(emailAlterarUsuario.getText())) {
-
-            verificar = false;
-        } else {
-
-        }
-
-        if (!UsuarioModel.verificarEmailValido(emailAlterarUsuario.getText())) {
-            meAlterarEmail.setText("E-mail inválido!");
-            verificar = false;
-        } else {
-            meAlterarEmail.setText("");
-        }
-
-        if(verificar){
-            UsuarioCriarRequest request = new UsuarioCriarRequest(
-                    nomeAlterarUsuario.getText(),
-                    emailAlterarUsuario.getText(),
-                    senhaAlterarUsuario.getText());
-
-            UsuarioModel.criarUsuario(request, cbTipoAlterarUsuario.getValue());
-            initialize();
-            mErroAlterarCampos.setText("Usuário cadastrado com sucesso!");
-            System.out.println("Formulario enviado???");
-
-            // Cria uma pausa para o texto voltar a seu estado vazio após 2 segundos
-            PauseTransition pause = new PauseTransition(Duration.seconds(2));
-            pause.setOnFinished(event -> {mErroAlterarCampos.setText("");});
-            pause.play();
-        }
     }
 
     @FXML
@@ -462,21 +366,30 @@ public class AdminController
 
         /**
          * TODO:
-         *  mensagem erro input invalido
-         *  mensagem sucesso ao cadastrar disciplina
-         *  botao limpar não limpa o campo de selecionar professor
+         *  mensagem erro input invalido ????????
+         *  mensagem sucesso ao cadastrar disciplina @Igor
          */
 
         if (verificarCamposVaziosAdicionarDisciplina()) {
-
+            verificar = false;
+            meAdicionarDisciplinas.setText("Todos os campos devem ser preenchidos");
+        } else {
+            meAdicionarDisciplinas.setText("");
         }
 
         if (verificar) {
             ProfessorModel professorResponsavel = ProfessorModel.buscarProfessorPorEmail(cbProfRespon.getSelectionModel().getSelectedItem());
-
             DisciplinaCriarRequest request = new DisciplinaCriarRequest(nomeAdicionarDisciplina.getText(), professorResponsavel);
-
             DisciplinaModel.criarDisciplina(request);
+
+            limparCampos();
+
+            meAdicionarDisciplinas.setText("Disciplina adicionada com sucesso!");
+            // Cria uma pausa para o texto voltar a seu estado vazio após 2 segundos
+            PauseTransition pause = new PauseTransition(Duration.seconds(2));
+            pause.setOnFinished(event -> {
+                meAdicionarDisciplinas.setText("");});
+            pause.play();
         }
     }
 
@@ -549,7 +462,6 @@ public class AdminController
         gBotaoUsuario.setVisible(false);
         gAdicionarUsuario.setVisible(false);
         gAlterarExcluirUsuario.setVisible(false);
-        gAlterarUsuario.setVisible(false);
         gConfirmaExclusao.setVisible(false);
 
         gDisciplinas.setVisible(false);
