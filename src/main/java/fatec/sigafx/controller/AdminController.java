@@ -111,6 +111,8 @@ public class AdminController
     private VBox gAlterarExcluirTurmas;
     @FXML
     private VBox gAdicionarRemoverAlunosTurmas;
+    @FXML
+    private ComboBox<String> cbCursoAdicionarTurma;
 
     @FXML
     public void initialize() {
@@ -128,7 +130,7 @@ public class AdminController
     private void carregarTableViewUsuarios() {
         //TableView alteração e exclusão de usuários
         usuarioId.setCellValueFactory(new PropertyValueFactory<>("id"));
-        usuarioNome.setCellValueFactory(new PropertyValueFactory<>("nome"));
+        usuarioNome.setCellValueFactory(new PropertyValueFactory<>("email"));
         usuarioEmail.setCellValueFactory(new PropertyValueFactory<>("email"));
         atualizarTableViewUsuarios();
     }
@@ -318,7 +320,7 @@ public class AdminController
                     senhaAdicionarUsuario.getText());
 
             UsuarioModel.criarUsuario(request, cbTipoAdicionarUsuario.getValue());
-            atualizarTableViewUsuarios();
+            initialize();
             mensagemErroCampos.setText("Usuário cadastrado com sucesso!");
             System.out.println("Formulario enviado???");
 
@@ -393,7 +395,7 @@ public class AdminController
                     senhaAlterarUsuario.getText());
 
             UsuarioModel.criarUsuario(request, cbTipoAlterarUsuario.getValue());
-            atualizarTableViewUsuarios();
+            initialize();
             mErroAlterarCampos.setText("Usuário cadastrado com sucesso!");
             System.out.println("Formulario enviado???");
 
@@ -523,6 +525,11 @@ public class AdminController
     private void mostrarAdicionarTurmas() {
         gTurmas.setVisible(true);
         gAdicionarTurmas.setVisible(true);
+    }
+
+    @FXML
+    private void adicionarTurma() {
+        System.out.println("oi");
     }
 
     private void mostrarAlterarExcluirTurmas() {
