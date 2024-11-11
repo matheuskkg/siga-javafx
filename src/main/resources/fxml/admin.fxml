@@ -461,7 +461,7 @@
                                     <Font size="20.0" />
                                 </font>
                             </Label>
-                            <ComboBox maxWidth="910.0" minHeight="30.0" minWidth="530.0" prefWidth="530.0" HBox.hgrow="ALWAYS">
+                            <ComboBox fx:id="cbCursoAdicionarTurma" maxWidth="910.0" minHeight="30.0" minWidth="530.0" prefWidth="530.0" HBox.hgrow="ALWAYS">
                                 <HBox.margin>
                                     <Insets top="10.0" />
                                 </HBox.margin>
@@ -522,7 +522,7 @@
                             </ComboBox>
                         </HBox>
                         <HBox alignment="TOP_RIGHT" maxWidth="1000.0" spacing="10.0">
-                            <Button minHeight="50.0" minWidth="100.0" mnemonicParsing="false" text="Criar" />
+                            <Button minHeight="50.0" minWidth="100.0" mnemonicParsing="false" onAction="#adicionarTurma" text="Criar" />
                             <Button minHeight="50.0" minWidth="100.0" mnemonicParsing="false" text="Limpar" />
                         </HBox>
                     </VBox>
