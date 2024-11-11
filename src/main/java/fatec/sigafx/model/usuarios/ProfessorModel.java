@@ -1,8 +1,7 @@
 package fatec.sigafx.model.usuarios;
 
 import fatec.sigafx.dao.ProfessorDAO;
-import fatec.sigafx.dao.UsuarioDAO;
-import fatec.sigafx.model.aulas.DisciplinaModel;
+import fatec.sigafx.model.aulas.TurmaModel;
 import fatec.sigafx.model.usuarios.dto.UsuarioCriarRequest;
 import jakarta.persistence.*;
 
@@ -12,8 +11,8 @@ import java.util.List;
 @Table(name = "professores")
 public class ProfessorModel extends UsuarioModel {
 
-    @OneToMany(mappedBy = "professorResponsavel")
-    private List<DisciplinaModel> disciplinasLecionadas;
+    @OneToMany(mappedBy = "professor")
+    private List<TurmaModel> turmas;
 
     public ProfessorModel() {}
 
@@ -21,9 +20,10 @@ public class ProfessorModel extends UsuarioModel {
         super(request);
     }
 
-    public static ProfessorModel buscarProfessorPorEmail(String email) {
-        ProfessorDAO professorDAO = new ProfessorDAO();
+    @Transient
+    private static ProfessorDAO professorDAO = new ProfessorDAO();
 
+    public static ProfessorModel buscarProfessorPorEmail(String email) {
         return professorDAO.buscarPorEmail(email);
     }
 }

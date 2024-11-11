@@ -10,8 +10,9 @@
         <class>fatec.sigafx.model.usuarios.AlunoModel</class>
         <class>fatec.sigafx.model.usuarios.AdminModel</class>
         <class>fatec.sigafx.model.usuarios.ProfessorModel</class>
-        <class>fatec.sigafx.model.aulas.NotaModel</class>
         <class>fatec.sigafx.model.aulas.DisciplinaModel</class>
+        <class>fatec.sigafx.model.aulas.NotaModel</class>
+        <class>fatec.sigafx.model.aulas.TurmaModel</class>
         <!-- Adicione outras classes de entidades se necessário -->
 
         <!-- Propriedades de conexão com o banco de dados -->
@@ -23,7 +24,7 @@
             <!-- Usuário e senha -->
             <!--WARNING: Altere as credênciais antes de executar-->
             <property name="jakarta.persistence.jdbc.user" value="postgres"/>
-            <property name="jakarta.persistence.jdbc.password" value="5427"/>
+            <property name="jakarta.persistence.jdbc.password" value="password"/>
             <!-- Opções adicionais -->
             <property name="hibernate.hbm2ddl.auto" value="update"/>
             <property name="hibernate.show_sql" value="true"/>

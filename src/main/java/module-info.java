@@ -15,6 +15,8 @@ module fatec.sigafx {
     opens fatec.sigafx to javafx.fxml;
     exports fatec.sigafx;
     exports fatec.sigafx.controller;
+    exports fatec.sigafx.model.usuarios;
+    exports fatec.sigafx.model.aulas;
     opens fatec.sigafx.controller to javafx.fxml;
 
     opens fatec.sigafx.model.usuarios to javafx.base, org.hibernate.orm.core;

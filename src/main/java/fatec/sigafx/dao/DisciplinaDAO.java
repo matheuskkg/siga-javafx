@@ -3,6 +3,7 @@ package fatec.sigafx.dao;
 import fatec.sigafx.EMF;
 import fatec.sigafx.model.aulas.DisciplinaModel;
 import fatec.sigafx.model.usuarios.ProfessorModel;
+import fatec.sigafx.model.usuarios.UsuarioModel;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.EntityManagerFactory;
 
@@ -22,6 +23,16 @@ public class DisciplinaDAO {
             }
 
             System.out.println("Falha ao salvar disciplina");
+        }
+    }
+
+    public DisciplinaModel buscarPorId(Integer id) {
+        try (EntityManager em = emf.createEntityManager()) {
+            return em.createQuery("FROM DisciplinaModel WHERE id = :id", DisciplinaModel.class)
+                    .setParameter("id", id)
+                    .getSingleResult();
+        } catch (Exception e) {
+            return null;
         }
     }
 }

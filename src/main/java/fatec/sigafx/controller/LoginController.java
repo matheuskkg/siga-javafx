@@ -1,6 +1,5 @@
 package fatec.sigafx.controller;
 
-import fatec.sigafx.dao.UsuarioDAO;
 import fatec.sigafx.model.usuarios.AdminModel;
 import fatec.sigafx.model.usuarios.AlunoModel;
 import fatec.sigafx.model.usuarios.ProfessorModel;
@@ -14,8 +13,6 @@ import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 
 public class LoginController {
-    private static final UsuarioDAO dao = new UsuarioDAO();
-
     @FXML
     private TextField usuarioEmail;
 
@@ -27,13 +24,9 @@ public class LoginController {
 
     @FXML
     private void confirmarLogin() {
-
-        /**
-         * TODO: mover validação para o model
-         *       alterar login para email e senha
-         */
-
-        UsuarioModel u = dao.buscarPorEmail(usuarioEmail.getText());
+        //TODO: encontrar uma maneira de mover a validação para o model,
+        //      é necessário saber a classe do objeto para redirecionar para a home correta
+        UsuarioModel u = UsuarioModel.buscarUsuarioPorEmail(usuarioEmail.getText());
         if (u != null && u.getSenha().equals(usuarioSenha.getText())) {
             if (u instanceof AdminModel) {
                 AdminView.mostrarHomeAdmin();

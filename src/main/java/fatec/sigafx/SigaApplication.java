@@ -1,5 +1,8 @@
 package fatec.sigafx;
 
+import fatec.sigafx.model.aulas.DisciplinaModel;
+import fatec.sigafx.model.aulas.dto.DisciplinaCriarRequest;
+import fatec.sigafx.model.usuarios.ProfessorModel;
 import fatec.sigafx.view.AdminView;
 import javafx.application.Application;
 import javafx.stage.Stage;

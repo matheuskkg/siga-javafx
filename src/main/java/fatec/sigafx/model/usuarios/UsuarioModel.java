@@ -21,6 +21,9 @@ public class UsuarioModel {
 
     private static final String EMAIL_REGEX = "^[A-Za-z0-9+_.-]+@[A-Za-z0-9.-]+\\.[A-Za-z]{2,6}$";
 
+    @Transient
+    private static UsuarioDAO usuarioDAO = new UsuarioDAO();
+
     public UsuarioModel() {}
 
     public UsuarioModel(UsuarioCriarRequest request) {
@@ -38,14 +41,10 @@ public class UsuarioModel {
     }
 
     public static boolean verificarEmailEmUso(String email) {
-        UsuarioDAO usuarioDAO = new UsuarioDAO();
-
         return usuarioDAO.buscarPorEmail(email) != null;
     }
 
     public static void criarUsuario(UsuarioCriarRequest request, String tipo) {
-        UsuarioDAO usuarioDAO = new UsuarioDAO();
-
         //TODO: Utilizar enum p/ definir a role
         UsuarioModel u = switch (tipo) {
             case "Administrador" -> new AdminModel(request);
@@ -58,15 +57,15 @@ public class UsuarioModel {
     }
 
     public static void atualizarUsuario(UsuarioModel request) {
-        UsuarioDAO usuarioDAO = new UsuarioDAO();
-
         usuarioDAO.salvarUsuario(request);
     }
 
     public static void excluirUsuario(UsuarioModel request) {
-        UsuarioDAO usuarioDAO = new UsuarioDAO();
-
         usuarioDAO.excluirUsuario(request);
+    }
+
+    public static UsuarioModel buscarUsuarioPorEmail(String email) {
+        return usuarioDAO.buscarPorEmail(email);
     }
 
     public Integer getId() {
