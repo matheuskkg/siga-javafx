@@ -11,6 +11,7 @@ module fatec.sigafx {
     requires eu.hansolo.tilesfx;
     requires jakarta.persistence;
     requires org.hibernate.orm.core;
+    requires java.desktop;
 
     opens fatec.sigafx to javafx.fxml;
     exports fatec.sigafx;

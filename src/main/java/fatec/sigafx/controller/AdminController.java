@@ -12,14 +12,20 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
+import javafx.scene.control.Button;
+import javafx.scene.control.Label;
+import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Priority;
+
+import javafx.geometry.Insets;
 import javafx.scene.layout.VBox;
 import javafx.event.ActionEvent;
 import javafx.animation.PauseTransition;
 import javafx.util.Duration;
 
+import java.awt.*;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -154,6 +160,7 @@ public class AdminController
         ComboBox<String> novaAdicionarCB = new ComboBox<>(cbTipoAdicionarUsuario.getItems());
         novaAdicionarCB.setMaxSize(Double.MAX_VALUE,30);
         HBox.setHgrow(novaAdicionarCB, Priority.ALWAYS);
+        HBox.setMargin(novaAdicionarCB, new Insets(10,0,0,0));
         novaAdicionarCB.setPromptText(cbTipoAdicionarUsuario.getPromptText());
         // Substituir a ComboBox original pela nova
         hTipoUsuario.getChildren().remove(cbTipoAdicionarUsuario);
