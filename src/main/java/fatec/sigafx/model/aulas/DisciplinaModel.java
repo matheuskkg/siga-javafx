@@ -23,6 +23,7 @@ public class DisciplinaModel {
 
     public DisciplinaModel(DisciplinaCriarRequest request) {
         this.nome = request.nome();
+        this.cargaHoraria = request.cargaHoraria();
     }
 
     public static void criarDisciplina(DisciplinaCriarRequest request) {

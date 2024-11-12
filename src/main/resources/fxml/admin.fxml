@@ -276,7 +276,7 @@
                                     <Font size="20.0"/>
                                 </font>
                             </Label>
-                            <ComboBox maxWidth="1.7976931348623157E308" minHeight="30.0" promptText="Carga"
+                            <ComboBox fx:id="cbCargaAdicionarDisciplina" maxWidth="1.7976931348623157E308" minHeight="30.0" promptText="Carga"
                                       HBox.hgrow="ALWAYS">
                                 <HBox.margin>
                                     <Insets top="10.0"/>

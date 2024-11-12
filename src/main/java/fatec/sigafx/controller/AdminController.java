@@ -84,6 +84,8 @@ public class AdminController
     @FXML
     private TextField nomeAdicionarDisciplina;
     @FXML
+    private ComboBox<Integer> cbCargaAdicionarDisciplina;
+    @FXML
     private VBox gAlterarExcluirDisciplinas;
 
     @FXML
@@ -108,6 +110,7 @@ public class AdminController
         carregarTableViewUsuarios();
         carregarComboBoxTipoUsuario();
         definirUsuarioSelecionado();
+        carregarComboBoxCargaHoraria();
         carregarComboBoxProfessorResponsavel();
     }
 
@@ -133,6 +136,15 @@ public class AdminController
         ObservableList<String> obsUsuarios = FXCollections.observableArrayList(usuarios);
 
         cbTipoAdicionarUsuario.setItems(obsUsuarios);
+    }
+
+    private void carregarComboBoxCargaHoraria() {
+        //cbCargaAdicionarDisciplina
+
+        ObservableList<Integer> obsCargaHoraria = FXCollections.observableArrayList();
+        obsCargaHoraria.addAll(List.of(40, 80));
+
+        cbCargaAdicionarDisciplina.setItems(obsCargaHoraria);
     }
 
     private void carregarComboBoxProfessorResponsavel() {
@@ -364,18 +376,12 @@ public class AdminController
 
     private boolean verificarCamposVaziosAdicionarDisciplina() {
         return nomeAdicionarDisciplina.getText().isEmpty()
-                || cbProfRespon.getSelectionModel().getSelectedItem() == null;
+                || cbCargaAdicionarDisciplina.getSelectionModel().getSelectedItem() == null;
     }
 
     @FXML
     private void adicionarDisciplina(){
         boolean verificar = true;
-
-        /**
-         * TODO:
-         *  mensagem erro input invalido ????????
-         *  mensagem sucesso ao cadastrar disciplina @Igor
-         */
 
         if (verificarCamposVaziosAdicionarDisciplina()) {
             verificar = false;
@@ -385,9 +391,7 @@ public class AdminController
         }
 
         if (verificar) {
-            ProfessorModel professorResponsavel = ProfessorModel.buscarProfessorPorEmail(cbProfRespon.getSelectionModel().getSelectedItem());
-            DisciplinaCriarRequest request = new DisciplinaCriarRequest(nomeAdicionarDisciplina.getText(), professorResponsavel);
-            DisciplinaModel.criarDisciplina(request);
+            DisciplinaModel.criarDisciplina(new DisciplinaCriarRequest(nomeAdicionarDisciplina.getText(), cbCargaAdicionarDisciplina.getSelectionModel().getSelectedItem()));
 
             limparCampos();
 
