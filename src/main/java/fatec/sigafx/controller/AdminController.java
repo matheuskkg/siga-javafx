@@ -37,7 +37,9 @@ public class AdminController
     @FXML
     private VBox gBotaoUsuario;
     @FXML
-    private VBox gAdicionarUsuario;
+    private VBox gAdicionarAlterarUsuario;
+    @FXML
+    private Label meAdicionarUsuario;
     @FXML
     private TextField nomeAdicionarUsuario;
     @FXML
@@ -230,6 +232,7 @@ public class AdminController
         meAdicionarUsuarioErroSenhasDiferentes.setText("");
         meAdicionarUsuarioErroCampos.setText("");
         meAdicionarUsuarioErroEmail.setText("");
+        meAdicionarUsuario.setText("");
 
         nomeAdicionarDisciplina.clear();
         meAdicionarDisciplinas.setText("");
@@ -288,7 +291,8 @@ public class AdminController
 
     private void mostrarAdicionarUsuario() {
         gUsuarios.setVisible(true);
-        gAdicionarUsuario.setVisible(true);
+        gAdicionarAlterarUsuario.setVisible(true);
+        meAdicionarUsuario.setText("Adicionar Usuario");
     }
 
     private void exibirMensagem(Label label, String mensagem) {
@@ -375,8 +379,15 @@ public class AdminController
 
     @FXML
     public void mostrarAlterarUsuario(){
-        esconderPaineis();
         gUsuarios.setVisible(true);
+        gAlterarExcluirUsuario.setVisible(false);
+        gAdicionarAlterarUsuario.setVisible(true);
+        meAdicionarUsuario.setText("Alterar Usuario");
+
+        //nomeAdicionarUsuario.setText(getUsuarioSelecionado().getNome());
+        emailAdicionarUsuario.setText(getUsuarioSelecionado().getEmail());
+        senhaAdicionarUsuario.setText(getUsuarioSelecionado().getSenha());
+        confirmarSenhaAdicionarUsuario.setText(getUsuarioSelecionado().getSenha());
     }
 
     @FXML
@@ -387,7 +398,6 @@ public class AdminController
     public void confirmaExclusao(){
         UsuarioModel.excluirUsuario(getUsuarioSelecionado());
         atualizarTableViewUsuarios();
-        System.out.println("usuario excluido?");
         gConfirmaExclusao.setVisible(false);
     }
     @FXML
@@ -537,7 +547,7 @@ public class AdminController
 
         gUsuarios.setVisible(false);
         gBotaoUsuario.setVisible(false);
-        gAdicionarUsuario.setVisible(false);
+        gAdicionarAlterarUsuario.setVisible(false);
         gAlterarExcluirUsuario.setVisible(false);
         gConfirmaExclusao.setVisible(false);
 

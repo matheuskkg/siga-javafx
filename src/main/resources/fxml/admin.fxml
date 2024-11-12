@@ -58,6 +58,12 @@
                 <VBox alignment="CENTER" spacing="10">
                     <Label text="Total de Usuários: ??" />
                 </VBox>
+                <VBox fx:id="gBotaoUsuario">
+                    <HBox alignment="TOP_CENTER" spacing="20.0">
+                        <Button minHeight="50.0" minWidth="100.0" mnemonicParsing="false" onAction="#mudarTelaUsuarios" text="Adicionar" />
+                        <Button minHeight="50.0" minWidth="100.0" mnemonicParsing="false" onAction="#mudarTelaUsuarios" text="Alterar/Excluir" />
+                    </HBox>
+                </VBox>
                 <StackPane VBox.vgrow="ALWAYS">
                     <StackPane>
                         <VBox fx:id="gAlterarExcluirUsuario" maxWidth="1000.0" prefWidth="500.0" visible="false">
@@ -74,7 +80,6 @@
                                 </VBox.margin>
                                 <!-- Fazer um onAction nesse botão para alterar os dados do usuário selecionado na TableView (Como fazer isso ? Não sei, chatgpt neles) -->
                                 <Button minHeight="50.0" minWidth="100.0" mnemonicParsing="false" onAction="#mostrarAlterarUsuario" text="Alterar" />
-                                <!-- Fazer um onAction nesse botão para excluir os dados do usuário selecionado na TableView (Como fazer isso ? Não sei, chatgpt neles) -->
                                 <Button minHeight="50.0" minWidth="100.0" mnemonicParsing="false" onAction="#mostrarExcluirUsuario" text="Excluir" />
                             </HBox>
                         </VBox>
@@ -93,15 +98,8 @@
                             </HBox>
                         </VBox>
                     </StackPane>
-                    <VBox fx:id="gBotaoUsuario">
-                        <HBox alignment="TOP_CENTER" spacing="20.0">
-                            <Button minHeight="50.0" minWidth="100.0" mnemonicParsing="false" onAction="#mudarTelaUsuarios" text="Adicionar" />
-                            <Button minHeight="50.0" minWidth="100.0" mnemonicParsing="false" onAction="#mudarTelaUsuarios" text="Alterar/Excluir" />
-                        </HBox>
-                    </VBox>
-                    <!-- Tem que conectar tudo o formulario com o banco de dados -->
-                    <VBox fx:id="gAdicionarUsuario" alignment="TOP_CENTER" spacing="10.0" visible="false" StackPane.alignment="TOP_CENTER">
-                        <Label fx:id="lAdicionarAlterar" alignment="TOP_CENTER" maxHeight="-Infinity" maxWidth="1.7976931348623157E308" minHeight="40.0" minWidth="680.0" text="Adicionar novo usuário" VBox.vgrow="ALWAYS">
+                    <VBox fx:id="gAdicionarAlterarUsuario" alignment="TOP_CENTER" spacing="10.0" visible="false" StackPane.alignment="TOP_CENTER">
+                        <Label fx:id="meAdicionarUsuario" alignment="TOP_CENTER" maxHeight="-Infinity" maxWidth="1.7976931348623157E308" minHeight="40.0" minWidth="680.0" VBox.vgrow="ALWAYS">
                             <font>
                                 <Font size="28.0" />
                             </font>
