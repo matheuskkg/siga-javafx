@@ -86,6 +86,8 @@ public class AdminController
     @FXML
     private ComboBox<Integer> cbCargaAdicionarDisciplina;
     @FXML
+    private HBox hDisciplinaCarga;
+    @FXML
     private VBox gAlterarExcluirDisciplinas;
 
     @FXML
@@ -122,7 +124,7 @@ public class AdminController
     private void carregarTableViewUsuarios() {
         //TableView alteração e exclusão de usuários
         usuarioId.setCellValueFactory(new PropertyValueFactory<>("id"));
-        usuarioNome.setCellValueFactory(new PropertyValueFactory<>("email"));
+        usuarioNome.setCellValueFactory(new PropertyValueFactory<>("nome"));
         usuarioEmail.setCellValueFactory(new PropertyValueFactory<>("email"));
         atualizarTableViewUsuarios();
     }
@@ -172,6 +174,15 @@ public class AdminController
         hTipoUsuario.getChildren().remove(cbTipoAdicionarUsuario);
         hTipoUsuario.getChildren().add(novaAdicionarCB);
         cbTipoAdicionarUsuario = novaAdicionarCB;
+
+        ComboBox<Integer> novaAdicionarCargaCB = new ComboBox<>(cbCargaAdicionarDisciplina.getItems());
+        novaAdicionarCargaCB.setMaxSize(Double.MAX_VALUE,30);
+        HBox.setHgrow(novaAdicionarCargaCB, Priority.ALWAYS);
+        HBox.setMargin(novaAdicionarCargaCB, new Insets(10,0,0,0));
+        novaAdicionarCargaCB.setPromptText(cbCargaAdicionarDisciplina.getPromptText());
+        hDisciplinaCarga.getChildren().remove(cbCargaAdicionarDisciplina);
+        hDisciplinaCarga.getChildren().add(novaAdicionarCargaCB);
+        cbCargaAdicionarDisciplina = novaAdicionarCargaCB;
 
         meAdicionarUsuarioErroSenhasDiferentes.setText("");
         meAdicionarUsuarioErroCampos.setText("");

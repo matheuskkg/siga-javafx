@@ -263,7 +263,7 @@
                                 </HBox.margin>
                             </TextField>
                         </HBox>
-                        <HBox alignment="TOP_CENTER" maxWidth="1000.0" minHeight="50.0">
+                        <HBox fx:id="hDisciplinaCarga" alignment="TOP_CENTER" maxWidth="1000.0" minHeight="50.0">
                             <VBox.margin>
                                 <Insets left="20.0" right="20.0"/>
                             </VBox.margin>
@@ -287,11 +287,11 @@
                             <VBox.margin>
                                 <Insets left="20.0" right="20.0" />
                             </VBox.margin>
-                     <Label fx:id="meAdicionarDisciplinas" maxWidth="1.7976931348623157E308" minHeight="50.0" text="Label" textFill="RED" visible="false" HBox.hgrow="ALWAYS">
-                        <HBox.margin>
-                           <Insets />
-                        </HBox.margin>
-                     </Label>
+                             <Label fx:id="meAdicionarDisciplinas" maxWidth="1.7976931348623157E308" minHeight="50.0" text="Label" textFill="RED" visible="false" HBox.hgrow="ALWAYS">
+                                <HBox.margin>
+                                   <Insets />
+                                </HBox.margin>
+                             </Label>
                             <Button minHeight="50.0" minWidth="100.0" mnemonicParsing="false" onAction="#adicionarDisciplina" text="Adicionar" />
                             <Button minHeight="50.0" minWidth="100.0" mnemonicParsing="false" onAction="#limparCampos" text="Limpar" />
                         </HBox>
