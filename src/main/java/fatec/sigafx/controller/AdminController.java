@@ -128,19 +128,13 @@ public class AdminController
     }
 
     private void carregarComboBoxTipoUsuario(){
-        List<String> usuarios = new ArrayList<>();
-        usuarios.add("Administrador");
-        usuarios.add("Professor");
-        usuarios.add("Aluno");
-
-        ObservableList<String> obsUsuarios = FXCollections.observableArrayList(usuarios);
+        ObservableList<String> obsUsuarios = FXCollections.observableArrayList();
+        obsUsuarios.addAll(List.of("Administrador", "Professor", "Aluno"));
 
         cbTipoAdicionarUsuario.setItems(obsUsuarios);
     }
 
     private void carregarComboBoxCargaHoraria() {
-        //cbCargaAdicionarDisciplina
-
         ObservableList<Integer> obsCargaHoraria = FXCollections.observableArrayList();
         obsCargaHoraria.addAll(List.of(40, 80));
 
@@ -244,6 +238,19 @@ public class AdminController
         gAdicionarUsuario.setVisible(true);
     }
 
+    private void exibirMensagem(Label label, String mensagem) {
+        label.setText(mensagem);
+    }
+
+    private void exibirMensagemTemporaria(Label label, String mensagem) {
+        label.setText(mensagem);
+
+        PauseTransition pause = new PauseTransition(Duration.seconds(2));
+        pause.setOnFinished(event -> {
+            meAdicionarUsuarioErroCampos.setText("");});
+        pause.play();
+    }
+
     private boolean verificarCamposVaziosAdicionarUsuario() {
         return nomeAdicionarUsuario.getText().isEmpty()
                 || senhaAdicionarUsuario.getText().isEmpty()
@@ -252,57 +259,47 @@ public class AdminController
                 || cbTipoAdicionarUsuario.getSelectionModel().getSelectedItem() == null;
     }
 
+    private boolean verificarEmailValido() {
+        String regex = "^[A-Za-z0-9+_.-]+@[A-Za-z0-9.-]+\\.[A-Za-z]{2,6}$";
+
+        return emailAdicionarUsuario.getText().matches(regex) ^ emailAdicionarUsuario.getText().isEmpty();
+    }
+
+    private boolean verificarSenhasCoincidem() {
+        return senhaAdicionarUsuario.getText().equals(confirmarSenhaAdicionarUsuario.getText());
+    }
+
     @FXML
     private void adicionarUsuario() {
-        boolean verificar = true;
+        exibirMensagem(meAdicionarUsuarioErroCampos, "");
+        exibirMensagem(meAdicionarUsuarioErroEmail, "");
+        exibirMensagem(meAdicionarUsuarioErroSenhasDiferentes, "");
 
-        if (verificarCamposVaziosAdicionarUsuario()) {
-            meAdicionarUsuarioErroCampos.setText("Todos campos devem ser preenchidos!");
-            verificar = false;
-        } else {
-            meAdicionarUsuarioErroCampos.setText("");
+        boolean camposVazios = verificarCamposVaziosAdicionarUsuario();
+        boolean emailValido = verificarEmailValido();
+        boolean emailEmUso = UsuarioModel.verificarEmailEmUso(emailAdicionarUsuario.getText());
+        boolean senhasCoincidem = verificarSenhasCoincidem();
+
+        if (camposVazios || !emailValido || emailEmUso || !senhasCoincidem) {
+            if (camposVazios) exibirMensagem(meAdicionarUsuarioErroCampos, "Todos os campos devem ser preenchidos.");
+            if (!emailValido) exibirMensagem(meAdicionarUsuarioErroEmail, "Email inválido.");
+            if (emailEmUso) exibirMensagem(meAdicionarUsuarioErroEmail, "Email já cadastrado.");
+            if (!senhasCoincidem) exibirMensagem(meAdicionarUsuarioErroSenhasDiferentes, "Senhas diferentes.");
+
+            return;
         }
 
-        if (!UsuarioModel.verificarSenhasCoincidem(senhaAdicionarUsuario.getText(), confirmarSenhaAdicionarUsuario.getText())) {
-            meAdicionarUsuarioErroSenhasDiferentes.setText("Senhas diferentes!");
-            verificar = false;
-        } else {
-            meAdicionarUsuarioErroSenhasDiferentes.setText("");
-        }
+        UsuarioCriarRequest request = new UsuarioCriarRequest(
+                nomeAdicionarUsuario.getText(),
+                emailAdicionarUsuario.getText(),
+                senhaAdicionarUsuario.getText());
 
-        //TODO: criar mensagem de erro "email em uso"
-        if (UsuarioModel.verificarEmailEmUso(emailAdicionarUsuario.getText())) {
+        UsuarioModel.criarUsuario(request, cbTipoAdicionarUsuario.getValue());
 
-            verificar = false;
-        } else {
+        limparCampos();
+        initialize();
 
-        }
-
-        if (!UsuarioModel.verificarEmailValido(emailAdicionarUsuario.getText())) {
-            meAdicionarUsuarioErroEmail.setText("E-mail inválido!");
-            verificar = false;
-        } else {
-            meAdicionarUsuarioErroEmail.setText("");
-        }
-
-        if(verificar){
-            UsuarioCriarRequest request = new UsuarioCriarRequest(
-                    nomeAdicionarUsuario.getText(),
-                    emailAdicionarUsuario.getText(),
-                    senhaAdicionarUsuario.getText());
-
-            UsuarioModel.criarUsuario(request, cbTipoAdicionarUsuario.getValue());
-
-            limparCampos();
-            initialize();
-
-            meAdicionarUsuarioErroCampos.setText("Usuário cadastrado com sucesso!");
-            // Cria uma pausa para o texto voltar a seu estado vazio após 2 segundos
-            PauseTransition pause = new PauseTransition(Duration.seconds(2));
-            pause.setOnFinished(event -> {
-                meAdicionarUsuarioErroCampos.setText("");});
-            pause.play();
-        }
+        exibirMensagemTemporaria(meAdicionarUsuarioErroCampos, "Usuário salvo com sucesso.");
     }
 
     private void mostrarAlterarExcluirUsuario() {
@@ -381,27 +378,20 @@ public class AdminController
 
     @FXML
     private void adicionarDisciplina(){
-        boolean verificar = true;
+        exibirMensagem(meAdicionarDisciplinas, "");
 
-        if (verificarCamposVaziosAdicionarDisciplina()) {
-            verificar = false;
-            meAdicionarDisciplinas.setText("Todos os campos devem ser preenchidos");
-        } else {
-            meAdicionarDisciplinas.setText("");
+        boolean camposVazios = verificarCamposVaziosAdicionarDisciplina();
+
+        if (camposVazios) {
+            exibirMensagem(meAdicionarDisciplinas, "Todos os campos devem ser preenchidos.");
         }
 
-        if (verificar) {
-            DisciplinaModel.criarDisciplina(new DisciplinaCriarRequest(nomeAdicionarDisciplina.getText(), cbCargaAdicionarDisciplina.getSelectionModel().getSelectedItem()));
+        DisciplinaModel.criarDisciplina(new DisciplinaCriarRequest(nomeAdicionarDisciplina.getText(), cbCargaAdicionarDisciplina.getSelectionModel().getSelectedItem()));
 
-            limparCampos();
+        limparCampos();
+        initialize();
 
-            meAdicionarDisciplinas.setText("Disciplina adicionada com sucesso!");
-            // Cria uma pausa para o texto voltar a seu estado vazio após 2 segundos
-            PauseTransition pause = new PauseTransition(Duration.seconds(2));
-            pause.setOnFinished(event -> {
-                meAdicionarDisciplinas.setText("");});
-            pause.play();
-        }
+        exibirMensagemTemporaria(meAdicionarDisciplinas, "Disciplina salva com sucesso.");
     }
 
     private void mostrarAlterarExcluirDisciplinas() {
