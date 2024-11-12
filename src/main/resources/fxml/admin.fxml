@@ -287,7 +287,7 @@
                             <VBox.margin>
                                 <Insets left="20.0" right="20.0" />
                             </VBox.margin>
-                             <Label fx:id="meAdicionarDisciplinas" maxWidth="1.7976931348623157E308" minHeight="50.0" text="Label" textFill="RED" visible="false" HBox.hgrow="ALWAYS">
+                             <Label fx:id="meAdicionarDisciplinas" maxWidth="1.7976931348623157E308" minHeight="50.0" textFill="RED" HBox.hgrow="ALWAYS">
                                 <HBox.margin>
                                    <Insets />
                                 </HBox.margin>
@@ -297,11 +297,11 @@
                         </HBox>
                     </VBox>
                     <VBox fx:id="gAlterarExcluirDisciplinas" maxWidth="1000.0" prefWidth="500.0" visible="false">
-                        <TableView prefHeight="902.0" prefWidth="1000.0">
+                        <TableView fx:id="tableViewAlterarExcluirDisciplina" prefHeight="902.0" prefWidth="1000.0">
                             <columns>
-                                <TableColumn minWidth="70.0" prefWidth="70.0" sortType="DESCENDING" text="Id" />
-                                <TableColumn minWidth="300.0" prefWidth="300.0" text="Disciplina" />
-                                <TableColumn minWidth="200.0" prefWidth="200.0" text="Carga Horária" />
+                                <TableColumn fx:id="disciplinaId" minWidth="70.0" prefWidth="70.0" sortType="DESCENDING" text="Id" />
+                                <TableColumn fx:id="disciplinaNome" minWidth="300.0" prefWidth="300.0" text="Disciplina" />
+                                <TableColumn fx:id="disciplinaCargaHoraria" minWidth="200.0" prefWidth="200.0" text="Carga Horária" />
                             </columns>
                             <columnResizePolicy>
                                 <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
@@ -381,7 +381,7 @@
                                     <Font size="20.0" />
                                 </font>
                             </Label>
-                            <ComboBox maxWidth="910.0" minHeight="30.0" minWidth="530.0" prefWidth="530.0" HBox.hgrow="ALWAYS">
+                            <ComboBox fx:id="cbDisciplinaAdicionarTurma" maxWidth="910.0" minHeight="30.0" minWidth="530.0" prefWidth="530.0" HBox.hgrow="ALWAYS">
                                 <HBox.margin>
                                     <Insets top="10.0" />
                                 </HBox.margin>
@@ -406,7 +406,7 @@
                             </ComboBox>
                         </HBox>
                         <HBox alignment="TOP_RIGHT" maxWidth="1000.0" spacing="10.0">
-                     <Label fx:id="meTurmas" maxWidth="1.7976931348623157E308" minHeight="50.0" text="Label" textFill="RED" visible="false" HBox.hgrow="ALWAYS" />
+                     <Label fx:id="meTurmas" maxWidth="1.7976931348623157E308" minHeight="50.0" textFill="RED" HBox.hgrow="ALWAYS" />
                             <Button minHeight="50.0" minWidth="100.0" mnemonicParsing="false" onAction="#adicionarTurma" text="Criar" />
                             <Button minHeight="50.0" minWidth="100.0" mnemonicParsing="false" text="Limpar" />
                      <VBox.margin>

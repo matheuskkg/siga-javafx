@@ -1,5 +1,7 @@
 package fatec.sigafx.model.aulas;
 
+import fatec.sigafx.dao.TurmaDAO;
+import fatec.sigafx.model.aulas.dto.TurmaCriarRequest;
 import fatec.sigafx.model.usuarios.AlunoModel;
 import fatec.sigafx.model.usuarios.ProfessorModel;
 import jakarta.persistence.*;
@@ -11,6 +13,7 @@ import java.util.List;
 public class TurmaModel {
 
     @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
     private Integer id;
 
     //fazer hard coded msm fds (final de semana)
@@ -31,4 +34,19 @@ public class TurmaModel {
             inverseJoinColumns = @JoinColumn(name = "aluno_id")
     )
     private List<AlunoModel> alunos;
+
+    @Transient
+    private static TurmaDAO turmaDAO = new TurmaDAO();
+
+    public TurmaModel() {}
+
+    public TurmaModel(TurmaCriarRequest request) {
+        this.curso = request.curso();
+        this.disciplina = request.disciplina();
+        this.professor = request.professor();
+    }
+
+    public static void criarTurma(TurmaCriarRequest request) {
+        turmaDAO.salvarTurma(new TurmaModel(request));
+    }
 }

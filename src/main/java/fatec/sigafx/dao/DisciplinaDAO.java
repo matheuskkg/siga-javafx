@@ -7,6 +7,8 @@ import fatec.sigafx.model.usuarios.UsuarioModel;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.EntityManagerFactory;
 
+import java.util.List;
+
 public class DisciplinaDAO {
     private EntityManagerFactory emf = EMF.getEmf();
 
@@ -23,6 +25,18 @@ public class DisciplinaDAO {
             }
 
             System.out.println("Falha ao salvar disciplina");
+        }
+    }
+
+    public List<DisciplinaModel> buscarTodos() {
+        try (EntityManager em = emf.createEntityManager()) {
+            List<DisciplinaModel> res = em.createQuery("FROM DisciplinaModel ", DisciplinaModel.class)
+                    .getResultList();
+
+            return res;
+        } catch (Exception e) {
+            e.printStackTrace();
+            return null;
         }
     }
 

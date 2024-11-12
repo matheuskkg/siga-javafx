@@ -1,9 +1,9 @@
 package fatec.sigafx.controller;
 
-import fatec.sigafx.dao.ProfessorDAO;
-import fatec.sigafx.dao.UsuarioDAO;
 import fatec.sigafx.model.aulas.DisciplinaModel;
+import fatec.sigafx.model.aulas.TurmaModel;
 import fatec.sigafx.model.aulas.dto.DisciplinaCriarRequest;
+import fatec.sigafx.model.aulas.dto.TurmaCriarRequest;
 import fatec.sigafx.model.usuarios.ProfessorModel;
 import fatec.sigafx.model.usuarios.UsuarioModel;
 import fatec.sigafx.model.usuarios.dto.UsuarioCriarRequest;
@@ -25,8 +25,6 @@ import javafx.event.ActionEvent;
 import javafx.animation.PauseTransition;
 import javafx.util.Duration;
 
-import java.awt.*;
-import java.util.ArrayList;
 import java.util.List;
 
 public class AdminController
@@ -91,21 +89,32 @@ public class AdminController
     private VBox gAlterarExcluirDisciplinas;
 
     @FXML
+    private TableView<DisciplinaModel> tableViewAlterarExcluirDisciplina;
+    @FXML
+    private TableColumn<DisciplinaModel, Integer> disciplinaId;
+    @FXML
+    private TableColumn<DisciplinaModel, String> disciplinaNome;
+    @FXML
+    private TableColumn<DisciplinaModel, Integer> disciplinaCargaHoraria;
+
+    @FXML
     private VBox gTurmas;
     @FXML
     private VBox gBotaoTurmas;
     @FXML
     private VBox gAdicionarTurmas;
     @FXML
-    private ComboBox<String> cbProfRespon;
+    private ComboBox<String> cbCursoAdicionarTurma;
+    @FXML
+    private ComboBox<DisciplinaModel> cbDisciplinaAdicionarTurma;
+    @FXML
+    private ComboBox<ProfessorModel> cbProfRespon;
     @FXML
     private Label meTurmas;
     @FXML
     private VBox gAlterarExcluirTurmas;
     @FXML
     private VBox gAdicionarRemoverAlunosTurmas;
-    @FXML
-    private ComboBox<String> cbCursoAdicionarTurma;
 
     @FXML
     public void initialize() {
@@ -114,15 +123,19 @@ public class AdminController
         definirUsuarioSelecionado();
         carregarComboBoxCargaHoraria();
         carregarComboBoxProfessorResponsavel();
+        carregarTableViewDisciplinas();
+        carregarComboBoxDisciplina();
+        carregarComboBoxCursos();
     }
 
     private void atualizarTableViewUsuarios() {
-        UsuarioDAO usuarioDAO = new UsuarioDAO();
-        tableViewAlterarExcluirUsuario.setItems(usuarioDAO.buscarTodos());
+        ObservableList<UsuarioModel> usuarios = FXCollections.observableArrayList();
+        usuarios.addAll(UsuarioModel.buscarTodosUsuarios());
+
+        tableViewAlterarExcluirUsuario.setItems(usuarios);
     }
 
     private void carregarTableViewUsuarios() {
-        //TableView alteração e exclusão de usuários
         usuarioId.setCellValueFactory(new PropertyValueFactory<>("id"));
         usuarioNome.setCellValueFactory(new PropertyValueFactory<>("nome"));
         usuarioEmail.setCellValueFactory(new PropertyValueFactory<>("email"));
@@ -143,16 +156,46 @@ public class AdminController
         cbCargaAdicionarDisciplina.setItems(obsCargaHoraria);
     }
 
+    private void atualizarTableViewDisciplinas() {
+        ObservableList<DisciplinaModel> disciplinas = FXCollections.observableArrayList();
+        disciplinas.addAll(DisciplinaModel.buscarTodasDisciplinas());
+
+        tableViewAlterarExcluirDisciplina.setItems(disciplinas);
+    }
+
+    private void carregarTableViewDisciplinas() {
+        disciplinaId.setCellValueFactory(new PropertyValueFactory<>("id"));
+        disciplinaNome.setCellValueFactory(new PropertyValueFactory<>("nome"));
+        disciplinaCargaHoraria.setCellValueFactory(new PropertyValueFactory<>("cargaHoraria"));
+        atualizarTableViewDisciplinas();
+    }
+
+    private void carregarComboBoxCursos() {
+        ObservableList<String> obsCursos = FXCollections.observableArrayList();
+        obsCursos.addAll(List.of(
+                "Análise e Desenvolvimento de Sistemas",
+                "Agronegócio",
+                "Gestão Empresarial",
+                "Logística",
+                "Recursos Humanos"));
+
+        cbCursoAdicionarTurma.setItems(obsCursos);
+    }
+
+    private void carregarComboBoxDisciplina() {
+        List<DisciplinaModel> disciplinas = DisciplinaModel.buscarTodasDisciplinas();
+
+        ObservableList<DisciplinaModel> obsDisciplinas = FXCollections.observableArrayList();
+        obsDisciplinas.addAll(disciplinas);
+
+        cbDisciplinaAdicionarTurma.setItems(obsDisciplinas);
+    }
+
     private void carregarComboBoxProfessorResponsavel() {
-        ProfessorDAO professorDAO = new ProfessorDAO();
+        List<ProfessorModel> professores = ProfessorModel.buscarTodosProfessores();
 
-        List<ProfessorModel> professores = professorDAO.buscarTodosProfessores();
-
-        ObservableList<String> obsProfessores = FXCollections.observableArrayList();
-
-        for (ProfessorModel p : professores) {
-            obsProfessores.add(p.getEmail());
-        }
+        ObservableList<ProfessorModel> obsProfessores = FXCollections.observableArrayList();
+        obsProfessores.addAll(professores);
 
         cbProfRespon.setItems(obsProfessores);
     }
@@ -192,7 +235,6 @@ public class AdminController
         meAdicionarDisciplinas.setText("");
     }
 
-    // Mostrar "Início"
     @FXML
     private void mudarTelaGeral(ActionEvent event) {
         esconderPaineis();
@@ -258,7 +300,7 @@ public class AdminController
 
         PauseTransition pause = new PauseTransition(Duration.seconds(2));
         pause.setOnFinished(event -> {
-            meAdicionarUsuarioErroCampos.setText("");});
+            label.setText("");});
         pause.play();
     }
 
@@ -395,6 +437,8 @@ public class AdminController
 
         if (camposVazios) {
             exibirMensagem(meAdicionarDisciplinas, "Todos os campos devem ser preenchidos.");
+
+            return;
         }
 
         DisciplinaModel.criarDisciplina(new DisciplinaCriarRequest(nomeAdicionarDisciplina.getText(), cbCargaAdicionarDisciplina.getSelectionModel().getSelectedItem()));
@@ -452,9 +496,30 @@ public class AdminController
         gAdicionarTurmas.setVisible(true);
     }
 
+    private boolean verificarCamposVaziosAdicionarTurma() {
+        return cbCursoAdicionarTurma.getSelectionModel().getSelectedItem() == null
+                || cbDisciplinaAdicionarTurma.getSelectionModel().getSelectedItem() == null
+                || cbProfRespon.getSelectionModel().getSelectedItem() == null;
+    }
+
     @FXML
     private void adicionarTurma() {
-        System.out.println("oi");
+        exibirMensagem(meTurmas, "");
+
+        boolean camposVazios = verificarCamposVaziosAdicionarTurma();
+
+        if (camposVazios) {
+            exibirMensagem(meTurmas, "Todos os campos devem ser preenchidos.");
+
+            return;
+        }
+
+        TurmaModel.criarTurma(new TurmaCriarRequest(cbCursoAdicionarTurma.getSelectionModel().getSelectedItem(), cbDisciplinaAdicionarTurma.getSelectionModel().getSelectedItem(), cbProfRespon.getSelectionModel().getSelectedItem()));
+
+        limparCampos();
+        initialize();
+
+        exibirMensagemTemporaria(meTurmas, "Turma salva com sucesso.");
     }
 
     private void mostrarAlterarExcluirTurmas() {

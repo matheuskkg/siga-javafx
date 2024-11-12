@@ -4,6 +4,8 @@ import fatec.sigafx.dao.UsuarioDAO;
 import fatec.sigafx.model.usuarios.dto.UsuarioCriarRequest;
 import jakarta.persistence.*;
 
+import java.util.List;
+
 @Entity
 @Table(name = "usuarios")
 @Inheritance(strategy = InheritanceType.JOINED)
@@ -52,6 +54,10 @@ public class UsuarioModel {
 
     public static void excluirUsuario(UsuarioModel request) {
         usuarioDAO.excluirUsuario(request);
+    }
+
+    public static List<UsuarioModel> buscarTodosUsuarios() {
+        return usuarioDAO.buscarTodos();
     }
 
     public static UsuarioModel buscarUsuarioPorEmail(String email) {

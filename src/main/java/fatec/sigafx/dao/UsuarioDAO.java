@@ -4,8 +4,6 @@ import fatec.sigafx.EMF;
 import fatec.sigafx.model.usuarios.UsuarioModel;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.EntityManagerFactory;
-import javafx.collections.FXCollections;
-import javafx.collections.ObservableList;
 
 import java.util.List;
 
@@ -57,14 +55,11 @@ public class UsuarioDAO {
     /**
      * Caso deseje retornar especificamente alunos, admins ou professores, utilizar seus respectivos DAOs.
      */
-    public ObservableList<UsuarioModel> buscarTodos() {
-        ObservableList<UsuarioModel> res = FXCollections.observableArrayList();
-
+    public List<UsuarioModel> buscarTodos() {
         try (EntityManager em = emf.createEntityManager()) {
-            List<UsuarioModel> l = em.createQuery("FROM UsuarioModel", UsuarioModel.class)
+            List<UsuarioModel> res = em.createQuery("FROM UsuarioModel", UsuarioModel.class)
                     .getResultList();
 
-            res.addAll(l);
             return res;
         } catch (Exception e) {
             e.printStackTrace();

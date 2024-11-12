@@ -23,7 +23,17 @@ public class ProfessorModel extends UsuarioModel {
     @Transient
     private static ProfessorDAO professorDAO = new ProfessorDAO();
 
+    public static List<ProfessorModel> buscarTodosProfessores() {
+        return professorDAO.buscarTodos();
+    }
+
     public static ProfessorModel buscarProfessorPorEmail(String email) {
         return professorDAO.buscarPorEmail(email);
+    }
+
+    @Override
+    public String toString() {
+        return "Nome: " + getNome() +
+                ", E-Mail: " + getEmail();
     }
 }
