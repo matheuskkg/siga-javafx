@@ -1,6 +1,6 @@
 package fatec.sigafx.model.usuarios.dto;
 
 public record UsuarioLoginRequest(
-       String nome,
+       String email,
        String senha
 ) {}

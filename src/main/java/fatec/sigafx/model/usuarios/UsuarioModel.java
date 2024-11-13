@@ -2,6 +2,7 @@ package fatec.sigafx.model.usuarios;
 
 import fatec.sigafx.dao.UsuarioDAO;
 import fatec.sigafx.model.usuarios.dto.UsuarioCriarRequest;
+import fatec.sigafx.model.usuarios.dto.UsuarioLoginRequest;
 import jakarta.persistence.*;
 
 import java.util.List;
@@ -30,6 +31,20 @@ public class UsuarioModel {
         this.nome = request.nome();
         this.email = request.email();
         this.senha = request.senha();
+    }
+
+    public static String autenticarUsuario(UsuarioLoginRequest request) {
+        UsuarioModel u = buscarUsuarioPorEmail(request.email());
+
+        if (u == null || !request.senha().equals(u.getSenha())) {
+            return null;
+        } else if (u instanceof AdminModel) {
+            return "ADMIN";
+        } else if (u instanceof AlunoModel) {
+            return "ALUNO";
+        } else {
+            return "PROFESSOR";
+        }
     }
 
     public static boolean verificarEmailEmUso(String email) {
