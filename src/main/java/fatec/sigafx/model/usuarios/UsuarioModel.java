@@ -2,7 +2,6 @@ package fatec.sigafx.model.usuarios;
 
 import fatec.sigafx.dao.UsuarioDAO;
 import fatec.sigafx.model.usuarios.dto.UsuarioCriarRequest;
-import fatec.sigafx.model.usuarios.dto.UsuarioLoginRequest;
 import jakarta.persistence.*;
 
 import java.util.List;
@@ -33,38 +32,44 @@ public class UsuarioModel {
         this.senha = request.senha();
     }
 
-    public static String autenticarUsuario(UsuarioLoginRequest request) {
-        UsuarioModel u = buscarUsuarioPorEmail(request.email());
+    public static String definirTipoUsuario(UsuarioModel u) {
+        if (u instanceof AdminModel) return "Administrador";
+        if (u instanceof AlunoModel) return "Aluno";
+        if (u instanceof ProfessorModel) return "Professor";
 
-        if (u == null || !request.senha().equals(u.getSenha())) {
-            return null;
-        } else if (u instanceof AdminModel) {
-            return "ADMIN";
-        } else if (u instanceof AlunoModel) {
-            return "ALUNO";
-        } else {
-            return "PROFESSOR";
-        }
+        return null;
     }
 
-    public static boolean verificarEmailEmUso(String email) {
-        return usuarioDAO.buscarPorEmail(email) != null;
-    }
-
-    public static void criarUsuario(UsuarioCriarRequest request, String tipo) {
+    private static UsuarioModel definirTipoUsuario(UsuarioCriarRequest request, String tipo) {
         //TODO: Utilizar enum p/ definir a role
-        UsuarioModel u = switch (tipo) {
+        return switch (tipo) {
             case "Administrador" -> new AdminModel(request);
             case "Professor" -> new ProfessorModel(request);
             case "Aluno" -> new AlunoModel(request);
             default -> null;
         };
+    }
+
+    public static void criarUsuario(UsuarioCriarRequest request, String tipo) {
+        UsuarioModel u = definirTipoUsuario(request, tipo);
 
         usuarioDAO.salvarUsuario(u);
     }
 
-    public static void atualizarUsuario(UsuarioModel request) {
-        usuarioDAO.salvarUsuario(request);
+    public static void atualizarUsuario(UsuarioCriarRequest request, String tipo, Integer id) {
+        UsuarioModel usuarioAntigo = usuarioDAO.buscarPorId(id);
+
+        if (!definirTipoUsuario(usuarioAntigo).equals(tipo)) {
+            excluirUsuario(usuarioAntigo);
+            UsuarioModel usuarioNovo = definirTipoUsuario(request, tipo);
+            usuarioNovo.setId(id);
+            usuarioDAO.salvarUsuario(usuarioNovo);
+        } else {
+            usuarioAntigo.setNome(request.nome());
+            usuarioAntigo.setEmail(request.email());
+            usuarioAntigo.setSenha(request.senha());
+            usuarioDAO.salvarUsuario(usuarioAntigo);
+        }
     }
 
     public static void excluirUsuario(UsuarioModel request) {

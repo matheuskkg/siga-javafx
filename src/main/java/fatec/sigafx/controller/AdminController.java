@@ -4,9 +4,12 @@ import fatec.sigafx.model.aulas.DisciplinaModel;
 import fatec.sigafx.model.aulas.TurmaModel;
 import fatec.sigafx.model.aulas.dto.DisciplinaCriarRequest;
 import fatec.sigafx.model.aulas.dto.TurmaCriarRequest;
+import fatec.sigafx.model.usuarios.AdminModel;
+import fatec.sigafx.model.usuarios.AlunoModel;
 import fatec.sigafx.model.usuarios.ProfessorModel;
 import fatec.sigafx.model.usuarios.UsuarioModel;
 import fatec.sigafx.model.usuarios.dto.UsuarioCriarRequest;
+import fatec.sigafx.model.util.UsuarioValidador;
 import fatec.sigafx.view.LoginView;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -233,6 +236,9 @@ public class AdminController
 
         nomeAdicionarDisciplina.clear();
         meAdicionarDisciplinas.setText("");
+
+        tableViewAlterarExcluirUsuario.getSelectionModel().clearSelection();
+        usuarioSelecionado = null;
     }
 
     @FXML
@@ -306,42 +312,47 @@ public class AdminController
         pause.play();
     }
 
-    private boolean verificarCamposVaziosAdicionarUsuario() {
-        return nomeAdicionarUsuario.getText().isEmpty()
-                || senhaAdicionarUsuario.getText().isEmpty()
-                || confirmarSenhaAdicionarUsuario.getText().isEmpty()
-                || emailAdicionarUsuario.getText().isEmpty()
-                || cbTipoAdicionarUsuario.getSelectionModel().getSelectedItem() == null;
-    }
-
-    private boolean verificarEmailValido() {
-        String regex = "^[A-Za-z0-9+_.-]+@[A-Za-z0-9.-]+\\.[A-Za-z]{2,6}$";
-
-        return emailAdicionarUsuario.getText().matches(regex) ^ emailAdicionarUsuario.getText().isEmpty();
-    }
-
-    private boolean verificarSenhasCoincidem() {
-        return senhaAdicionarUsuario.getText().equals(confirmarSenhaAdicionarUsuario.getText());
-    }
-
     @FXML
     private void adicionarUsuario() {
         exibirMensagem(meAdicionarUsuarioErroCampos, "");
         exibirMensagem(meAdicionarUsuarioErroEmail, "");
         exibirMensagem(meAdicionarUsuarioErroSenhasDiferentes, "");
 
-        boolean camposVazios = verificarCamposVaziosAdicionarUsuario();
-        boolean emailValido = verificarEmailValido();
-        boolean emailEmUso = UsuarioModel.verificarEmailEmUso(emailAdicionarUsuario.getText());
-        boolean senhasCoincidem = verificarSenhasCoincidem();
+        String nome = nomeAdicionarUsuario.getText();
+        String email = emailAdicionarUsuario.getText();
+        String senha = senhaAdicionarUsuario.getText();
+        String confirmarSenha = confirmarSenhaAdicionarUsuario.getText();
+        String tipo = cbTipoAdicionarUsuario.getValue();
 
-        if (camposVazios || !emailValido || emailEmUso || !senhasCoincidem) {
-            if (camposVazios) exibirMensagem(meAdicionarUsuarioErroCampos, "Todos os campos devem ser preenchidos.");
-            if (!emailValido) exibirMensagem(meAdicionarUsuarioErroEmail, "Email inválido.");
-            if (emailEmUso) exibirMensagem(meAdicionarUsuarioErroEmail, "Email já cadastrado.");
-            if (!senhasCoincidem) exibirMensagem(meAdicionarUsuarioErroSenhasDiferentes, "Senhas diferentes.");
+        UsuarioValidador validador = new UsuarioValidador(nome, email, senha, confirmarSenha, tipo);
 
-            return;
+        boolean errosCampos = false;
+
+        if (validador.verificarCamposVazios()) {
+            exibirMensagem(meAdicionarUsuarioErroCampos, "Todos os campos devem ser preenchidos.");
+            errosCampos = true;
+        }
+
+        if (!validador.verificarEmailValido()) {
+            exibirMensagem(meAdicionarUsuarioErroEmail, "Email inválido.");
+            errosCampos = true;
+        }
+
+        if (!validador.verificarSenhasCoincidem()) {
+            exibirMensagem(meAdicionarUsuarioErroSenhasDiferentes, "Senhas diferentes.");
+            errosCampos = true;
+        }
+
+        if (errosCampos) return;
+
+        //Primeira condição: Está sendo criado um novo usuário, deve verificar se o e-mail não está em uso
+        //Segunda condição: Um usuário está sendo alterado, deve verificar se o e-mail não está em uso apenas caso tenha sido alterado
+        //Caso nenhuma das duas condições sejam verdadeiras, não há necessidade de verificar o e-mail
+        if (usuarioSelecionado == null || !usuarioSelecionado.getEmail().equals(email)) {
+            if (validador.verificarEmailEmUso()) {
+                exibirMensagem(meAdicionarUsuarioErroEmail, "Email já cadastrado.");
+                return;
+            }
         }
 
         UsuarioCriarRequest request = new UsuarioCriarRequest(
@@ -349,12 +360,18 @@ public class AdminController
                 emailAdicionarUsuario.getText(),
                 senhaAdicionarUsuario.getText());
 
-        UsuarioModel.criarUsuario(request, cbTipoAdicionarUsuario.getValue());
+        if (usuarioSelecionado == null) {
+            UsuarioModel.criarUsuario(request, tipo);
+        } else {
+            UsuarioModel.atualizarUsuario(request, tipo, usuarioSelecionado.getId());
+        }
 
         limparCampos();
         initialize();
 
         exibirMensagemTemporaria(meAdicionarUsuarioErroCampos, "Usuário salvo com sucesso.");
+
+        usuarioSelecionado = null;
     }
 
     private void mostrarAlterarExcluirUsuario() {
@@ -371,24 +388,24 @@ public class AdminController
         });
     }
 
-    private UsuarioModel getUsuarioSelecionado() {
-        return usuarioSelecionado;
-    }
-
     @FXML
     public void mostrarAlterarUsuario(){
-        gUsuarios.setVisible(true);
-        gAlterarExcluirUsuario.setVisible(false);
-        gAdicionarAlterarUsuario.setVisible(true);
-        meAdicionarUsuario.setText("Alterar Usuario");
+        if (usuarioSelecionado == null) {
+            //TODO: exibir mensagem pedindo p selecionar um usuario
+        } else {
+            gUsuarios.setVisible(true);
+            gAlterarExcluirUsuario.setVisible(false);
+            gAdicionarAlterarUsuario.setVisible(true);
+            meAdicionarUsuario.setText("Alterar Usuario");
 
-        nomeAdicionarUsuario.setText(getUsuarioSelecionado().getNome());
-        emailAdicionarUsuario.setText(getUsuarioSelecionado().getEmail());
-        senhaAdicionarUsuario.setText(getUsuarioSelecionado().getSenha());
-        confirmarSenhaAdicionarUsuario.setText(getUsuarioSelecionado().getSenha());
-        cbTipoAdicionarUsuario.setValue("mano, n sei");
+            botaoAdicionarAlterarUsuario.setText("Alterar");
 
-        botaoAdicionarAlterarUsuario.setText("Alterar");
+            nomeAdicionarUsuario.setText(usuarioSelecionado.getNome());
+            emailAdicionarUsuario.setText(usuarioSelecionado.getEmail());
+            senhaAdicionarUsuario.setText(usuarioSelecionado.getSenha());
+            confirmarSenhaAdicionarUsuario.setText(usuarioSelecionado.getSenha());
+            cbTipoAdicionarUsuario.setValue(UsuarioModel.definirTipoUsuario(usuarioSelecionado));
+        }
     }
 
     @FXML
@@ -397,7 +414,7 @@ public class AdminController
     }
     @FXML
     public void confirmaExclusao(){
-        UsuarioModel.excluirUsuario(getUsuarioSelecionado());
+        UsuarioModel.excluirUsuario(usuarioSelecionado);
         atualizarTableViewUsuarios();
         gConfirmaExclusao.setVisible(false);
     }
