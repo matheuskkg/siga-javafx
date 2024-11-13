@@ -202,6 +202,19 @@ public class AdminController
         cbProfRespon.setItems(obsProfessores);
     }
 
+    private ComboBox<String> reconstruirComboBox(ComboBox<String> comboBox, HBox hboxPai) {
+        ComboBox<String> novaComboBox = new ComboBox<>(comboBox.getItems());
+        novaComboBox.setMaxSize(Double.MAX_VALUE,30);
+        HBox.setHgrow(novaComboBox, Priority.ALWAYS);
+        HBox.setMargin(novaComboBox, new Insets(10,0,0,0));
+        novaComboBox.setFocusTraversable(false);
+        novaComboBox.setPromptText(comboBox.getPromptText());
+
+        hboxPai.getChildren().remove(comboBox);
+        hboxPai.getChildren().add(novaComboBox);
+        return novaComboBox;
+    }
+
     @FXML
     public void limparCampos(){
         nomeAdicionarUsuario.clear();
@@ -209,25 +222,21 @@ public class AdminController
         confirmarSenhaAdicionarUsuario.clear();
         emailAdicionarUsuario.clear();
 
-        // Criar uma ComboBox com as mesmas propriedades e itens
-        ComboBox<String> novaAdicionarCB = new ComboBox<>(cbTipoAdicionarUsuario.getItems());
-        novaAdicionarCB.setMaxSize(Double.MAX_VALUE,30);
-        HBox.setHgrow(novaAdicionarCB, Priority.ALWAYS);
-        HBox.setMargin(novaAdicionarCB, new Insets(10,0,0,0));
-        novaAdicionarCB.setPromptText(cbTipoAdicionarUsuario.getPromptText());
-        // Substituir a ComboBox original pela nova
-        hTipoUsuario.getChildren().remove(cbTipoAdicionarUsuario);
-        hTipoUsuario.getChildren().add(novaAdicionarCB);
-        cbTipoAdicionarUsuario = novaAdicionarCB;
+        cbTipoAdicionarUsuario = reconstruirComboBox(cbTipoAdicionarUsuario, hTipoUsuario);
 
         ComboBox<Integer> novaAdicionarCargaCB = new ComboBox<>(cbCargaAdicionarDisciplina.getItems());
         novaAdicionarCargaCB.setMaxSize(Double.MAX_VALUE,30);
         HBox.setHgrow(novaAdicionarCargaCB, Priority.ALWAYS);
         HBox.setMargin(novaAdicionarCargaCB, new Insets(10,0,0,0));
+        novaAdicionarCargaCB.setFocusTraversable(false);
         novaAdicionarCargaCB.setPromptText(cbCargaAdicionarDisciplina.getPromptText());
         hDisciplinaCarga.getChildren().remove(cbCargaAdicionarDisciplina);
         hDisciplinaCarga.getChildren().add(novaAdicionarCargaCB);
         cbCargaAdicionarDisciplina = novaAdicionarCargaCB;
+
+        // Quero fazer isso aqui mas essa ComboBox recebe int e eu preciso que seja String
+        // Tem como mudar pra String e ao mandar pro banco de dados transformar em int ??
+        //cbCargaAdicionarDisciplina = reconstruirComboBox(cbCargaAdicionarDisciplina, hDisciplinaCarga);
 
         meAdicionarUsuarioErroSenhasDiferentes.setText("");
         meAdicionarUsuarioErroCampos.setText("");
