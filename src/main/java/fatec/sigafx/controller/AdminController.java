@@ -62,6 +62,8 @@ public class AdminController
     @FXML
     private VBox gAlterarExcluirUsuario;
     @FXML
+    private Button botaoAdicionarAlterarUsuario;
+    @FXML
     public VBox gConfirmaExclusao;
 
     @FXML
@@ -228,7 +230,6 @@ public class AdminController
         meAdicionarUsuarioErroSenhasDiferentes.setText("");
         meAdicionarUsuarioErroCampos.setText("");
         meAdicionarUsuarioErroEmail.setText("");
-        meAdicionarUsuario.setText("");
 
         nomeAdicionarDisciplina.clear();
         meAdicionarDisciplinas.setText("");
@@ -289,6 +290,7 @@ public class AdminController
         gUsuarios.setVisible(true);
         gAdicionarAlterarUsuario.setVisible(true);
         meAdicionarUsuario.setText("Adicionar Usuario");
+        botaoAdicionarAlterarUsuario.setText("Adicionar");
     }
 
     private void exibirMensagem(Label label, String mensagem) {
@@ -384,6 +386,9 @@ public class AdminController
         emailAdicionarUsuario.setText(getUsuarioSelecionado().getEmail());
         senhaAdicionarUsuario.setText(getUsuarioSelecionado().getSenha());
         confirmarSenhaAdicionarUsuario.setText(getUsuarioSelecionado().getSenha());
+        cbTipoAdicionarUsuario.setValue("mano, n sei");
+
+        botaoAdicionarAlterarUsuario.setText("Alterar");
     }
 
     @FXML

@@ -212,7 +212,7 @@
                             </VBox.margin>
                         <Label fx:id="meAdicionarUsuarioErroCampos" minWidth="200.0" textFill="red" />
                         <Region HBox.hgrow="ALWAYS" />
-                        <Button focusTraversable="false" minHeight="50.0" minWidth="100.0" mnemonicParsing="false" onAction="#adicionarUsuario" text="Adicionar" />
+                        <Button fx:id="botaoAdicionarAlterarUsuario" focusTraversable="false" minHeight="50.0" minWidth="100.0" mnemonicParsing="false" onAction="#adicionarUsuario" />
                         <Button focusTraversable="false" minHeight="50.0" minWidth="100.0" mnemonicParsing="false" onAction="#limparCampos" text="Limpar" />
                         </HBox>
                     </VBox>
