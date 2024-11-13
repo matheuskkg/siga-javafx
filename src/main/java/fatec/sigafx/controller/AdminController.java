@@ -202,8 +202,8 @@ public class AdminController
         cbProfRespon.setItems(obsProfessores);
     }
 
-    private ComboBox<String> reconstruirComboBox(ComboBox<String> comboBox, HBox hboxPai) {
-        ComboBox<String> novaComboBox = new ComboBox<>(comboBox.getItems());
+    private <T> ComboBox<T> reconstruirComboBox(ComboBox<T> comboBox, HBox hboxPai) {
+        ComboBox<T> novaComboBox = new ComboBox<>(comboBox.getItems());
         novaComboBox.setMaxSize(Double.MAX_VALUE,30);
         HBox.setHgrow(novaComboBox, Priority.ALWAYS);
         HBox.setMargin(novaComboBox, new Insets(10,0,0,0));
@@ -223,20 +223,7 @@ public class AdminController
         emailAdicionarUsuario.clear();
 
         cbTipoAdicionarUsuario = reconstruirComboBox(cbTipoAdicionarUsuario, hTipoUsuario);
-
-        ComboBox<Integer> novaAdicionarCargaCB = new ComboBox<>(cbCargaAdicionarDisciplina.getItems());
-        novaAdicionarCargaCB.setMaxSize(Double.MAX_VALUE,30);
-        HBox.setHgrow(novaAdicionarCargaCB, Priority.ALWAYS);
-        HBox.setMargin(novaAdicionarCargaCB, new Insets(10,0,0,0));
-        novaAdicionarCargaCB.setFocusTraversable(false);
-        novaAdicionarCargaCB.setPromptText(cbCargaAdicionarDisciplina.getPromptText());
-        hDisciplinaCarga.getChildren().remove(cbCargaAdicionarDisciplina);
-        hDisciplinaCarga.getChildren().add(novaAdicionarCargaCB);
-        cbCargaAdicionarDisciplina = novaAdicionarCargaCB;
-
-        // Quero fazer isso aqui mas essa ComboBox recebe int e eu preciso que seja String
-        // Tem como mudar pra String e ao mandar pro banco de dados transformar em int ??
-        //cbCargaAdicionarDisciplina = reconstruirComboBox(cbCargaAdicionarDisciplina, hDisciplinaCarga);
+        cbCargaAdicionarDisciplina = reconstruirComboBox(cbCargaAdicionarDisciplina, hDisciplinaCarga);
 
         meAdicionarUsuarioErroSenhasDiferentes.setText("");
         meAdicionarUsuarioErroCampos.setText("");
@@ -393,7 +380,7 @@ public class AdminController
         gAdicionarAlterarUsuario.setVisible(true);
         meAdicionarUsuario.setText("Alterar Usuario");
 
-        //nomeAdicionarUsuario.setText(getUsuarioSelecionado().getNome());
+        nomeAdicionarUsuario.setText(getUsuarioSelecionado().getNome());
         emailAdicionarUsuario.setText(getUsuarioSelecionado().getEmail());
         senhaAdicionarUsuario.setText(getUsuarioSelecionado().getSenha());
         confirmarSenhaAdicionarUsuario.setText(getUsuarioSelecionado().getSenha());
