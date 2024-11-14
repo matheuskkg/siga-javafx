@@ -49,4 +49,48 @@ public class TurmaModel {
     public static void criarTurma(TurmaCriarRequest request) {
         turmaDAO.salvarTurma(new TurmaModel(request));
     }
+
+    public static List<TurmaModel> buscarTodasTurmas() {
+        return turmaDAO.buscarTodos();
+    }
+
+    public Integer getId() {
+        return id;
+    }
+
+    public void setId(Integer id) {
+        this.id = id;
+    }
+
+    public String getCurso() {
+        return curso;
+    }
+
+    public void setCurso(String curso) {
+        this.curso = curso;
+    }
+
+    public DisciplinaModel getDisciplina() {
+        return disciplina;
+    }
+
+    public void setDisciplina(DisciplinaModel disciplina) {
+        this.disciplina = disciplina;
+    }
+
+    public ProfessorModel getProfessor() {
+        return professor;
+    }
+
+    public void setProfessor(ProfessorModel professor) {
+        this.professor = professor;
+    }
+
+    public List<AlunoModel> getAlunos() {
+        return alunos;
+    }
+
+    public void setAlunos(List<AlunoModel> alunos) {
+        this.alunos = alunos;
+    }
 }

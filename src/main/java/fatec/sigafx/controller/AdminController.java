@@ -151,6 +151,17 @@ public class AdminController
     public VBox gConfirmaRemoverAluno;
 
     @FXML
+    private TableView<TurmaModel> tableViewAlterarExcluirTurma;
+    @FXML
+    private TableColumn<TurmaModel, Integer> turmaId;
+    @FXML
+    private TableColumn<TurmaModel, String> turmaCurso;
+    @FXML
+    private TableColumn<TurmaModel, DisciplinaModel> turmaDisciplina;
+    @FXML
+    private TableColumn<TurmaModel, ProfessorModel> turmaProfessor;
+
+    @FXML
     public void initialize() {
         carregarTableViewUsuarios();
         carregarComboBoxTipoUsuario();
@@ -161,6 +172,7 @@ public class AdminController
         carregarTableViewDisciplinas();
         carregarComboBoxDisciplina();
         carregarComboBoxCursos();
+        carregarTableViewTurmas();
     }
 
     private void atualizarTableViewUsuarios() {
@@ -241,6 +253,25 @@ public class AdminController
         obsProfessores.addAll(professores);
 
         cbProfResponAdicionarTurma.setItems(obsProfessores);
+    }
+
+    private void atualizarTableViewTurmas() {
+        ObservableList<TurmaModel> turmas = FXCollections.observableArrayList();
+        turmas.addAll(TurmaModel.buscarTodasTurmas());
+
+        tableViewAlterarExcluirTurma.setItems(turmas);
+
+        turmaId.setSortType(TableColumn.SortType.ASCENDING);
+        tableViewAlterarExcluirTurma.getSortOrder().add(turmaId);
+        tableViewAlterarExcluirTurma.sort();
+    }
+
+    private void carregarTableViewTurmas() {
+        turmaId.setCellValueFactory(new PropertyValueFactory<>("id"));
+        turmaCurso.setCellValueFactory(new PropertyValueFactory<>("curso"));
+        turmaDisciplina.setCellValueFactory(new PropertyValueFactory<>("disciplina"));
+        turmaProfessor.setCellValueFactory(new PropertyValueFactory<>("professor"));
+        atualizarTableViewTurmas();
     }
 
     private <T> ComboBox<T> reconstruirComboBox(ComboBox<T> comboBox, HBox hboxPai) {
@@ -578,8 +609,7 @@ public class AdminController
             bAdicionarAlterarDisiciplina.setText("Alterar");
 
             nomeAdicionarDisciplina.setText(disciplinaSelecionada.getNome());
-            //Precisa preencher a comobobox com o valor da carga horaria mas não sei fazer isso
-            //cbCargaAdicionarDisciplina.setValue(DisciplinaModel.);
+            cbCargaAdicionarDisciplina.setValue(disciplinaSelecionada.getCargaHoraria());
         }
     }
 
