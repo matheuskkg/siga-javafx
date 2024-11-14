@@ -62,7 +62,7 @@
                         <VBox fx:id="gAlterarExcluirUsuario" maxWidth="1000.0" prefWidth="500.0" visible="false">
                             <TableView fx:id="tableViewAlterarExcluirUsuario" maxWidth="1.7976931348623157E308" prefHeight="200.0" prefWidth="200.0" VBox.vgrow="ALWAYS">
                                 <columns>
-                                    <TableColumn fx:id="usuarioId" minWidth="150.0" prefWidth="-1.0" sortType="DESCENDING" text="RA" />
+                                    <TableColumn fx:id="usuarioId" minWidth="150.0" prefWidth="-1.0" sortType="DESCENDING" text="Id" />
                                     <TableColumn fx:id="usuarioNome" minWidth="200.0" prefWidth="-1.0" text="Nome" />
                                     <TableColumn fx:id="usuarioEmail" minWidth="325.0" prefWidth="-1.0" text="E-mail" />
                                 </columns>
@@ -239,9 +239,9 @@
                         <VBox fx:id="gAlterarExcluirDisciplinas" maxWidth="1000.0" prefWidth="500.0" visible="false">
                             <TableView fx:id="tableViewAlterarExcluirDisciplina" prefHeight="902.0" prefWidth="1000.0">
                                 <columns>
-                                    <TableColumn fx:id="disciplinaId" minWidth="70.0" prefWidth="70.0" sortType="DESCENDING" text="Id" />
-                                    <TableColumn fx:id="disciplinaNome" minWidth="300.0" prefWidth="300.0" text="Disciplina" />
-                                    <TableColumn fx:id="disciplinaCargaHoraria" minWidth="200.0" prefWidth="200.0" text="Carga Horária" />
+                                    <TableColumn fx:id="disciplinaId" maxWidth="90.0" minWidth="70.0" prefWidth="-1.0" sortType="DESCENDING" text="Id" />
+                                    <TableColumn fx:id="disciplinaNome" minWidth="300.0" prefWidth="-1.0" text="Disciplina" />
+                                    <TableColumn fx:id="disciplinaCargaHoraria" maxWidth="150.0" minWidth="100.0" prefWidth="-1.0" text="Carga Horária" />
                                 </columns>
                                 <columnResizePolicy>
                                     <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
@@ -337,8 +337,8 @@
                            <Insets />
                         </HBox.margin>
                      </Label>
+                            <Button fx:id="bLimparDisciplina" minHeight="50.0" minWidth="100.0" mnemonicParsing="false" onAction="#limparCampos" text="Limpar" />
                             <Button fx:id="bAdicionarAlterarDisiciplina" minHeight="50.0" minWidth="100.0" mnemonicParsing="false" onAction="#adicionarDisciplina" text="Adicionar" />
-                            <Button fx:id="bLimparAdicionarDisciplina" minHeight="50.0" minWidth="100.0" mnemonicParsing="false" onAction="#limparCampos" text="Limpar" />
                         </HBox>
                     </VBox>
                 </StackPane>
@@ -362,11 +362,14 @@
                         <VBox fx:id="gAlterarExcluirTurmas" maxHeight="1.7976931348623157E308" maxWidth="1000.0" prefHeight="469.0" prefWidth="1000.0" visible="false">
                             <TableView prefHeight="896.0" prefWidth="1000.0">
                                 <columns>
-                                    <TableColumn editable="false" minWidth="90.0" prefWidth="-1.0" text="Id" />
+                                    <TableColumn editable="false" maxWidth="150.0" minWidth="90.0" prefWidth="-1.0" text="Id" />
                                     <TableColumn minWidth="200.0" prefWidth="-1.0" text="Curso" />
                                     <TableColumn editable="false" minWidth="200.0" prefWidth="-1.0" text="Disciplina" />
                                     <TableColumn editable="false" minWidth="150.0" prefWidth="-1.0" text="Professor" />
                                 </columns>
+                        <columnResizePolicy>
+                           <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
+                        </columnResizePolicy>
                             </TableView>
                             <HBox alignment="TOP_RIGHT" spacing="20.0">
                                 <VBox.margin>
@@ -407,10 +410,10 @@
                             </HBox>
                             <TableView VBox.vgrow="ALWAYS">
                                 <columns>
-                                    <TableColumn maxWidth="80.0" minWidth="80.0" prefWidth="-1.0" sortType="DESCENDING" text="Id" />
-                                    <TableColumn maxWidth="220.0" minWidth="220.0" prefWidth="-1.0" text="Nome" />
-                                    <TableColumn maxWidth="250.0" minWidth="250.0" prefWidth="-1.0" text="E-mail" />
-                                    <TableColumn maxWidth="90.0" minWidth="90.0" prefWidth="-1.0" text="Está na turma" />
+                                    <TableColumn maxWidth="150.0" minWidth="80.0" prefWidth="-1.0" sortType="DESCENDING" text="Id" />
+                                    <TableColumn maxWidth="300.0" minWidth="220.0" prefWidth="-1.0" text="Nome" />
+                                    <TableColumn maxWidth="400.0" minWidth="250.0" prefWidth="-1.0" text="E-mail" />
+                                    <TableColumn maxWidth="150.0" minWidth="90.0" prefWidth="-1.0" text="Está na turma" />
                                 </columns>
                                 <columnResizePolicy>
                                     <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />

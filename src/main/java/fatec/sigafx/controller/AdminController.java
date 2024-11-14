@@ -107,7 +107,7 @@ public class AdminController
     @FXML
     public VBox gConfirmaExclusaoDisciplina;
     @FXML
-    public Button bLimparAdicionarDisciplina;
+    public Button bLimparDisciplina;
 
     @FXML
     private TableView<DisciplinaModel> tableViewAlterarExcluirDisciplina;

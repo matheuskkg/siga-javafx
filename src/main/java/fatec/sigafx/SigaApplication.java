@@ -3,10 +3,12 @@ package fatec.sigafx;
 import fatec.sigafx.model.aulas.DisciplinaModel;
 import fatec.sigafx.model.aulas.dto.DisciplinaCriarRequest;
 import fatec.sigafx.model.usuarios.ProfessorModel;
+import fatec.sigafx.view.LoginView;
 import fatec.sigafx.view.AdminView;
+import fatec.sigafx.view.AlunoView;
+import fatec.sigafx.view.ProfessorView;
 import javafx.application.Application;
 import javafx.stage.Stage;
-import fatec.sigafx.view.LoginView;
 
 import fatec.sigafx.model.usuarios.UsuarioModel;
 import fatec.sigafx.model.usuarios.dto.UsuarioCriarRequest;
