@@ -74,7 +74,7 @@
                                 <VBox.margin>
                                     <Insets top="20.0" />
                                 </VBox.margin>
-                        <Label fx:id="meAlterarExcluirUsuario" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" textFill="RED" HBox.hgrow="ALWAYS" />
+                        <Label fx:id="mAlterarExcluirUsuario" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" textFill="RED" HBox.hgrow="ALWAYS" />
                                 <Button minHeight="50.0" minWidth="100.0" mnemonicParsing="false" onAction="#mostrarAlterarUsuario" text="Alterar" />
                                 <Button minHeight="50.0" minWidth="100.0" mnemonicParsing="false" onAction="#mostrarExcluirUsuario" text="Excluir" />
                             </HBox>
@@ -104,7 +104,7 @@
                        </HBox>
                    </VBox>
                     <VBox fx:id="gAdicionarAlterarUsuario" alignment="TOP_CENTER" spacing="10.0" visible="false" StackPane.alignment="TOP_CENTER">
-                        <Label fx:id="meAdicionarUsuario" alignment="TOP_CENTER" maxHeight="-Infinity" maxWidth="1.7976931348623157E308" minHeight="40.0" minWidth="680.0" VBox.vgrow="ALWAYS">
+                        <Label fx:id="mAdicionarUsuario" alignment="TOP_CENTER" maxHeight="-Infinity" maxWidth="1.7976931348623157E308" minHeight="40.0" minWidth="680.0" VBox.vgrow="ALWAYS">
                             <font>
                                 <Font size="28.0" />
                             </font>
@@ -166,7 +166,7 @@
                                         <Insets top="10.0" />
                                     </VBox.margin>
                                 </PasswordField>
-                                <Label fx:id="meAdicionarUsuarioErroSenhasDiferentes" textFill="red" />
+                                <Label fx:id="mAdicionarUsuarioErroSenhasDiferentes" textFill="red" />
                             </VBox>
                         </HBox>
                         <HBox alignment="TOP_CENTER" maxHeight="50.0" maxWidth="1000.0" minHeight="50.0">
@@ -187,7 +187,7 @@
                                         <Insets top="10.0" />
                                     </VBox.margin>
                                 </TextField>
-                                <Label fx:id="meAdicionarUsuarioErroEmail" textFill="red" />
+                                <Label fx:id="mAdicionarUsuarioErroEmail" textFill="red" />
                             </VBox>
                         </HBox>
                         <HBox fx:id="hAdicionarTipoUsuario" alignment="TOP_RIGHT" maxWidth="1000.0">
@@ -212,7 +212,7 @@
                             <VBox.margin>
                                 <Insets left="20.0" right="20.0" />
                             </VBox.margin>
-                        <Label fx:id="meAdicionarUsuarioErroCampos" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minWidth="200.0" textFill="red" HBox.hgrow="ALWAYS" />
+                        <Label fx:id="mAdicionarUsuarioErroCampos" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minWidth="200.0" textFill="red" HBox.hgrow="ALWAYS" />
                             <Button fx:id="botaoLimparAdicionarAlterarUsuario" focusTraversable="false" minHeight="50.0" minWidth="100.0" mnemonicParsing="false" onAction="#limparCampos" text="Limpar" />
                             <Button fx:id="botaoAdicionarAlterarUsuario" focusTraversable="false" minHeight="50.0" minWidth="100.0" mnemonicParsing="false" onAction="#adicionarUsuario" />
                         </HBox>
@@ -254,7 +254,7 @@
                                 <VBox.margin>
                                     <Insets top="20.0" />
                                 </VBox.margin>
-                                <Label fx:id="meAlterarExcluirDisciplina" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" textFill="RED" HBox.hgrow="ALWAYS" />
+                                <Label fx:id="mAlterarExcluirDisciplina" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" textFill="RED" HBox.hgrow="ALWAYS" />
                                 <Button minHeight="50.0" minWidth="100.0" mnemonicParsing="false" onAction="#mostrarAlterarDisciplina" text="Alterar" />
                                 <Button minHeight="50.0" minWidth="100.0" mnemonicParsing="false" onAction="#mostrarExcluirDisciplina" text="Excluir" />
                             </HBox>
@@ -284,7 +284,7 @@
                         </HBox>
                     </VBox>
                     <VBox fx:id="gAdicionarDisciplinas" alignment="TOP_CENTER" spacing="10.0" visible="false" StackPane.alignment="TOP_CENTER">
-                        <Label fx:id="lAdicionarAlterarDisciplina" alignment="TOP_CENTER" maxHeight="-Infinity" maxWidth="1.7976931348623157E308" minHeight="40.0" minWidth="680.0" text="Adicionar nova disciplina" VBox.vgrow="ALWAYS">
+                        <Label fx:id="mAdicionarAlterarDisciplina" alignment="TOP_CENTER" maxHeight="-Infinity" maxWidth="1.7976931348623157E308" minHeight="40.0" minWidth="680.0" text="Adicionar nova disciplina" VBox.vgrow="ALWAYS">
                             <font>
                                 <Font size="28.0" />
                             </font>
@@ -332,13 +332,13 @@
                             <VBox.margin>
                                 <Insets left="20.0" right="20.0" />
                             </VBox.margin>
-                     <Label fx:id="meAdicionarDisciplinas" maxWidth="1.7976931348623157E308" minHeight="50.0" textFill="RED" HBox.hgrow="ALWAYS">
+                     <Label fx:id="mAdicionarDisciplinas" maxWidth="1.7976931348623157E308" minHeight="50.0" textFill="RED" HBox.hgrow="ALWAYS">
                         <HBox.margin>
                            <Insets />
                         </HBox.margin>
                      </Label>
                             <Button fx:id="bAdicionarAlterarDisiciplina" minHeight="50.0" minWidth="100.0" mnemonicParsing="false" onAction="#adicionarDisciplina" text="Adicionar" />
-                            <Button fx:id="bLimparDisciplina" minHeight="50.0" minWidth="100.0" mnemonicParsing="false" onAction="#limparCampos" text="Limpar" />
+                            <Button fx:id="bLimparAdicionarDisciplina" minHeight="50.0" minWidth="100.0" mnemonicParsing="false" onAction="#limparCampos" text="Limpar" />
                         </HBox>
                     </VBox>
                 </StackPane>
@@ -510,9 +510,9 @@
                             </ComboBox>
                         </HBox>
                         <HBox alignment="TOP_RIGHT" maxWidth="1000.0" spacing="10.0">
-                     <Label fx:id="meTurmas" maxWidth="1.7976931348623157E308" minHeight="50.0" textFill="RED" HBox.hgrow="ALWAYS" />
+                     <Label fx:id="mTurmas" maxWidth="1.7976931348623157E308" minHeight="50.0" textFill="RED" HBox.hgrow="ALWAYS" />
                             <Button minHeight="50.0" minWidth="100.0" mnemonicParsing="false" onAction="#adicionarTurma" text="Criar" />
-                            <Button fx:id="bLimparTurma" minHeight="50.0" minWidth="100.0" mnemonicParsing="false" onAction="#limparCampos" text="Limpar" />
+                            <Button fx:id="bLimparAdicionarTurma" minHeight="50.0" minWidth="100.0" mnemonicParsing="false" onAction="#limparCampos" text="Limpar" />
                      <VBox.margin>
                         <Insets left="20.0" right="20.0" />
                      </VBox.margin>

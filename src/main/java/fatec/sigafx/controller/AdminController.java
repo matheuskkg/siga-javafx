@@ -42,7 +42,7 @@ public class AdminController
     @FXML
     private VBox gAdicionarAlterarUsuario;
     @FXML
-    private Label meAdicionarUsuario;
+    private Label mAdicionarUsuario;
     @FXML
     private TextField nomeAdicionarUsuario;
     @FXML
@@ -56,14 +56,11 @@ public class AdminController
     @FXML
     private HBox hAdicionarTipoUsuario;
     @FXML
-    private Label meAdicionarUsuarioErroSenhasDiferentes;
+    private Label mAdicionarUsuarioErroSenhasDiferentes;
     @FXML
-    private Label meAdicionarUsuarioErroCampos;
+    private Label mAdicionarUsuarioErroCampos;
     @FXML
-    private Label meAdicionarUsuarioErroEmail;
-    @FXML
-    public Button bLimparUsuario;
-
+    private Label mAdicionarUsuarioErroEmail;
     @FXML
     private VBox gAlterarExcluirUsuario;
     @FXML
@@ -73,7 +70,7 @@ public class AdminController
     @FXML
     public VBox gConfirmaExclusao;
     @FXML
-    public Label meAlterarExcluirUsuario;
+    public Label mAlterarExcluirUsuario;
 
     @FXML
     private TableView<UsuarioModel> tableViewAlterarExcluirUsuario;
@@ -92,7 +89,7 @@ public class AdminController
     @FXML
     private VBox gAdicionarDisciplinas;
     @FXML
-    private Label meAdicionarDisciplinas;
+    private Label mAdicionarDisciplinas;
     @FXML
     private TextField nomeAdicionarDisciplina;
     @FXML
@@ -102,15 +99,15 @@ public class AdminController
     @FXML
     private VBox gAlterarExcluirDisciplinas;
     @FXML
-    public Label meAlterarExcluirDisciplina;
+    public Label mAlterarExcluirDisciplina;
     @FXML
-    public Label lAdicionarAlterarDisciplina;
+    public Label mAdicionarAlterarDisciplina;
     @FXML
     public Button bAdicionarAlterarDisiciplina;
     @FXML
     public VBox gConfirmaExclusaoDisciplina;
     @FXML
-    public Button bLimparDisciplina;
+    public Button bLimparAdicionarDisciplina;
 
     @FXML
     private TableView<DisciplinaModel> tableViewAlterarExcluirDisciplina;
@@ -135,7 +132,7 @@ public class AdminController
     @FXML
     private ComboBox<ProfessorModel> cbProfResponAdicionarTurma;
     @FXML
-    private Label meTurmas;
+    private Label mTurmas;
     @FXML
     private VBox gAlterarExcluirTurmas;
     @FXML
@@ -147,7 +144,7 @@ public class AdminController
     @FXML
     public HBox hProfAdicionarTurma;
     @FXML
-    public Button bLimparTurma;
+    public Button bLimparAdicionarTurma;
     @FXML
     public VBox gConfirmaExclusaoTurma;
     @FXML
@@ -271,16 +268,16 @@ public class AdminController
         cbDisciplinaAdicionarTurma = reconstruirComboBox(cbDisciplinaAdicionarTurma, hDisciplinaAdicionarTurma);
         cbProfResponAdicionarTurma = reconstruirComboBox(cbProfResponAdicionarTurma, hProfAdicionarTurma);
 
-        meAdicionarUsuarioErroSenhasDiferentes.setText("");
-        meAdicionarUsuarioErroCampos.setText("");
-        meAdicionarUsuarioErroEmail.setText("");
+        mAdicionarUsuarioErroSenhasDiferentes.setText("");
+        mAdicionarUsuarioErroCampos.setText("");
+        mAdicionarUsuarioErroEmail.setText("");
 
-        meAlterarExcluirUsuario.setText("");
+        mAlterarExcluirUsuario.setText("");
 
         nomeAdicionarDisciplina.clear();
-        meAdicionarDisciplinas.setText("");
+        mAdicionarDisciplinas.setText("");
 
-        meAlterarExcluirDisciplina.setText("");
+        mAlterarExcluirDisciplina.setText("");
 
         tableViewAlterarExcluirUsuario.getSelectionModel().clearSelection();
         usuarioSelecionado = null;
@@ -292,7 +289,7 @@ public class AdminController
         cbDisciplinaAdicionarTurma = reconstruirComboBox(cbDisciplinaAdicionarTurma, hDisciplinaAdicionarTurma);
         cbProfResponAdicionarTurma = reconstruirComboBox(cbProfResponAdicionarTurma, hProfAdicionarTurma);
 
-        meTurmas.setText("");
+        mTurmas.setText("");
     }
 
     @FXML
@@ -353,11 +350,11 @@ public class AdminController
     private void mostrarAdicionarUsuario() {
         gUsuarios.setVisible(true);
         gAdicionarAlterarUsuario.setVisible(true);
-        meAdicionarUsuario.setText("Adicionar Usuario");
+        mAdicionarUsuario.setText("Adicionar Usuario");
         botaoAdicionarAlterarUsuario.setText("Adicionar");
         botaoLimparAdicionarAlterarUsuario.setVisible(true);
         // Coloca o foco na label ao iniciar
-        meAdicionarUsuario.requestFocus();
+        mAdicionarUsuario.requestFocus();
     }
 
     private void exibirMensagem(Label label, String mensagem) {
@@ -375,9 +372,9 @@ public class AdminController
 
     @FXML
     private void adicionarUsuario() {
-        exibirMensagem(meAdicionarUsuarioErroCampos, "");
-        exibirMensagem(meAdicionarUsuarioErroEmail, "");
-        exibirMensagem(meAdicionarUsuarioErroSenhasDiferentes, "");
+        exibirMensagem(mAdicionarUsuarioErroCampos, "");
+        exibirMensagem(mAdicionarUsuarioErroEmail, "");
+        exibirMensagem(mAdicionarUsuarioErroSenhasDiferentes, "");
 
         String nome = nomeAdicionarUsuario.getText();
         String email = emailAdicionarUsuario.getText();
@@ -390,17 +387,17 @@ public class AdminController
         boolean errosCampos = false;
 
         if (validador.verificarCamposVazios()) {
-            exibirMensagem(meAdicionarUsuarioErroCampos, "Todos os campos devem ser preenchidos.");
+            exibirMensagem(mAdicionarUsuarioErroCampos, "Todos os campos devem ser preenchidos.");
             errosCampos = true;
         }
 
         if (!validador.verificarEmailValido()) {
-            exibirMensagem(meAdicionarUsuarioErroEmail, "Email inválido.");
+            exibirMensagem(mAdicionarUsuarioErroEmail, "Email inválido.");
             errosCampos = true;
         }
 
         if (!validador.verificarSenhasCoincidem()) {
-            exibirMensagem(meAdicionarUsuarioErroSenhasDiferentes, "Senhas diferentes.");
+            exibirMensagem(mAdicionarUsuarioErroSenhasDiferentes, "Senhas diferentes.");
             errosCampos = true;
         }
 
@@ -411,7 +408,7 @@ public class AdminController
         //Caso nenhuma das duas condições sejam verdadeiras, não há necessidade de verificar o e-mail
         if (usuarioSelecionado == null || !usuarioSelecionado.getEmail().equals(email)) {
             if (validador.verificarEmailEmUso()) {
-                exibirMensagem(meAdicionarUsuarioErroEmail, "Email já cadastrado.");
+                exibirMensagem(mAdicionarUsuarioErroEmail, "Email já cadastrado.");
                 return;
             }
         }
@@ -430,7 +427,7 @@ public class AdminController
         limparCampos();
         initialize();
 
-        exibirMensagemTemporaria(meAdicionarUsuarioErroCampos, "Usuário salvo com sucesso.");
+        exibirMensagemTemporaria(mAdicionarUsuarioErroCampos, "Usuário salvo com sucesso.");
 
         usuarioSelecionado = null;
     }
@@ -452,12 +449,12 @@ public class AdminController
     @FXML
     public void mostrarAlterarUsuario(){
         if (usuarioSelecionado == null) {
-            meAlterarExcluirUsuario.setText("Selecione um usuário a ser alterado!");
+            mAlterarExcluirUsuario.setText("Selecione um usuário a ser alterado!");
         } else {
             gUsuarios.setVisible(true);
             gAlterarExcluirUsuario.setVisible(false);
             gAdicionarAlterarUsuario.setVisible(true);
-            meAdicionarUsuario.setText("Alterar Usuario");
+            mAdicionarUsuario.setText("Alterar Usuario");
 
             botaoAdicionarAlterarUsuario.setText("Alterar");
             botaoLimparAdicionarAlterarUsuario.setVisible(false);
@@ -473,10 +470,10 @@ public class AdminController
     @FXML
     public void mostrarExcluirUsuario(){
         if (usuarioSelecionado == null) {
-            meAlterarExcluirUsuario.setText("Selecione um usuário a ser excluído!");
+            mAlterarExcluirUsuario.setText("Selecione um usuário a ser excluído!");
         }
         else {
-            meAlterarExcluirUsuario.setText("");
+            mAlterarExcluirUsuario.setText("");
             gConfirmaExclusao.setVisible(true);
         }
     }
@@ -525,7 +522,7 @@ public class AdminController
     private void mostrarAdicionarDisciplinas() {
         gDisciplinas.setVisible(true);
         gAdicionarDisciplinas.setVisible(true);
-        lAdicionarAlterarDisciplina.setText("Adicionar nova Disciplina");
+        mAdicionarAlterarDisciplina.setText("Adicionar nova Disciplina");
         bAdicionarAlterarDisiciplina.setText("Adicionar");
     }
 
@@ -536,12 +533,12 @@ public class AdminController
 
     @FXML
     private void adicionarDisciplina(){
-        exibirMensagem(meAdicionarDisciplinas, "");
+        exibirMensagem(mAdicionarDisciplinas, "");
 
         boolean camposVazios = verificarCamposVaziosAdicionarDisciplina();
 
         if (camposVazios) {
-            exibirMensagem(meAdicionarDisciplinas, "Todos os campos devem ser preenchidos.");
+            exibirMensagem(mAdicionarDisciplinas, "Todos os campos devem ser preenchidos.");
 
             return;
         }
@@ -551,7 +548,7 @@ public class AdminController
         limparCampos();
         initialize();
 
-        exibirMensagemTemporaria(meAdicionarDisciplinas, "Disciplina salva com sucesso.");
+        exibirMensagemTemporaria(mAdicionarDisciplinas, "Disciplina salva com sucesso.");
     }
 
     private void mostrarAlterarExcluirDisciplinas() {
@@ -571,12 +568,12 @@ public class AdminController
     @FXML
     private void mostrarAlterarDisciplina() {
         if (disciplinaSelecionada == null) {
-            meAlterarExcluirDisciplina.setText("Selecione uma disciplina a ser alterada!");
+            mAlterarExcluirDisciplina.setText("Selecione uma disciplina a ser alterada!");
         } else {
             gDisciplinas.setVisible(true);
             gAlterarExcluirDisciplinas.setVisible(false);
             gAdicionarDisciplinas.setVisible(true);
-            lAdicionarAlterarDisciplina.setText("Alterar Disciplina");
+            mAdicionarAlterarDisciplina.setText("Alterar Disciplina");
 
             bAdicionarAlterarDisiciplina.setText("Alterar");
 
@@ -589,9 +586,9 @@ public class AdminController
     @FXML
     private void mostrarExcluirDisciplina(){
         if (disciplinaSelecionada == null) {
-            meAlterarExcluirDisciplina.setText("Selecione uma disciplina a ser alterada!");
+            mAlterarExcluirDisciplina.setText("Selecione uma disciplina a ser alterada!");
         } else {
-            meAlterarExcluirDisciplina.setText("");
+            mAlterarExcluirDisciplina.setText("");
             gConfirmaExclusaoDisciplina.setVisible(true);
         }
     }
@@ -655,12 +652,12 @@ public class AdminController
 
     @FXML
     private void adicionarTurma() {
-        exibirMensagem(meTurmas, "");
+        exibirMensagem(mTurmas, "");
 
         boolean camposVazios = verificarCamposVaziosAdicionarTurma();
 
         if (camposVazios) {
-            exibirMensagem(meTurmas, "Todos os campos devem ser preenchidos.");
+            exibirMensagem(mTurmas, "Todos os campos devem ser preenchidos.");
 
             return;
         }
@@ -670,7 +667,7 @@ public class AdminController
         limparCampos();
         initialize();
 
-        exibirMensagemTemporaria(meTurmas, "Turma salva com sucesso.");
+        exibirMensagemTemporaria(mTurmas, "Turma salva com sucesso.");
     }
 
     private void mostrarAlterarExcluirTurmas() {
