@@ -140,6 +140,10 @@ public class AdminController
         usuarios.addAll(UsuarioModel.buscarTodosUsuarios());
 
         tableViewAlterarExcluirUsuario.setItems(usuarios);
+
+        usuarioId.setSortType(TableColumn.SortType.ASCENDING);
+        tableViewAlterarExcluirUsuario.getSortOrder().add(usuarioId);
+        tableViewAlterarExcluirUsuario.sort();
     }
 
     private void carregarTableViewUsuarios() {
@@ -168,6 +172,10 @@ public class AdminController
         disciplinas.addAll(DisciplinaModel.buscarTodasDisciplinas());
 
         tableViewAlterarExcluirDisciplina.setItems(disciplinas);
+
+        disciplinaId.setSortType(TableColumn.SortType.ASCENDING);
+        tableViewAlterarExcluirDisciplina.getSortOrder().add(disciplinaId);
+        tableViewAlterarExcluirDisciplina.sort();
     }
 
     private void carregarTableViewDisciplinas() {
@@ -212,7 +220,6 @@ public class AdminController
         novaComboBox.setMaxSize(Double.MAX_VALUE,30);
         HBox.setHgrow(novaComboBox, Priority.ALWAYS);
         HBox.setMargin(novaComboBox, new Insets(10,0,0,0));
-        novaComboBox.setFocusTraversable(false);
         novaComboBox.setPromptText(comboBox.getPromptText());
 
         hboxPai.getChildren().remove(comboBox);
@@ -297,6 +304,8 @@ public class AdminController
         gAdicionarAlterarUsuario.setVisible(true);
         meAdicionarUsuario.setText("Adicionar Usuario");
         botaoAdicionarAlterarUsuario.setText("Adicionar");
+        // Coloca o foco na label ao iniciar
+        meAdicionarUsuario.requestFocus();
     }
 
     private void exibirMensagem(Label label, String mensagem) {

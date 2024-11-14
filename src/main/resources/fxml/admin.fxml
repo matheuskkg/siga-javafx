@@ -17,7 +17,7 @@
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="900.0" xmlns="http://javafx.com/javafx/22" xmlns:fx="http://javafx.com/fxml/1" fx:controller="fatec.sigafx.controller.AdminController">
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="900.0" xmlns="http://javafx.com/javafx/23" xmlns:fx="http://javafx.com/fxml/1" fx:controller="fatec.sigafx.controller.AdminController">
 
     <left>
         <VBox maxWidth="500.0" minWidth="200.0" spacing="20.0" style="-fx-background-color: #1E3A60; -fx-padding: 10px;" stylesheets="@../css/adm.css">
@@ -79,6 +79,9 @@
                                 <Button minHeight="50.0" minWidth="100.0" mnemonicParsing="false" onAction="#mostrarAlterarUsuario" text="Alterar" />
                                 <Button minHeight="50.0" minWidth="100.0" mnemonicParsing="false" onAction="#mostrarExcluirUsuario" text="Excluir" />
                             </HBox>
+                     <StackPane.margin>
+                        <Insets left="20.0" right="20.0" />
+                     </StackPane.margin>
                         </VBox>
                         <VBox fx:id="gConfirmaExclusao" alignment="CENTER" maxHeight="200.0" maxWidth="400.0" visible="false">
                             <Label text="Deseja mesmo excluir ?" textFill="WHITE">
@@ -122,7 +125,7 @@
                                     <Font size="20.0" />
                                 </font>
                             </Label>
-                            <TextField fx:id="nomeAdicionarUsuario" focusTraversable="false" minHeight="30.0" promptText="Nome" HBox.hgrow="ALWAYS">
+                            <TextField fx:id="nomeAdicionarUsuario" minHeight="30.0" promptText="Nome" HBox.hgrow="ALWAYS">
                                 <HBox.margin>
                                     <Insets top="10.0" />
                                 </HBox.margin>
@@ -140,7 +143,7 @@
                                     <Font size="20.0" />
                                 </font>
                             </Label>
-                            <PasswordField fx:id="senhaAdicionarUsuario" focusTraversable="false" minHeight="30.0" promptText="Senha" HBox.hgrow="ALWAYS">
+                            <PasswordField fx:id="senhaAdicionarUsuario" minHeight="30.0" promptText="Senha" HBox.hgrow="ALWAYS">
                                 <HBox.margin>
                                     <Insets top="10.0" />
                                 </HBox.margin>
@@ -159,7 +162,7 @@
                                 </font>
                             </Label>
                             <VBox HBox.hgrow="ALWAYS">
-                                <PasswordField fx:id="confirmarSenhaAdicionarUsuario" focusTraversable="false" minHeight="30.0" promptText="Confirmar Senha">
+                                <PasswordField fx:id="confirmarSenhaAdicionarUsuario" minHeight="30.0" promptText="Confirmar Senha">
                                     <VBox.margin>
                                         <Insets top="10.0" />
                                     </VBox.margin>
@@ -180,7 +183,7 @@
                                 </font>
                             </Label>
                             <VBox HBox.hgrow="ALWAYS">
-                                <TextField fx:id="emailAdicionarUsuario" focusTraversable="false" minHeight="30.0" promptText="exemplo@exemplo.com" HBox.hgrow="ALWAYS">
+                                <TextField fx:id="emailAdicionarUsuario" minHeight="30.0" promptText="exemplo@exemplo.com" HBox.hgrow="ALWAYS">
                                     <VBox.margin>
                                         <Insets top="10.0" />
                                     </VBox.margin>
@@ -200,7 +203,7 @@
                                    <Insets right="10.0" />
                                 </HBox.margin>
                             </Label>
-                                <ComboBox fx:id="cbTipoAdicionarUsuario" focusTraversable="false" maxWidth="1.7976931348623157E308" minHeight="30.0" promptText="Tipo de Usuário" HBox.hgrow="ALWAYS">
+                                <ComboBox fx:id="cbTipoAdicionarUsuario" maxWidth="1.7976931348623157E308" minHeight="30.0" promptText="Tipo de Usuário" HBox.hgrow="ALWAYS">
                                     <HBox.margin>
                                             <Insets top="10.0" />
                                     </HBox.margin>
@@ -212,8 +215,8 @@
                             </VBox.margin>
                         <Label fx:id="meAdicionarUsuarioErroCampos" minWidth="200.0" textFill="red" />
                         <Region HBox.hgrow="ALWAYS" />
-                        <Button fx:id="botaoAdicionarAlterarUsuario" focusTraversable="false" minHeight="50.0" minWidth="100.0" mnemonicParsing="false" onAction="#adicionarUsuario" />
-                        <Button focusTraversable="false" minHeight="50.0" minWidth="100.0" mnemonicParsing="false" onAction="#limparCampos" text="Limpar" />
+                        <Button fx:id="botaoAdicionarAlterarUsuario" minHeight="50.0" minWidth="100.0" mnemonicParsing="false" onAction="#adicionarUsuario" />
+                        <Button minHeight="50.0" minWidth="100.0" mnemonicParsing="false" onAction="#limparCampos" text="Limpar" />
                         </HBox>
                     </VBox>
                 </StackPane>
@@ -306,16 +309,19 @@
                                 <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
                             </columnResizePolicy>
                      <VBox.margin>
-                        <Insets left="20.0" right="20.0" />
+                        <Insets />
                      </VBox.margin>
                         </TableView>
                         <HBox alignment="TOP_RIGHT" spacing="20.0">
                             <VBox.margin>
-                                <Insets left="20.0" right="20.0" top="20.0" />
+                                <Insets top="20.0" />
                             </VBox.margin>
                             <Button minHeight="50.0" minWidth="100.0" mnemonicParsing="false" onAction="#alterarDisciplina" text="Alterar" />
                             <Button minHeight="50.0" minWidth="100.0" mnemonicParsing="false" onAction="#excluirDisciplina" text="Excluir" />
                         </HBox>
+                  <StackPane.margin>
+                     <Insets left="20.0" right="20.0" />
+                  </StackPane.margin>
                     </VBox>
                 </StackPane>
             </VBox>
@@ -362,7 +368,7 @@
                                     <Font size="20.0" />
                                 </font>
                             </Label>
-                            <ComboBox fx:id="cbCursoAdicionarTurma" focusTraversable="false" maxWidth="910.0" minHeight="30.0" minWidth="530.0" prefWidth="530.0" HBox.hgrow="ALWAYS">
+                            <ComboBox fx:id="cbCursoAdicionarTurma" focusTraversable="false" maxWidth="910.0" minHeight="30.0" minWidth="530.0" prefWidth="530.0" promptText="Curso" HBox.hgrow="ALWAYS">
                                 <HBox.margin>
                                     <Insets top="10.0" />
                                 </HBox.margin>
@@ -380,7 +386,7 @@
                                     <Font size="20.0" />
                                 </font>
                             </Label>
-                            <ComboBox fx:id="cbDisciplinaAdicionarTurma" focusTraversable="false" maxWidth="910.0" minHeight="30.0" minWidth="530.0" prefWidth="530.0" HBox.hgrow="ALWAYS">
+                            <ComboBox fx:id="cbDisciplinaAdicionarTurma" focusTraversable="false" maxWidth="910.0" minHeight="30.0" minWidth="530.0" prefWidth="530.0" promptText="Disciplina" HBox.hgrow="ALWAYS">
                                 <HBox.margin>
                                     <Insets top="10.0" />
                                 </HBox.margin>
@@ -398,7 +404,7 @@
                                     <Font size="20.0" />
                                 </font>
                             </Label>
-                            <ComboBox fx:id="cbProfRespon" focusTraversable="false" maxWidth="1.7976931348623157E308" minHeight="30.0" HBox.hgrow="ALWAYS">
+                            <ComboBox fx:id="cbProfRespon" focusTraversable="false" maxWidth="1.7976931348623157E308" minHeight="30.0" promptText="Professor Responsável" HBox.hgrow="ALWAYS">
                                 <HBox.margin>
                                     <Insets top="10.0" />
                                 </HBox.margin>
@@ -427,6 +433,9 @@
                             <Button minHeight="50.0" minWidth="100.0" mnemonicParsing="false" text="Alterar" />
                             <Button minHeight="50.0" minWidth="100.0" mnemonicParsing="false" text="Excluir" />
                         </HBox>
+                  <StackPane.margin>
+                     <Insets left="20.0" right="20.0" />
+                  </StackPane.margin>
                     </VBox>
                     <VBox fx:id="gAdicionarRemoverAlunosTurmas" maxHeight="1.7976931348623157E308" maxWidth="1000.0" prefHeight="1080.0" prefWidth="1000.0" visible="false">
                         <HBox alignment="TOP_CENTER">
@@ -452,6 +461,9 @@
                             <Button minHeight="50.0" minWidth="100.0" mnemonicParsing="false" text="Adicionar" />
                             <Button minHeight="50.0" minWidth="100.0" mnemonicParsing="false" text="Remover" />
                         </HBox>
+                  <StackPane.margin>
+                     <Insets left="20.0" right="20.0" />
+                  </StackPane.margin>
                     </VBox>
                 </StackPane>
             </VBox>
