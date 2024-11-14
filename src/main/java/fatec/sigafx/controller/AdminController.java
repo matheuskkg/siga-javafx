@@ -54,7 +54,7 @@ public class AdminController
     @FXML
     private ComboBox<String> cbTipoAdicionarUsuario;
     @FXML
-    private HBox hTipoUsuario;
+    private HBox hAdicionarTipoUsuario;
     @FXML
     private Label meAdicionarUsuarioErroSenhasDiferentes;
     @FXML
@@ -68,6 +68,8 @@ public class AdminController
     private VBox gAlterarExcluirUsuario;
     @FXML
     private Button botaoAdicionarAlterarUsuario;
+    @FXML
+    private Button botaoLimparAdicionarAlterarUsuario;
     @FXML
     public VBox gConfirmaExclusao;
     @FXML
@@ -96,7 +98,7 @@ public class AdminController
     @FXML
     private ComboBox<Integer> cbCargaAdicionarDisciplina;
     @FXML
-    private HBox hDisciplinaCarga;
+    private HBox hAdicionarDisciplinaCarga;
     @FXML
     private VBox gAlterarExcluirDisciplinas;
     @FXML
@@ -131,7 +133,7 @@ public class AdminController
     @FXML
     private ComboBox<DisciplinaModel> cbDisciplinaAdicionarTurma;
     @FXML
-    private ComboBox<ProfessorModel> cbProfRespon;
+    private ComboBox<ProfessorModel> cbProfResponAdicionarTurma;
     @FXML
     private Label meTurmas;
     @FXML
@@ -241,7 +243,7 @@ public class AdminController
         ObservableList<ProfessorModel> obsProfessores = FXCollections.observableArrayList();
         obsProfessores.addAll(professores);
 
-        cbProfRespon.setItems(obsProfessores);
+        cbProfResponAdicionarTurma.setItems(obsProfessores);
     }
 
     private <T> ComboBox<T> reconstruirComboBox(ComboBox<T> comboBox, HBox hboxPai) {
@@ -263,8 +265,11 @@ public class AdminController
         confirmarSenhaAdicionarUsuario.clear();
         emailAdicionarUsuario.clear();
 
-        cbTipoAdicionarUsuario = reconstruirComboBox(cbTipoAdicionarUsuario, hTipoUsuario);
-        cbCargaAdicionarDisciplina = reconstruirComboBox(cbCargaAdicionarDisciplina, hDisciplinaCarga);
+        cbTipoAdicionarUsuario = reconstruirComboBox(cbTipoAdicionarUsuario, hAdicionarTipoUsuario);
+        cbCargaAdicionarDisciplina = reconstruirComboBox(cbCargaAdicionarDisciplina, hAdicionarDisciplinaCarga);
+        cbCursoAdicionarTurma = reconstruirComboBox(cbCursoAdicionarTurma, hCursoAdicionarTurma);
+        cbDisciplinaAdicionarTurma = reconstruirComboBox(cbDisciplinaAdicionarTurma, hDisciplinaAdicionarTurma);
+        cbProfResponAdicionarTurma = reconstruirComboBox(cbProfResponAdicionarTurma, hProfAdicionarTurma);
 
         meAdicionarUsuarioErroSenhasDiferentes.setText("");
         meAdicionarUsuarioErroCampos.setText("");
@@ -285,7 +290,7 @@ public class AdminController
 
         cbCursoAdicionarTurma = reconstruirComboBox(cbCursoAdicionarTurma, hCursoAdicionarTurma);
         cbDisciplinaAdicionarTurma = reconstruirComboBox(cbDisciplinaAdicionarTurma, hDisciplinaAdicionarTurma);
-        cbProfRespon = reconstruirComboBox(cbProfRespon, hProfAdicionarTurma);
+        cbProfResponAdicionarTurma = reconstruirComboBox(cbProfResponAdicionarTurma, hProfAdicionarTurma);
 
         meTurmas.setText("");
     }
@@ -350,6 +355,7 @@ public class AdminController
         gAdicionarAlterarUsuario.setVisible(true);
         meAdicionarUsuario.setText("Adicionar Usuario");
         botaoAdicionarAlterarUsuario.setText("Adicionar");
+        botaoLimparAdicionarAlterarUsuario.setVisible(true);
         // Coloca o foco na label ao iniciar
         meAdicionarUsuario.requestFocus();
     }
@@ -454,6 +460,7 @@ public class AdminController
             meAdicionarUsuario.setText("Alterar Usuario");
 
             botaoAdicionarAlterarUsuario.setText("Alterar");
+            botaoLimparAdicionarAlterarUsuario.setVisible(false);
 
             nomeAdicionarUsuario.setText(usuarioSelecionado.getNome());
             emailAdicionarUsuario.setText(usuarioSelecionado.getEmail());
@@ -643,7 +650,7 @@ public class AdminController
     private boolean verificarCamposVaziosAdicionarTurma() {
         return cbCursoAdicionarTurma.getSelectionModel().getSelectedItem() == null
                 || cbDisciplinaAdicionarTurma.getSelectionModel().getSelectedItem() == null
-                || cbProfRespon.getSelectionModel().getSelectedItem() == null;
+                || cbProfResponAdicionarTurma.getSelectionModel().getSelectedItem() == null;
     }
 
     @FXML
@@ -658,7 +665,7 @@ public class AdminController
             return;
         }
 
-        TurmaModel.criarTurma(new TurmaCriarRequest(cbCursoAdicionarTurma.getSelectionModel().getSelectedItem(), cbDisciplinaAdicionarTurma.getSelectionModel().getSelectedItem(), cbProfRespon.getSelectionModel().getSelectedItem()));
+        TurmaModel.criarTurma(new TurmaCriarRequest(cbCursoAdicionarTurma.getSelectionModel().getSelectedItem(), cbDisciplinaAdicionarTurma.getSelectionModel().getSelectedItem(), cbProfResponAdicionarTurma.getSelectionModel().getSelectedItem()));
 
         limparCampos();
         initialize();

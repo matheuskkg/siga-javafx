@@ -32,7 +32,7 @@ public class SigaApplication extends Application
         //ProfessorView.mostrarHomeProf();
 
         //Apenas para testes
-        if (!UsuarioModel.verificarEmailEmUso("aluno@aluno")) {
+        if (UsuarioModel.buscarUsuarioPorEmail("aluno@aluno") == null) {
             UsuarioModel.criarUsuario(new UsuarioCriarRequest("aluno", "aluno@aluno", "aluno"), "Aluno");
             UsuarioModel.criarUsuario(new UsuarioCriarRequest("admin", "admin@admin", "admin"), "Administrador");
             UsuarioModel.criarUsuario(new UsuarioCriarRequest("professor", "professor@professor", "professor"), "Professor");

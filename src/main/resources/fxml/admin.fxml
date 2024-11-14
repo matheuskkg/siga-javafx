@@ -16,7 +16,7 @@
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="900.0" xmlns="http://javafx.com/javafx/23" xmlns:fx="http://javafx.com/fxml/1" fx:controller="fatec.sigafx.controller.AdminController">
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="900.0" xmlns="http://javafx.com/javafx/22" xmlns:fx="http://javafx.com/fxml/1" fx:controller="fatec.sigafx.controller.AdminController">
 
     <left>
         <VBox maxWidth="500.0" minWidth="200.0" spacing="20.0" style="-fx-background-color: #1E3A60; -fx-padding: 10px;" stylesheets="@../css/adm.css">
@@ -38,7 +38,7 @@
 
     <center>
         <StackPane stylesheets="@../css/adm.css">
-            <VBox fx:id="gPrincipal" alignment="TOP_CENTER" spacing="20" style="-fx-padding: 20px;" visible="false">
+            <VBox fx:id="gPrincipal" alignment="TOP_CENTER" spacing="20" style="-fx-padding: 20px;">
                 <Label styleClass="admin-header" text="Bem-vindo, Administrador!">
                     <font>
                         <Font size="28.0" />
@@ -190,7 +190,7 @@
                                 <Label fx:id="meAdicionarUsuarioErroEmail" textFill="red" />
                             </VBox>
                         </HBox>
-                        <HBox fx:id="hTipoUsuario" alignment="TOP_RIGHT" maxWidth="1000.0">
+                        <HBox fx:id="hAdicionarTipoUsuario" alignment="TOP_RIGHT" maxWidth="1000.0">
                             <VBox.margin>
                                 <Insets left="20.0" right="20.0" />
                             </VBox.margin>
@@ -212,9 +212,9 @@
                             <VBox.margin>
                                 <Insets left="20.0" right="20.0" />
                             </VBox.margin>
-                        <Label fx:id="meAdicionarUsuarioErroCampos" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minWidth="200.0" textFill="red" HBox.hgrow="ALWAYS" />
-                        <Button fx:id="botaoAdicionarAlterarUsuario" minHeight="50.0" minWidth="100.0" mnemonicParsing="false" onAction="#adicionarUsuario" />
-                        <Button fx:id="bLimparUsuario" minHeight="50.0" minWidth="100.0" mnemonicParsing="false" onAction="#limparCampos" text="Limpar" />
+                        <Label fx:id="meAdicionarUsuarioErroCampos" minWidth="200.0" textFill="red" />
+                            <Button fx:id="botaoLimparAdicionarAlterarUsuario" focusTraversable="false" minHeight="50.0" minWidth="100.0" mnemonicParsing="false" onAction="#limparCampos" text="Limpar" />
+                            <Button fx:id="botaoAdicionarAlterarUsuario" focusTraversable="false" minHeight="50.0" minWidth="100.0" mnemonicParsing="false" onAction="#adicionarUsuario" />
                         </HBox>
                     </VBox>
                 </StackPane>
@@ -310,7 +310,7 @@
                                 </HBox.margin>
                             </TextField>
                         </HBox>
-                        <HBox fx:id="hDisciplinaCarga" alignment="TOP_CENTER" maxWidth="1000.0" minHeight="50.0">
+                        <HBox fx:id="hAdicionarDisciplinaCarga" alignment="TOP_CENTER" maxWidth="1000.0" minHeight="50.0">
                             <VBox.margin>
                                 <Insets left="20.0" right="20.0" />
                             </VBox.margin>
@@ -457,7 +457,7 @@
                             <Button minHeight="50.0" minWidth="100.0" mnemonicParsing="false" onAction="#mudarTelaTurmas" text="Adicionar/Remover Aluno" />
                         </HBox>
                     </VBox>
-                    <VBox fx:id="gAdicionarTurmas" alignment="TOP_CENTER" spacing="10.0">
+                    <VBox fx:id="gAdicionarTurmas" alignment="TOP_CENTER" spacing="10.0" visible="false">
                         <Label alignment="TOP_CENTER" maxHeight="-Infinity" maxWidth="1.7976931348623157E308" minHeight="40.0" minWidth="680.0" text="Criar nova turma" VBox.vgrow="ALWAYS">
                             <font>
                                 <Font size="28.0" />
@@ -514,7 +514,7 @@
                                     <Font size="20.0" />
                                 </font>
                             </Label>
-                            <ComboBox fx:id="cbProfRespon" focusTraversable="false" maxWidth="1.7976931348623157E308" minHeight="30.0" promptText="Professor Responsável" HBox.hgrow="ALWAYS">
+                            <ComboBox fx:id="cbProfResponAdicionarTurma" focusTraversable="false" maxWidth="1.7976931348623157E308" minHeight="30.0" HBox.hgrow="ALWAYS">
                                 <HBox.margin>
                                     <Insets top="10.0" />
                                 </HBox.margin>
