@@ -4,8 +4,6 @@ import fatec.sigafx.model.aulas.DisciplinaModel;
 import fatec.sigafx.model.aulas.TurmaModel;
 import fatec.sigafx.model.aulas.dto.DisciplinaCriarRequest;
 import fatec.sigafx.model.aulas.dto.TurmaCriarRequest;
-import fatec.sigafx.model.usuarios.AdminModel;
-import fatec.sigafx.model.usuarios.AlunoModel;
 import fatec.sigafx.model.usuarios.ProfessorModel;
 import fatec.sigafx.model.usuarios.UsuarioModel;
 import fatec.sigafx.model.usuarios.dto.UsuarioCriarRequest;
@@ -32,9 +30,11 @@ import java.util.List;
 
 public class AdminController
 {
+    // Início
     @FXML
     private VBox gPrincipal;
 
+    // Gerenciar Usuários
     @FXML
     private VBox gUsuarios;
     @FXML
@@ -61,6 +61,8 @@ public class AdminController
     private Label meAdicionarUsuarioErroCampos;
     @FXML
     private Label meAdicionarUsuarioErroEmail;
+    @FXML
+    public Button bLimparUsuario;
 
     @FXML
     private VBox gAlterarExcluirUsuario;
@@ -68,6 +70,8 @@ public class AdminController
     private Button botaoAdicionarAlterarUsuario;
     @FXML
     public VBox gConfirmaExclusao;
+    @FXML
+    public Label meAlterarExcluirUsuario;
 
     @FXML
     private TableView<UsuarioModel> tableViewAlterarExcluirUsuario;
@@ -78,6 +82,7 @@ public class AdminController
     @FXML
     private TableColumn<UsuarioModel, String> usuarioEmail;
 
+    // Gerenciar Disciplinas
     @FXML
     private VBox gDisciplinas;
     @FXML
@@ -94,6 +99,16 @@ public class AdminController
     private HBox hDisciplinaCarga;
     @FXML
     private VBox gAlterarExcluirDisciplinas;
+    @FXML
+    public Label meAlterarExcluirDisciplina;
+    @FXML
+    public Label lAdicionarAlterarDisciplina;
+    @FXML
+    public Button bAdicionarAlterarDisiciplina;
+    @FXML
+    public VBox gConfirmaExclusaoDisciplina;
+    @FXML
+    public Button bLimparDisciplina;
 
     @FXML
     private TableView<DisciplinaModel> tableViewAlterarExcluirDisciplina;
@@ -104,6 +119,7 @@ public class AdminController
     @FXML
     private TableColumn<DisciplinaModel, Integer> disciplinaCargaHoraria;
 
+    // Gerenciar Turmas
     @FXML
     private VBox gTurmas;
     @FXML
@@ -122,12 +138,25 @@ public class AdminController
     private VBox gAlterarExcluirTurmas;
     @FXML
     private VBox gAdicionarRemoverAlunosTurmas;
+    @FXML
+    public HBox hCursoAdicionarTurma;
+    @FXML
+    public HBox hDisciplinaAdicionarTurma;
+    @FXML
+    public HBox hProfAdicionarTurma;
+    @FXML
+    public Button bLimparTurma;
+    @FXML
+    public VBox gConfirmaExclusaoTurma;
+    @FXML
+    public VBox gConfirmaRemoverAluno;
 
     @FXML
     public void initialize() {
         carregarTableViewUsuarios();
         carregarComboBoxTipoUsuario();
         definirUsuarioSelecionado();
+        definirDisciplinaSelecionada();
         carregarComboBoxCargaHoraria();
         carregarComboBoxProfessorResponsavel();
         carregarTableViewDisciplinas();
@@ -241,11 +270,24 @@ public class AdminController
         meAdicionarUsuarioErroCampos.setText("");
         meAdicionarUsuarioErroEmail.setText("");
 
+        meAlterarExcluirUsuario.setText("");
+
         nomeAdicionarDisciplina.clear();
         meAdicionarDisciplinas.setText("");
 
+        meAlterarExcluirDisciplina.setText("");
+
         tableViewAlterarExcluirUsuario.getSelectionModel().clearSelection();
         usuarioSelecionado = null;
+
+        tableViewAlterarExcluirDisciplina.getSelectionModel().clearSelection();
+        disciplinaSelecionada = null;
+
+        cbCursoAdicionarTurma = reconstruirComboBox(cbCursoAdicionarTurma, hCursoAdicionarTurma);
+        cbDisciplinaAdicionarTurma = reconstruirComboBox(cbDisciplinaAdicionarTurma, hDisciplinaAdicionarTurma);
+        cbProfRespon = reconstruirComboBox(cbProfRespon, hProfAdicionarTurma);
+
+        meTurmas.setText("");
     }
 
     @FXML
@@ -272,10 +314,14 @@ public class AdminController
         }
     }
 
+
+    // Início
     private void mostrarInicio() {
         gPrincipal.setVisible(true);
     }
 
+
+    // Usuários
     private void mostrarGerenciarUsuarios() {
         gUsuarios.setVisible(true);
         gBotaoUsuario.setVisible(true);
@@ -400,7 +446,7 @@ public class AdminController
     @FXML
     public void mostrarAlterarUsuario(){
         if (usuarioSelecionado == null) {
-            //TODO: exibir mensagem pedindo p selecionar um usuario
+            meAlterarExcluirUsuario.setText("Selecione um usuário a ser alterado!");
         } else {
             gUsuarios.setVisible(true);
             gAlterarExcluirUsuario.setVisible(false);
@@ -419,19 +465,32 @@ public class AdminController
 
     @FXML
     public void mostrarExcluirUsuario(){
-        gConfirmaExclusao.setVisible(true);
+        if (usuarioSelecionado == null) {
+            meAlterarExcluirUsuario.setText("Selecione um usuário a ser excluído!");
+        }
+        else {
+            meAlterarExcluirUsuario.setText("");
+            gConfirmaExclusao.setVisible(true);
+        }
     }
+
     @FXML
-    public void confirmaExclusao(){
-        UsuarioModel.excluirUsuario(usuarioSelecionado);
-        atualizarTableViewUsuarios();
-        gConfirmaExclusao.setVisible(false);
-    }
-    @FXML
-    public void voltaConfirmaExclusao(){
+    public void confirmaExclusao(ActionEvent event){
+
+        String textoBotao = ((Button) event.getSource()).getText();
+        switch (textoBotao) {
+            case "Sim":
+                UsuarioModel.excluirUsuario(usuarioSelecionado);
+                atualizarTableViewUsuarios();
+                break;
+            case "Não":
+                break;
+        }
         gConfirmaExclusao.setVisible(false);
     }
 
+
+    // Disciplinas
     @FXML
     public void mostrarGerenciarDisciplinas() {
         gDisciplinas.setVisible(true);
@@ -459,6 +518,8 @@ public class AdminController
     private void mostrarAdicionarDisciplinas() {
         gDisciplinas.setVisible(true);
         gAdicionarDisciplinas.setVisible(true);
+        lAdicionarAlterarDisciplina.setText("Adicionar nova Disciplina");
+        bAdicionarAlterarDisiciplina.setText("Adicionar");
     }
 
     private boolean verificarCamposVaziosAdicionarDisciplina() {
@@ -491,16 +552,62 @@ public class AdminController
         gAlterarExcluirDisciplinas.setVisible(true);
     }
 
-    @FXML
-    private void alterarDisciplina() {
-        System.out.println("diciplina alterada?");
+    private DisciplinaModel disciplinaSelecionada;
+
+    private void definirDisciplinaSelecionada() {
+        tableViewAlterarExcluirDisciplina.setOnMouseClicked((MouseEvent) -> {
+            disciplinaSelecionada = tableViewAlterarExcluirDisciplina.getSelectionModel().getSelectedItem();
+            System.out.println(disciplinaSelecionada);
+        });
     }
 
     @FXML
-    private void excluirDisciplina(){
-        System.out.println("disciplina excluida?");
+    private void mostrarAlterarDisciplina() {
+        if (disciplinaSelecionada == null) {
+            meAlterarExcluirDisciplina.setText("Selecione uma disciplina a ser alterada!");
+        } else {
+            gDisciplinas.setVisible(true);
+            gAlterarExcluirDisciplinas.setVisible(false);
+            gAdicionarDisciplinas.setVisible(true);
+            lAdicionarAlterarDisciplina.setText("Alterar Disciplina");
+
+            bAdicionarAlterarDisiciplina.setText("Alterar");
+
+            nomeAdicionarDisciplina.setText(disciplinaSelecionada.getNome());
+            //Precisa preencher a comobobox com o valor da carga horaria mas não sei fazer isso
+            //cbCargaAdicionarDisciplina.setValue(DisciplinaModel.);
+        }
     }
 
+    @FXML
+    private void mostrarExcluirDisciplina(){
+        if (disciplinaSelecionada == null) {
+            meAlterarExcluirDisciplina.setText("Selecione uma disciplina a ser alterada!");
+        } else {
+            meAlterarExcluirDisciplina.setText("");
+            gConfirmaExclusaoDisciplina.setVisible(true);
+        }
+    }
+
+    @FXML
+    private void confirmaExclusaoDisciplina(ActionEvent event) {
+
+        String textoBotao = ((Button) event.getSource()).getText();
+        switch (textoBotao) {
+            case "Sim":
+                //Fazer a exclusão da disciplina no model pra chamar aqui
+                //DisciplinaModel.
+                atualizarTableViewDisciplinas();
+                System.out.println("disciplina excluida ?");
+                break;
+            case "Não":
+                break;
+        }
+        gConfirmaExclusaoDisciplina.setVisible(false);
+    }
+
+
+    // Turmas
     @FXML
     private void mostrarGerenciarTurmas() {
         gTurmas.setVisible(true);
