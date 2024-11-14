@@ -574,7 +574,13 @@ public class AdminController
             return;
         }
 
-        DisciplinaModel.criarDisciplina(new DisciplinaCriarRequest(nomeAdicionarDisciplina.getText(), cbCargaAdicionarDisciplina.getSelectionModel().getSelectedItem()));
+        DisciplinaCriarRequest request = new DisciplinaCriarRequest(nomeAdicionarDisciplina.getText(), cbCargaAdicionarDisciplina.getSelectionModel().getSelectedItem());
+
+        if (disciplinaSelecionada == null) {
+            DisciplinaModel.criarDisciplina(request);
+        } else {
+            DisciplinaModel.atualizarDisciplina(request, disciplinaSelecionada.getId());
+        }
 
         limparCampos();
         initialize();

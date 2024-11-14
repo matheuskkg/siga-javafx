@@ -32,6 +32,14 @@ public class DisciplinaModel {
         disciplinaDAO.salvarDisciplina(new DisciplinaModel(request));
     }
 
+    public static void atualizarDisciplina(DisciplinaCriarRequest request, Integer id) {
+        DisciplinaModel d = disciplinaDAO.buscarPorId(id);
+        d.setNome(request.nome());
+        d.setCargaHoraria(request.cargaHoraria());
+
+        disciplinaDAO.salvarDisciplina(d);
+    }
+
     public static List<DisciplinaModel> buscarTodasDisciplinas() {
         return disciplinaDAO.buscarTodos();
     }
