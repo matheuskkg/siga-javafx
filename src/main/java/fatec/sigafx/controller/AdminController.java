@@ -4,6 +4,7 @@ import fatec.sigafx.model.aulas.DisciplinaModel;
 import fatec.sigafx.model.aulas.TurmaModel;
 import fatec.sigafx.model.aulas.dto.DisciplinaCriarRequest;
 import fatec.sigafx.model.aulas.dto.TurmaCriarRequest;
+import fatec.sigafx.model.usuarios.AlunoModel;
 import fatec.sigafx.model.usuarios.ProfessorModel;
 import fatec.sigafx.model.usuarios.UsuarioModel;
 import fatec.sigafx.model.usuarios.dto.UsuarioCriarRequest;
@@ -30,6 +31,9 @@ import java.util.List;
 
 public class AdminController
 {
+
+
+
     // Início
     @FXML
     private VBox gPrincipal;
@@ -103,7 +107,7 @@ public class AdminController
     @FXML
     public Label mAdicionarAlterarDisciplina;
     @FXML
-    public Button bAdicionarAlterarDisiciplina;
+    public Button bAdicionarAlterarDisciplina;
     @FXML
     public VBox gConfirmaExclusaoDisciplina;
     @FXML
@@ -126,6 +130,8 @@ public class AdminController
     @FXML
     private VBox gAdicionarTurmas;
     @FXML
+    public Label mAdicionarAlterarTurma;
+    @FXML
     private ComboBox<String> cbCursoAdicionarTurma;
     @FXML
     private ComboBox<DisciplinaModel> cbDisciplinaAdicionarTurma;
@@ -133,6 +139,8 @@ public class AdminController
     private ComboBox<ProfessorModel> cbProfResponAdicionarTurma;
     @FXML
     private Label mTurmas;
+    @FXML
+    public Button bAdicionarAlterarTurma;
     @FXML
     private VBox gAlterarExcluirTurmas;
     @FXML
@@ -150,6 +158,10 @@ public class AdminController
     @FXML
     public VBox gConfirmaRemoverAluno;
     @FXML
+    public Label mAlterarExcluirTurma;
+    @FXML
+    public Label mAdicionarRemoverAlunoTurma;
+    @FXML
     private ComboBox<TurmaModel> cbTurmaAdicionarRemoverAlunoTurma; //@Juninho arruma um nome melhor p issa combo box ae
 
     @FXML
@@ -162,6 +174,17 @@ public class AdminController
     private TableColumn<TurmaModel, DisciplinaModel> turmaDisciplina;
     @FXML
     private TableColumn<TurmaModel, ProfessorModel> turmaProfessor;
+    
+    @FXML
+    public TableView<AlunoModel> tableViewAdicionarRemoverAluno;
+    @FXML
+    public TableColumn<AlunoModel, Integer> alunoId;
+    @FXML
+    public TableColumn<AlunoModel, String> alunoNome;
+    @FXML
+    public TableColumn<AlunoModel, String> alunoEmail;
+    @FXML
+    public TableColumn<AlunoModel, String> alunoNaTurma;
 
     @FXML
     public void initialize() {
@@ -176,6 +199,8 @@ public class AdminController
         carregarComboBoxCursos();
         carregarTableViewTurmas();
         carregarComboBoxTurmas();
+        carregarTableViewAlunos();
+        definirTurmaSelecionada();
     }
 
     private void atualizarTableViewUsuarios() {
@@ -286,6 +311,28 @@ public class AdminController
         cbTurmaAdicionarRemoverAlunoTurma.setItems(obsTurmas);
     }
 
+    private void atualizarTableViewAlunos() {
+        ObservableList<AlunoModel> alunos = FXCollections.observableArrayList();
+        //Fazer alguma função para puxar só os alunos aqui
+        //alunos.addAll(AlunoModel.buscarTodosUsuarios());
+
+        tableViewAdicionarRemoverAluno.setItems(alunos);
+
+        alunoId.setSortType(TableColumn.SortType.ASCENDING);
+        tableViewAdicionarRemoverAluno.getSortOrder().add(alunoId);
+        tableViewAdicionarRemoverAluno.sort();
+    }
+
+    private void carregarTableViewAlunos() {
+        alunoId.setCellValueFactory(new PropertyValueFactory<>("id"));
+        alunoNome.setCellValueFactory(new PropertyValueFactory<>("nome"));
+        alunoEmail.setCellValueFactory(new PropertyValueFactory<>("email"));
+
+        //Colocar uma validação. Caso o aluno esteja na turma mostrar "Sim", do contrário "Não"
+        //alunoNaTurma.setCellValueFactory(new PropertyValueFactory<>("curso"));
+        atualizarTableViewAlunos();
+    }
+
     private <T> ComboBox<T> reconstruirComboBox(ComboBox<T> comboBox, HBox hboxPai) {
         ComboBox<T> novaComboBox = new ComboBox<>(comboBox.getItems());
         novaComboBox.setMaxSize(Double.MAX_VALUE,30);
@@ -333,6 +380,9 @@ public class AdminController
         cbProfResponAdicionarTurma = reconstruirComboBox(cbProfResponAdicionarTurma, hProfAdicionarTurma);
 
         mTurmas.setText("");
+
+        tableViewAlterarExcluirTurma.getSelectionModel().clearSelection();
+        turmaSelecionada = null;
     }
 
     @FXML
@@ -566,7 +616,8 @@ public class AdminController
         gDisciplinas.setVisible(true);
         gAdicionarDisciplinas.setVisible(true);
         mAdicionarAlterarDisciplina.setText("Adicionar nova Disciplina");
-        bAdicionarAlterarDisiciplina.setText("Adicionar");
+        bAdicionarAlterarDisciplina.setText("Adicionar");
+        bLimparDisciplina.setVisible(true);
     }
 
     private boolean verificarCamposVaziosAdicionarDisciplina() {
@@ -624,7 +675,8 @@ public class AdminController
             gAdicionarDisciplinas.setVisible(true);
             mAdicionarAlterarDisciplina.setText("Alterar Disciplina");
 
-            bAdicionarAlterarDisiciplina.setText("Alterar");
+            bAdicionarAlterarDisciplina.setText("Alterar");
+            bLimparDisciplina.setVisible(false);
 
             nomeAdicionarDisciplina.setText(disciplinaSelecionada.getNome());
             cbCargaAdicionarDisciplina.setValue(disciplinaSelecionada.getCargaHoraria());
@@ -634,7 +686,7 @@ public class AdminController
     @FXML
     private void mostrarExcluirDisciplina(){
         if (disciplinaSelecionada == null) {
-            mAlterarExcluirDisciplina.setText("Selecione uma disciplina a ser alterada!");
+            mAlterarExcluirDisciplina.setText("Selecione uma disciplina a ser excluída!");
         } else {
             mAlterarExcluirDisciplina.setText("");
             gConfirmaExclusaoDisciplina.setVisible(true);
@@ -688,6 +740,8 @@ public class AdminController
     private void mostrarAdicionarTurmas() {
         gTurmas.setVisible(true);
         gAdicionarTurmas.setVisible(true);
+        bAdicionarAlterarTurma.setText("Adicionar");
+        bLimparAdicionarTurma.setVisible(true);
     }
 
     private boolean verificarCamposVaziosAdicionarTurma() {
@@ -721,9 +775,62 @@ public class AdminController
         gAlterarExcluirTurmas.setVisible(true);
     }
 
+    private TurmaModel turmaSelecionada;
+
+    private void definirTurmaSelecionada() {
+        tableViewAlterarExcluirTurma.setOnMouseClicked((MouseEvent) -> {
+            turmaSelecionada = tableViewAlterarExcluirTurma.getSelectionModel().getSelectedItem();
+            System.out.println(turmaSelecionada);
+        });
+    }
+
+    @FXML
+    private void mostrarAlterarTurma(){
+        if (turmaSelecionada == null) {
+            mAlterarExcluirTurma.setText("Selecione uma turma a ser alterada!");
+        } else {
+            gTurmas.setVisible(true);
+            gAlterarExcluirTurmas.setVisible(false);
+            gAdicionarTurmas.setVisible(true);
+            mAdicionarAlterarTurma.setText("Alterar Turma");
+
+            bAdicionarAlterarTurma.setText("Alterar");
+            bLimparAdicionarTurma.setVisible(false);
+
+            cbCursoAdicionarTurma.setValue(turmaSelecionada.getCurso());
+            cbDisciplinaAdicionarTurma.setValue(turmaSelecionada.getDisciplina());
+            cbProfResponAdicionarTurma.setValue(turmaSelecionada.getProfessor());
+        }
+    }
+
+    @FXML
+    private void mostrarExcluirTurma(){
+        if (turmaSelecionada == null) {
+            mAlterarExcluirTurma.setText("Selecione uma turma a ser excluída!");
+        } else {
+            mAlterarExcluirTurma.setText("");
+            gConfirmaExclusaoTurma.setVisible(true);
+        }
+    }
+
     private void mostraAdicionarRemoverAlunosTurmas() {
         gTurmas.setVisible(true);
         gAdicionarRemoverAlunosTurmas.setVisible(true);
+    }
+
+    public void confirmaExclusaoTurma(ActionEvent event) {
+        String textoBotao = ((Button) event.getSource()).getText();
+        switch (textoBotao) {
+            case "Sim":
+                //Precisa fazer essa função de exclusão no TurmaModel
+                //TurmaModel.excluirTurma(turmaSelecionada);
+                System.out.println("Turma excluída ??");
+                initialize();
+                break;
+            case "Não":
+                break;
+        }
+        gConfirmaExclusaoTurma.setVisible(false);
     }
 
     private void esconderPaineis() {
@@ -751,4 +858,5 @@ public class AdminController
     private void onLogoutClicked(ActionEvent event) {
         LoginView.mostrarLogin();
     }
+
 }

@@ -262,15 +262,23 @@
                                 <Insets left="20.0" right="20.0" />
                             </StackPane.margin>
                         </VBox>
-                        <VBox fx:id="gConfirmaExclusaoDisciplina" alignment="CENTER" maxHeight="200.0" maxWidth="400.0" visible="false">
+                        <VBox fx:id="gConfirmaExclusaoDisciplina" alignment="TOP_CENTER" maxHeight="225.0" maxWidth="400.0" spacing="10.0" visible="false">
                             <Label text="Deseja mesmo excluir ?" textFill="WHITE">
                                 <font>
                                     <Font size="24.0" />
                                 </font>
+                        <VBox.margin>
+                           <Insets top="35.0" />
+                        </VBox.margin>
                             </Label>
+                     <Label alignment="CENTER" maxWidth="1.7976931348623157E308" text="Turmas também serão excluídas" textAlignment="CENTER" textFill="WHITE" wrapText="true">
+                        <font>
+                           <Font size="16.0" />
+                        </font>
+                     </Label>
                             <HBox alignment="CENTER" prefHeight="64.0" prefWidth="1000.0" spacing="20.0" VBox.vgrow="NEVER">
                                 <VBox.margin>
-                                    <Insets top="20.0" />
+                                    <Insets top="10.0" />
                                 </VBox.margin>
                                 <Button minHeight="50.0" minWidth="100.0" mnemonicParsing="false" onAction="#confirmaExclusaoDisciplina" text="Sim" />
                                 <Button minHeight="50.0" minWidth="100.0" mnemonicParsing="false" onAction="#confirmaExclusaoDisciplina" text="Não" />
@@ -338,7 +346,7 @@
                         </HBox.margin>
                      </Label>
                             <Button fx:id="bLimparDisciplina" minHeight="50.0" minWidth="100.0" mnemonicParsing="false" onAction="#limparCampos" text="Limpar" />
-                            <Button fx:id="bAdicionarAlterarDisiciplina" minHeight="50.0" minWidth="100.0" mnemonicParsing="false" onAction="#adicionarDisciplina" text="Adicionar" />
+                            <Button fx:id="bAdicionarAlterarDisciplina" minHeight="50.0" minWidth="100.0" mnemonicParsing="false" onAction="#adicionarDisciplina" text="Adicionar" />
                         </HBox>
                     </VBox>
                 </StackPane>
@@ -375,8 +383,9 @@
                                 <VBox.margin>
                                     <Insets top="20.0" />
                                 </VBox.margin>
-                                <Button minHeight="50.0" minWidth="100.0" mnemonicParsing="false" text="Alterar" />
-                                <Button minHeight="50.0" minWidth="100.0" mnemonicParsing="false" text="Excluir" />
+                        <Label fx:id="mAlterarExcluirTurma" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" textFill="RED" HBox.hgrow="ALWAYS" />
+                                <Button minHeight="50.0" minWidth="100.0" mnemonicParsing="false" onAction="#mostrarAlterarTurma" text="Alterar" />
+                                <Button minHeight="50.0" minWidth="100.0" mnemonicParsing="false" onAction="#mostrarExcluirTurma" text="Excluir" />
                             </HBox>
                             <StackPane.margin>
                                 <Insets left="20.0" right="20.0" />
@@ -392,15 +401,10 @@
                                 <VBox.margin>
                                     <Insets top="20.0" />
                                 </VBox.margin>
-                                <Button minHeight="50.0" minWidth="100.0" mnemonicParsing="false" onAction="#confirmaExclusaoDisciplina" text="Sim" />
-                                <Button minHeight="50.0" minWidth="100.0" mnemonicParsing="false" onAction="#confirmaExclusaoDisciplina" text="Não" />
+                                <Button minHeight="50.0" minWidth="100.0" mnemonicParsing="false" onAction="#confirmaExclusaoTurma" text="Sim" />
+                                <Button minHeight="50.0" minWidth="100.0" mnemonicParsing="false" onAction="#confirmaExclusaoTurma" text="Não" />
                             </HBox>
                         </VBox>
-                    </StackPane>
-                    <StackPane>
-                        <StackPane.margin>
-                            <Insets left="20.0" right="20.0" />
-                        </StackPane.margin>
                         <VBox fx:id="gAdicionarRemoverAlunosTurmas" maxHeight="1.7976931348623157E308" maxWidth="1000.0" prefHeight="1080.0" prefWidth="1000.0" visible="false">
                             <HBox alignment="TOP_CENTER">
                                 <VBox.margin>
@@ -408,12 +412,12 @@
                                 </VBox.margin>
                                 <ComboBox fx:id="cbTurmaAdicionarRemoverAlunoTurma" focusTraversable="false" minHeight="30.0" minWidth="395.0" promptText="Turma" />
                             </HBox>
-                            <TableView VBox.vgrow="ALWAYS">
+                            <TableView fx:id="tableViewAdicionarRemoverAluno" VBox.vgrow="ALWAYS">
                                 <columns>
-                                    <TableColumn maxWidth="150.0" minWidth="80.0" prefWidth="-1.0" sortType="DESCENDING" text="Id" />
-                                    <TableColumn maxWidth="300.0" minWidth="220.0" prefWidth="-1.0" text="Nome" />
-                                    <TableColumn maxWidth="400.0" minWidth="250.0" prefWidth="-1.0" text="E-mail" />
-                                    <TableColumn maxWidth="150.0" minWidth="90.0" prefWidth="-1.0" text="Está na turma" />
+                                    <TableColumn fx:id="alunoId" maxWidth="150.0" minWidth="80.0" prefWidth="-1.0" sortType="DESCENDING" text="Id" />
+                                    <TableColumn fx:id="alunoNome" maxWidth="300.0" minWidth="220.0" prefWidth="-1.0" text="Nome" />
+                                    <TableColumn fx:id="alunoEmail" maxWidth="400.0" minWidth="250.0" prefWidth="-1.0" text="E-mail" />
+                                    <TableColumn fx:id="alunoNaTurma" maxWidth="150.0" minWidth="90.0" prefWidth="-1.0" text="Está na turma" />
                                 </columns>
                                 <columnResizePolicy>
                                     <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
@@ -423,9 +427,13 @@
                                 <VBox.margin>
                                     <Insets top="20.0" />
                                 </VBox.margin>
+                        <Label fx:id="mAdicionarRemoverAlunoTurma" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" textFill="RED" HBox.hgrow="ALWAYS" />
                                 <Button minHeight="50.0" minWidth="100.0" mnemonicParsing="false" text="Adicionar" />
                                 <Button minHeight="50.0" minWidth="100.0" mnemonicParsing="false" text="Remover" />
                             </HBox>
+                     <StackPane.margin>
+                        <Insets left="20.0" right="20.0" />
+                     </StackPane.margin>
                         </VBox>
                         <VBox fx:id="gConfirmaRemoverAluno" alignment="CENTER" maxHeight="200.0" maxWidth="400.0" visible="false">
                             <Label text="Deseja mesmo excluir ?" textFill="WHITE">
@@ -450,7 +458,7 @@
                         </HBox>
                     </VBox>
                     <VBox fx:id="gAdicionarTurmas" alignment="TOP_CENTER" spacing="10.0" visible="false">
-                        <Label alignment="TOP_CENTER" maxHeight="-Infinity" maxWidth="1.7976931348623157E308" minHeight="40.0" minWidth="680.0" text="Criar nova turma" VBox.vgrow="ALWAYS">
+                        <Label fx:id="mAdicionarAlterarTurma" alignment="TOP_CENTER" maxHeight="-Infinity" maxWidth="1.7976931348623157E308" minHeight="40.0" minWidth="680.0" text="Criar nova turma" VBox.vgrow="ALWAYS">
                             <font>
                                 <Font size="28.0" />
                             </font>
@@ -514,8 +522,8 @@
                         </HBox>
                         <HBox alignment="TOP_RIGHT" maxWidth="1000.0" spacing="10.0">
                      <Label fx:id="mTurmas" maxWidth="1.7976931348623157E308" minHeight="50.0" textFill="RED" HBox.hgrow="ALWAYS" />
-                            <Button minHeight="50.0" minWidth="100.0" mnemonicParsing="false" onAction="#adicionarTurma" text="Criar" />
                             <Button fx:id="bLimparAdicionarTurma" minHeight="50.0" minWidth="100.0" mnemonicParsing="false" onAction="#limparCampos" text="Limpar" />
+                            <Button fx:id="bAdicionarAlterarTurma" minHeight="50.0" minWidth="100.0" mnemonicParsing="false" onAction="#adicionarTurma" text="Adicionar" />
                      <VBox.margin>
                         <Insets left="20.0" right="20.0" />
                      </VBox.margin>
