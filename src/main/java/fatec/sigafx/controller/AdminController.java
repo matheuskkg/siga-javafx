@@ -149,6 +149,8 @@ public class AdminController
     public VBox gConfirmaExclusaoTurma;
     @FXML
     public VBox gConfirmaRemoverAluno;
+    @FXML
+    private ComboBox<TurmaModel> cbTurmaAdicionarRemoverAlunoTurma; //@Juninho arruma um nome melhor p issa combo box ae
 
     @FXML
     private TableView<TurmaModel> tableViewAlterarExcluirTurma;
@@ -173,6 +175,7 @@ public class AdminController
         carregarComboBoxDisciplina();
         carregarComboBoxCursos();
         carregarTableViewTurmas();
+        carregarComboBoxTurmas();
     }
 
     private void atualizarTableViewUsuarios() {
@@ -272,6 +275,15 @@ public class AdminController
         turmaDisciplina.setCellValueFactory(new PropertyValueFactory<>("disciplina"));
         turmaProfessor.setCellValueFactory(new PropertyValueFactory<>("professor"));
         atualizarTableViewTurmas();
+    }
+
+    private void carregarComboBoxTurmas() {
+        List<TurmaModel> turmas = TurmaModel.buscarTodasTurmas();
+
+        ObservableList<TurmaModel> obsTurmas = FXCollections.observableArrayList();
+        obsTurmas.addAll(turmas);
+
+        cbTurmaAdicionarRemoverAlunoTurma.setItems(obsTurmas);
     }
 
     private <T> ComboBox<T> reconstruirComboBox(ComboBox<T> comboBox, HBox hboxPai) {

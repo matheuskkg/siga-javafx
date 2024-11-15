@@ -93,4 +93,11 @@ public class TurmaModel {
     public void setAlunos(List<AlunoModel> alunos) {
         this.alunos = alunos;
     }
+
+    @Override
+    public String toString() {
+        return "Curso: " + curso +
+                ", Disciplina: " + disciplina.getNome() +
+                ", Professor: " + professor.getEmail();
+    }
 }

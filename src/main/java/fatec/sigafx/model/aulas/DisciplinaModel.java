@@ -77,8 +77,7 @@ public class DisciplinaModel {
 
     @Override
     public String toString() {
-        return "Id: " + id +
-                ", Nome: " + nome +
+        return "Nome: " + nome +
                 ", Carga Horária: " + cargaHoraria;
     }
 }
