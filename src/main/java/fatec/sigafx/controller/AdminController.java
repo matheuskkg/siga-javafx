@@ -516,7 +516,7 @@ public class AdminController
         switch (textoBotao) {
             case "Sim":
                 UsuarioModel.excluirUsuario(usuarioSelecionado);
-                atualizarTableViewUsuarios();
+                initialize();
                 break;
             case "Não":
                 break;
@@ -635,10 +635,8 @@ public class AdminController
         String textoBotao = ((Button) event.getSource()).getText();
         switch (textoBotao) {
             case "Sim":
-                //Fazer a exclusão da disciplina no model pra chamar aqui
-                //DisciplinaModel.
-                atualizarTableViewDisciplinas();
-                System.out.println("disciplina excluida ?");
+                DisciplinaModel.excluirDisciplina(disciplinaSelecionada);
+                initialize();
                 break;
             case "Não":
                 break;

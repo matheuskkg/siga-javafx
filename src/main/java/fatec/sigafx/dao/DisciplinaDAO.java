@@ -28,6 +28,30 @@ public class DisciplinaDAO {
         }
     }
 
+    public void excluirDisciplina(DisciplinaModel request) {
+        EntityManager em = emf.createEntityManager();
+
+        try {
+            em.getTransaction().begin();
+
+            if (!em.contains(request)) {
+                request = em.merge(request);
+            }
+
+            em.remove(request);
+            em.getTransaction().commit();
+        } catch (Exception e) {
+            if (em.getTransaction().isActive()) {
+                em.getTransaction().rollback();
+            }
+
+            System.out.println("Falha ao excluir disciplina.");
+            e.printStackTrace();
+        } finally {
+            em.close();
+        }
+    }
+
     public List<DisciplinaModel> buscarTodos() {
         try (EntityManager em = emf.createEntityManager()) {
             List<DisciplinaModel> res = em.createQuery("FROM DisciplinaModel ", DisciplinaModel.class)

@@ -18,6 +18,9 @@ public class DisciplinaModel {
 
     private Integer cargaHoraria;
 
+    @OneToMany(mappedBy = "disciplina", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<TurmaModel> turmas;
+
     @Transient
     private static DisciplinaDAO disciplinaDAO = new DisciplinaDAO();
 
@@ -38,6 +41,10 @@ public class DisciplinaModel {
         d.setCargaHoraria(request.cargaHoraria());
 
         disciplinaDAO.salvarDisciplina(d);
+    }
+
+    public static void excluirDisciplina(DisciplinaModel request) {
+        disciplinaDAO.excluirDisciplina(request);
     }
 
     public static List<DisciplinaModel> buscarTodasDisciplinas() {
