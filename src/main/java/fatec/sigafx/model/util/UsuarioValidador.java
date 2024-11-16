@@ -36,8 +36,7 @@ public class UsuarioValidador {
     }
 
     public boolean verificarCamposVazios() {
-        System.out.println(tipo);
-        return nome.isEmpty() || email.isEmpty() || senha.isEmpty() || confirmarSenha.isEmpty() || tipo.isEmpty();
+        return nome.isEmpty() || email.isEmpty() || senha.isEmpty() || confirmarSenha.isEmpty() || tipo == null;
     }
 
     public boolean verificarEmailValido() {
@@ -53,5 +52,4 @@ public class UsuarioValidador {
     public boolean verificarSenhasCoincidem() {
         return senha.equals(confirmarSenha);
     }
-
 }
