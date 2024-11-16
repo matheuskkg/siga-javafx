@@ -25,13 +25,13 @@ public class SigaApplication extends Application
         //LoginView.mostrarLogin();
 
         //Usar para testar a página de ADM
-        //AdminView.mostrarHomeAdmin();
+        AdminView.mostrarHomeAdmin();
 
         //Usar para testar a página de Aluno
         //AlunoView.mostrarHomeAluno();
 
         //Usar para testar a página de Professor
-        ProfessorView.mostrarHomeProf();
+        //ProfessorView.mostrarHomeProf();
 
         //Apenas para testes
         if (UsuarioModel.buscarUsuarioPorEmail("aluno@aluno") == null) {

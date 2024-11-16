@@ -164,14 +164,8 @@ public class AdminController
     @FXML
     private TableColumn<TurmaModel, ProfessorModel> turmaProfessor;
     
-    @FXML
+
     public TableView<AlunoModel> tAdicionarAlunos;
-    @FXML
-    public TableColumn<AlunoModel, Integer> alunoId;
-    @FXML
-    public TableColumn<AlunoModel, String> alunoNome;
-    @FXML
-    public TableColumn<AlunoModel, String> alunoEmail;
 
     @FXML
     public void initialize() {
@@ -185,7 +179,6 @@ public class AdminController
         carregarComboBoxDisciplina();
         carregarComboBoxCursos();
         carregarTableViewTurmas();
-        carregarTableViewAlunos();
         definirTurmaSelecionada();
     }
 
@@ -288,24 +281,41 @@ public class AdminController
         atualizarTableViewTurmas();
     }
 
-    private void atualizarTableViewAlunos() {
+    private void carregarTableViewAlunos() {
+        TableColumn<AlunoModel, String> colunaId = new TableColumn<>("Id");
+        colunaId.setCellValueFactory(new PropertyValueFactory<>("id"));
+
+        TableColumn<AlunoModel, String> colunaNome = new TableColumn<>("Nome");
+        colunaNome.setCellValueFactory(new PropertyValueFactory<>("nome"));
+
+        TableColumn<AlunoModel, String> colunaEmail = new TableColumn<>("E-mail");
+        colunaEmail.setCellValueFactory(new PropertyValueFactory<>("email"));
+
+        tAdicionarAlunos.getColumns().addAll(colunaId, colunaNome, colunaEmail);
+
+        colunaId.setMinWidth(80);
+        colunaId.setMaxWidth(80);
+
+        colunaNome.setMinWidth(200);
+        colunaNome.setMaxWidth(400);
+
+        colunaEmail.setMinWidth(300);
+        colunaEmail.setMaxWidth(Double.MAX_VALUE);
+
+        tAdicionarAlunos.setMaxSize(1000,Double.MAX_VALUE);
+        tAdicionarAlunos.setPrefHeight(1000);
+        VBox.setVgrow(tAdicionarAlunos, Priority.ALWAYS);
+        tAdicionarAlunos.getSelectionModel().setSelectionMode(SelectionMode.MULTIPLE);
+        tAdicionarAlunos.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY);
+
+
         ObservableList<AlunoModel> alunos = FXCollections.observableArrayList();
         alunos.addAll(AlunoModel.buscarTodosAlunos());
 
         tAdicionarAlunos.setItems(alunos);
-
-        alunoId.setSortType(TableColumn.SortType.ASCENDING);
-        tAdicionarAlunos.getSortOrder().add(alunoId);
+        colunaId.setSortType(TableColumn.SortType.ASCENDING);
+        tAdicionarAlunos.getSortOrder().add(colunaId);
         tAdicionarAlunos.sort();
-    }
-
-    private void carregarTableViewAlunos() {
-        alunoId.setCellValueFactory(new PropertyValueFactory<>("id"));
-        alunoNome.setCellValueFactory(new PropertyValueFactory<>("nome"));
-        alunoEmail.setCellValueFactory(new PropertyValueFactory<>("email"));
-
-        tAdicionarAlunos.getSelectionModel().setSelectionMode(SelectionMode.MULTIPLE);
-        atualizarTableViewAlunos();
     }
 
     private <T> ComboBox<T> reconstruirComboBox(ComboBox<T> comboBox, HBox hboxPai) {
@@ -353,6 +363,9 @@ public class AdminController
         cbCursoAdicionarTurma = reconstruirComboBox(cbCursoAdicionarTurma, hCursoAdicionarTurma);
         cbDisciplinaAdicionarTurma = reconstruirComboBox(cbDisciplinaAdicionarTurma, hDisciplinaAdicionarTurma);
         cbProfResponAdicionarTurma = reconstruirComboBox(cbProfResponAdicionarTurma, hProfAdicionarTurma);
+
+        if (tAdicionarAlunos != null)
+            tAdicionarAlunos.getSelectionModel().clearSelection();
 
         mTurmas.setText("");
 
@@ -433,8 +446,7 @@ public class AdminController
         label.setText(mensagem);
 
         PauseTransition pause = new PauseTransition(Duration.seconds(2));
-        pause.setOnFinished(event -> {
-            label.setText("");});
+        pause.setOnFinished(event -> label.setText(""));
         pause.play();
     }
 
@@ -714,6 +726,27 @@ public class AdminController
         gAdicionarTurmas.setVisible(true);
         bAdicionarAlterarTurma.setText("Adicionar");
         bLimparAdicionarTurma.setVisible(true);
+        criarTableViewAlunos();
+
+    }
+
+    private void criarTableViewAlunos(){
+        if (tAdicionarAlunos == null) {
+            tAdicionarAlunos = new TableView<>();
+
+            carregarTableViewAlunos();
+
+            int index = gAdicionarTurmas.getChildren().indexOf(hProfAdicionarTurma) + 1;
+            gAdicionarTurmas.getChildren().add(index, tAdicionarAlunos);
+
+        }
+    }
+
+    private void removerTableViewAlunos(){
+        if (tAdicionarAlunos != null) {
+            gAdicionarTurmas.getChildren().remove(tAdicionarAlunos);
+            tAdicionarAlunos = null;
+        }
     }
 
     private boolean verificarCamposVaziosAdicionarTurma() {
@@ -782,6 +815,7 @@ public class AdminController
             cbCursoAdicionarTurma.setValue(turmaSelecionada.getCurso());
             cbDisciplinaAdicionarTurma.setValue(turmaSelecionada.getDisciplina());
             cbProfResponAdicionarTurma.setValue(turmaSelecionada.getProfessor());
+            removerTableViewAlunos();
         }
     }
 
@@ -831,7 +865,7 @@ public class AdminController
     }
 
     @FXML
-    private void onLogoutClicked(ActionEvent event) {
+    private void onLogoutClicked() {
         LoginView.mostrarLogin();
     }
 
