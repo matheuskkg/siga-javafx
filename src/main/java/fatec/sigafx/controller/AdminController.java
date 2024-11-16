@@ -762,7 +762,13 @@ public class AdminController
             return;
         }
 
-        TurmaModel.criarTurma(new TurmaCriarRequest(cbCursoAdicionarTurma.getSelectionModel().getSelectedItem(), cbDisciplinaAdicionarTurma.getSelectionModel().getSelectedItem(), cbProfResponAdicionarTurma.getSelectionModel().getSelectedItem()));
+        TurmaCriarRequest request = new TurmaCriarRequest(cbCursoAdicionarTurma.getSelectionModel().getSelectedItem(), cbDisciplinaAdicionarTurma.getSelectionModel().getSelectedItem(), cbProfResponAdicionarTurma.getSelectionModel().getSelectedItem());
+
+        if (turmaSelecionada == null) {
+            TurmaModel.criarTurma(request);
+        } else {
+            TurmaModel.atualizarTurma(request, turmaSelecionada.getId());
+        }
 
         limparCampos();
         initialize();

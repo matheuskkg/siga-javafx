@@ -50,6 +50,13 @@ public class TurmaModel {
         turmaDAO.salvarTurma(new TurmaModel(request));
     }
 
+    public static void atualizarTurma(TurmaCriarRequest request, Integer id) {
+        TurmaModel t = new TurmaModel(request);
+        t.setId(id);
+
+        turmaDAO.salvarTurma(t);
+    }
+
     public static List<TurmaModel> buscarTodasTurmas() {
         return turmaDAO.buscarTodos();
     }
