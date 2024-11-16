@@ -31,9 +31,6 @@ import java.util.List;
 
 public class AdminController
 {
-
-
-
     // Início
     @FXML
     private VBox gPrincipal;
@@ -144,8 +141,6 @@ public class AdminController
     @FXML
     private VBox gAlterarExcluirTurmas;
     @FXML
-    private VBox gAdicionarRemoverAlunosTurmas;
-    @FXML
     public HBox hCursoAdicionarTurma;
     @FXML
     public HBox hDisciplinaAdicionarTurma;
@@ -156,13 +151,7 @@ public class AdminController
     @FXML
     public VBox gConfirmaExclusaoTurma;
     @FXML
-    public VBox gConfirmaRemoverAluno;
-    @FXML
     public Label mAlterarExcluirTurma;
-    @FXML
-    public Label mAdicionarRemoverAlunoTurma;
-    @FXML
-    private ComboBox<TurmaModel> cbTurmaAdicionarRemoverAlunoTurma; //@Juninho arruma um nome melhor p issa combo box ae
 
     @FXML
     private TableView<TurmaModel> tableViewAlterarExcluirTurma;
@@ -176,15 +165,13 @@ public class AdminController
     private TableColumn<TurmaModel, ProfessorModel> turmaProfessor;
     
     @FXML
-    public TableView<AlunoModel> tableViewAdicionarRemoverAluno;
+    public TableView<AlunoModel> tAdicionarAlunos;
     @FXML
     public TableColumn<AlunoModel, Integer> alunoId;
     @FXML
     public TableColumn<AlunoModel, String> alunoNome;
     @FXML
     public TableColumn<AlunoModel, String> alunoEmail;
-    @FXML
-    public TableColumn<AlunoModel, String> alunoNaTurma;
 
     @FXML
     public void initialize() {
@@ -198,7 +185,6 @@ public class AdminController
         carregarComboBoxDisciplina();
         carregarComboBoxCursos();
         carregarTableViewTurmas();
-        carregarComboBoxTurmas();
         carregarTableViewAlunos();
         definirTurmaSelecionada();
     }
@@ -302,25 +288,15 @@ public class AdminController
         atualizarTableViewTurmas();
     }
 
-    private void carregarComboBoxTurmas() {
-        List<TurmaModel> turmas = TurmaModel.buscarTodasTurmas();
-
-        ObservableList<TurmaModel> obsTurmas = FXCollections.observableArrayList();
-        obsTurmas.addAll(turmas);
-
-        cbTurmaAdicionarRemoverAlunoTurma.setItems(obsTurmas);
-    }
-
     private void atualizarTableViewAlunos() {
         ObservableList<AlunoModel> alunos = FXCollections.observableArrayList();
-        //Fazer alguma função para puxar só os alunos aqui
-        //alunos.addAll(AlunoModel.buscarTodosUsuarios());
+        alunos.addAll(AlunoModel.buscarTodosAlunos());
 
-        tableViewAdicionarRemoverAluno.setItems(alunos);
+        tAdicionarAlunos.setItems(alunos);
 
         alunoId.setSortType(TableColumn.SortType.ASCENDING);
-        tableViewAdicionarRemoverAluno.getSortOrder().add(alunoId);
-        tableViewAdicionarRemoverAluno.sort();
+        tAdicionarAlunos.getSortOrder().add(alunoId);
+        tAdicionarAlunos.sort();
     }
 
     private void carregarTableViewAlunos() {
@@ -328,8 +304,7 @@ public class AdminController
         alunoNome.setCellValueFactory(new PropertyValueFactory<>("nome"));
         alunoEmail.setCellValueFactory(new PropertyValueFactory<>("email"));
 
-        //Colocar uma validação. Caso o aluno esteja na turma mostrar "Sim", do contrário "Não"
-        //alunoNaTurma.setCellValueFactory(new PropertyValueFactory<>("curso"));
+        tAdicionarAlunos.getSelectionModel().setSelectionMode(SelectionMode.MULTIPLE);
         atualizarTableViewAlunos();
     }
 
@@ -729,9 +704,6 @@ public class AdminController
             case "Alterar/Excluir":
                 mostrarAlterarExcluirTurmas();
                 break;
-            case "Adicionar/Remover Aluno":
-                mostraAdicionarRemoverAlunosTurmas();
-                break;
             default:
                 break;
         }
@@ -747,7 +719,8 @@ public class AdminController
     private boolean verificarCamposVaziosAdicionarTurma() {
         return cbCursoAdicionarTurma.getSelectionModel().getSelectedItem() == null
                 || cbDisciplinaAdicionarTurma.getSelectionModel().getSelectedItem() == null
-                || cbProfResponAdicionarTurma.getSelectionModel().getSelectedItem() == null;
+                || cbProfResponAdicionarTurma.getSelectionModel().getSelectedItem() == null
+                || tAdicionarAlunos.getSelectionModel().getSelectedItem() == null;
     }
 
     @FXML
@@ -769,6 +742,9 @@ public class AdminController
         } else {
             TurmaModel.atualizarTurma(request, turmaSelecionada.getId());
         }
+
+        //TODO: pegar esses alunos associados e mandar eles para a turma
+        //ObservableList<AlunoModel> alunosSelecionados = tAdicionarAlunos.getSelectionModel().getSelectedItems();
 
         limparCampos();
         initialize();
@@ -819,11 +795,6 @@ public class AdminController
         }
     }
 
-    private void mostraAdicionarRemoverAlunosTurmas() {
-        gTurmas.setVisible(true);
-        gAdicionarRemoverAlunosTurmas.setVisible(true);
-    }
-
     public void confirmaExclusaoTurma(ActionEvent event) {
         String textoBotao = ((Button) event.getSource()).getText();
         switch (textoBotao) {
@@ -856,7 +827,6 @@ public class AdminController
         gTurmas.setVisible(false);
         gBotaoTurmas.setVisible(false);
         gAdicionarTurmas.setVisible(false);
-        gAdicionarRemoverAlunosTurmas.setVisible(false);
         gAlterarExcluirTurmas.setVisible(false);
     }
 

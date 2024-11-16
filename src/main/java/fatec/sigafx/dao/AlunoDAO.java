@@ -10,19 +10,14 @@ import java.util.List;
 public class AlunoDAO {
     private EntityManagerFactory emf = EMF.getEmf();
 
-    public void buscarTodosAlunos() {
+    public List<AlunoModel> buscarTodosAlunos() {
         try (EntityManager em = emf.createEntityManager()) {
             List<AlunoModel> res = em.createQuery("FROM AlunoModel", AlunoModel.class)
                     .getResultList();
 
-            //return res;
-
-            //está aqui apenas p debug, remover dps
-            for (AlunoModel a : res) {
-                System.out.println(a.toString());
-            }
+            return res;
         } catch (Exception e) {
-            System.out.println("Falha ao buscar todos os alunos.");
+            return null;
         }
     }
 
@@ -35,4 +30,20 @@ public class AlunoDAO {
             return null;
         }
     }
+
+    public List<AlunoModel> buscarAlunosForaDaTurma(Integer turmaId) {
+        try (EntityManager em = emf.createEntityManager()) {
+            // Consulta para buscar alunos que não estão na turma especificada
+            return em.createQuery(
+                            "SELECT a FROM AlunoModel a WHERE a.id NOT IN (" +
+                                    "SELECT at.id FROM TurmaModel t JOIN t.alunos at WHERE t.id = :turmaId" +
+                                    ")", AlunoModel.class)
+                    .setParameter("turmaId", turmaId)
+                    .getResultList();
+        } catch (Exception e) {
+            e.printStackTrace();
+            return null;
+        }
+    }
+
 }
