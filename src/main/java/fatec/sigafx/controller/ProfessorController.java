@@ -166,4 +166,13 @@ public class ProfessorController {
         LoginView.mostrarLogin();
 
     }
+
+    public void mostrarRealizarChamada(ActionEvent event) {
+    }
+
+    public void mostrarAlterarFaltas(ActionEvent event) {
+    }
+
+    public void finalizarChamada(ActionEvent event) {
+    }
 }
