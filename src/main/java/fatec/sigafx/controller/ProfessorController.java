@@ -1,6 +1,9 @@
 package fatec.sigafx.controller;
 
+import fatec.sigafx.dao.NotaDAO;
+import fatec.sigafx.model.aulas.NotaModel;
 import fatec.sigafx.model.aulas.TurmaModel;
+import fatec.sigafx.model.aulas.dto.NotaCriarRequest;
 import fatec.sigafx.model.usuarios.AlunoModel;
 import fatec.sigafx.view.LoginView;
 import javafx.beans.property.SimpleBooleanProperty;
@@ -319,6 +322,10 @@ public class ProfessorController
         gPrincipal.setVisible(true);
         turmaSelecionada = null;
         alunoSelecionado = null;
+
+        //debug apenas
+        NotaDAO dao = new NotaDAO();
+        dao.buscarTodos();
     }
 
     // Mostrar *Notas*
@@ -369,6 +376,12 @@ public class ProfessorController
             mAtribuirNotasAluno.setText("Selecione alguma nota e atribua um valor a ela para prosseguir.");
         }
 
+        NotaCriarRequest requestP1 = null;
+        if (checkP1.isSelected() && sP1.getValue() != null) {
+            requestP1 = new NotaCriarRequest(sP1.getValue(), alunoSelecionado, turmaSelecionada);
+        }
+
+        NotaModel.criarNota(requestP1);
     }
 
     //Da pra deixar mais funcional e fazer só uma função, mas tô com preguiça

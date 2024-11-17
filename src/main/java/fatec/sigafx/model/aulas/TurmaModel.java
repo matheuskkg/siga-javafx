@@ -16,7 +16,6 @@ public class TurmaModel {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Integer id;
 
-    //fazer hard coded msm fds (final de semana)
     private String curso;
 
     @ManyToOne
@@ -34,6 +33,9 @@ public class TurmaModel {
             inverseJoinColumns = @JoinColumn(name = "aluno_id")
     )
     private List<AlunoModel> alunos;
+
+    @OneToMany(mappedBy = "turma", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<NotaModel> notas;
 
     @Transient
     private static TurmaDAO turmaDAO = new TurmaDAO();
