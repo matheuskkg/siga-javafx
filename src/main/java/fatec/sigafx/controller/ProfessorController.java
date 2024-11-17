@@ -18,6 +18,10 @@ import javafx.scene.layout.VBox;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
+import java.util.stream.Collectors;
+
+import static fatec.sigafx.controller.LoginController.usuarioLogado;
 
 public class ProfessorController
 {
@@ -150,9 +154,9 @@ public class ProfessorController
 
     private void carregarComboBoxTurmas(){
         List<TurmaModel> turmas = TurmaModel.buscarTodasTurmas();
-
+        List<TurmaModel> turmasProfLogado = turmas.stream().filter(p -> Objects.equals(p.getProfessor().getEmail(), usuarioLogado.getEmail())).toList();
         ObservableList<TurmaModel> obsTurmas = FXCollections.observableArrayList();
-        obsTurmas.addAll(turmas);
+        obsTurmas.addAll(turmasProfLogado);
 
         cbAtribuirFaltasTurma.setItems(obsTurmas);
         cbTurmaRealizarChamada.setItems(obsTurmas);
