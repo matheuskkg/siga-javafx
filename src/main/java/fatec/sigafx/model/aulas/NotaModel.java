@@ -5,6 +5,10 @@ import fatec.sigafx.model.aulas.dto.NotaCriarRequest;
 import fatec.sigafx.model.usuarios.AlunoModel;
 import jakarta.persistence.*;
 
+/**
+ * Selecioanar turma -> Acessar alunos da turma -> Acessar notas dos alunos
+ */
+
 @Entity
 @Table(name = "notas")
 public class NotaModel {

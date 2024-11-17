@@ -1,6 +1,7 @@
 package fatec.sigafx.model.usuarios;
 
 import fatec.sigafx.dao.AlunoDAO;
+import fatec.sigafx.model.aulas.NotaModel;
 import fatec.sigafx.model.aulas.TurmaModel;
 import fatec.sigafx.model.usuarios.dto.UsuarioCriarRequest;
 import jakarta.persistence.*;
@@ -13,6 +14,9 @@ public class AlunoModel extends UsuarioModel {
 
     @ManyToMany(mappedBy = "alunos")
     private List<TurmaModel> turmas;
+
+    @OneToMany(mappedBy = "aluno", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<NotaModel> notas;
 
     public AlunoModel() {}
 

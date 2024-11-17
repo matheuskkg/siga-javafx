@@ -34,9 +34,6 @@ public class TurmaModel {
     )
     private List<AlunoModel> alunos;
 
-    @OneToMany(mappedBy = "turma", cascade = CascadeType.ALL, orphanRemoval = true)
-    private List<NotaModel> notas;
-
     @Transient
     private static TurmaDAO turmaDAO = new TurmaDAO();
 
