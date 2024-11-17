@@ -23,8 +23,8 @@
             <property name="jakarta.persistence.jdbc.driver" value="org.postgresql.Driver"/>
             <!-- Usuário e senha -->
             <!--WARNING: Altere as credênciais antes de executar-->
-            <property name="jakarta.persistence.jdbc.user" value="postgres"/>
-            <property name="jakarta.persistence.jdbc.password" value="8502021"/>
+            <property name="jakarta.persistence.jdbc.user" value="javaLogin"/>
+            <property name="jakarta.persistence.jdbc.password" value="shindasAdmin"/>
             <!-- Opções adicionais -->
             <property name="hibernate.hbm2ddl.auto" value="update"/>
             <property name="hibernate.show_sql" value="true"/>

@@ -1,6 +1,7 @@
 package fatec.sigafx.controller;
 
 import fatec.sigafx.model.usuarios.dto.UsuarioLoginRequest;
+import fatec.sigafx.model.usuarios.UsuarioModel;
 import fatec.sigafx.model.util.UsuarioValidador;
 import fatec.sigafx.view.AdminView;
 import fatec.sigafx.view.AlunoView;
@@ -20,6 +21,8 @@ public class LoginController {
     @FXML
     private Label mensagemErroLogin;
 
+    public static UsuarioModel usuarioLogado = new UsuarioModel();
+
     @FXML
     private void confirmarLogin() {
         String login = UsuarioValidador.login(new UsuarioLoginRequest(usuarioEmail.getText(), usuarioSenha.getText()));
@@ -28,7 +31,7 @@ public class LoginController {
             mensagemErroLogin.setVisible(true);
             return;
         }
-
+        usuarioLogado = UsuarioModel.buscarUsuarioPorEmail(usuarioEmail.getText());
         if (login.equals("ADMIN")) {
             AdminView.mostrarHomeAdmin();
         }
