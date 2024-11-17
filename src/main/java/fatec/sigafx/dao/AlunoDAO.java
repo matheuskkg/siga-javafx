@@ -31,11 +31,10 @@ public class AlunoDAO {
         }
     }
 
-    public List<AlunoModel> buscarAlunosForaDaTurma(Integer turmaId) {
+    public List<AlunoModel> buscarAlunosNaTurma(Integer turmaId) {
         try (EntityManager em = emf.createEntityManager()) {
-            // Consulta para buscar alunos que não estão na turma especificada
             return em.createQuery(
-                            "SELECT a FROM AlunoModel a WHERE a.id NOT IN (" +
+                            "SELECT a FROM AlunoModel a WHERE a.id IN (" +
                                     "SELECT at.id FROM TurmaModel t JOIN t.alunos at WHERE t.id = :turmaId" +
                                     ")", AlunoModel.class)
                     .setParameter("turmaId", turmaId)

@@ -7,8 +7,6 @@
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.Separator?>
 <?import javafx.scene.control.Spinner?>
-<?import javafx.scene.control.TableColumn?>
-<?import javafx.scene.control.TableView?>
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.BorderPane?>
 <?import javafx.scene.layout.HBox?>
@@ -60,26 +58,13 @@
                         <StackPane.margin>
                             <Insets left="20.0" right="20.0" />
                         </StackPane.margin>
-                        <HBox fx:id="hAtribuirNotasTurma" alignment="TOP_CENTER" maxWidth="800.0" spacing="10.0">
+                        <HBox fx:id="hAtribuirNotasTurma" alignment="CENTER" maxWidth="800.0" spacing="10.0">
                             <ComboBox fx:id="cbAtribuirNotasTurma" maxHeight="30.0" maxWidth="1.7976931348623157E308" minHeight="30.0" minWidth="300.0" promptText="Turma" HBox.hgrow="ALWAYS">
                                 <HBox.margin>
-                                    <Insets top="10.0" />
+                                    <Insets />
                                 </HBox.margin>
                             </ComboBox>
                         </HBox>
-                        <TableView fx:id="tAtribuirNotasAlunos" maxHeight="1.7976931348623157E308" maxWidth="800.0" prefHeight="941.0" VBox.vgrow="ALWAYS">
-                            <columns>
-                                <TableColumn fx:id="alunoId" maxWidth="100.0" minWidth="50.0" prefWidth="-1.0" text="Id" />
-                                <TableColumn fx:id="alunoNome" maxWidth="300.0" minWidth="200.0" prefWidth="-1.0" text="Nome" />
-                                <TableColumn fx:id="alunoEmail" maxWidth="300.0" minWidth="212.0" prefWidth="-1.0" text="E-mail" />
-                                <TableColumn fx:id="alunoP1" maxWidth="100.0" minWidth="50.0" prefWidth="-1.0" text="P1" />
-                                <TableColumn fx:id="alunoP2" maxWidth="100.0" minWidth="50.0" prefWidth="-1.0" text="P2" />
-                                <TableColumn fx:id="alunoP3" maxWidth="100.0" minWidth="50.0" prefWidth="-1.0" text="P3" />
-                            </columns>
-                            <columnResizePolicy>
-                                <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
-                            </columnResizePolicy>
-                        </TableView>
                         <HBox alignment="TOP_RIGHT" maxWidth="800.0" spacing="10.0">
                             <Label fx:id="mAtribuirNotas" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" textFill="RED" HBox.hgrow="ALWAYS" />
                             <Button fx:id="bConfirmarAluno" alignment="CENTER" minHeight="50.0" minWidth="100.0" mnemonicParsing="false" onAction="#mostrarAtribuirNotas" text="Confirmar">
@@ -99,7 +84,7 @@
                                     <Font size="24.0" />
                                 </font>
                             </Label>
-                            <TextField fx:id="nomeAlunoNota" disable="true" maxHeight="35.0" maxWidth="1.7976931348623157E308" HBox.hgrow="ALWAYS">
+                            <TextField fx:id="nomeAlunoNota" disable="true" editable="false" focusTraversable="false" maxHeight="35.0" maxWidth="1.7976931348623157E308" HBox.hgrow="ALWAYS">
                                 <HBox.margin>
                                     <Insets />
                                 </HBox.margin>
@@ -205,7 +190,7 @@
                 </Label>
                  <Label text="Total de Alunos: ??" />
                 <StackPane>
-                    <VBox fx:id="gRealizarAlterar" alignment="TOP_CENTER" spacing="20.0" visible="false">
+                    <VBox fx:id="gRealizarAlterar" alignment="TOP_CENTER" spacing="20.0">
                         <HBox alignment="TOP_CENTER" maxWidth="800.0" spacing="10.0">
                             <VBox.margin>
                                 <Insets left="20.0" right="20.0" />
@@ -213,47 +198,46 @@
                             <!-- Aqui precisa de um onAction para mostrar a VBox de Chamada -->
                             <Button minHeight="60.0" minWidth="120.0" mnemonicParsing="false" onAction="#mostrarRealizarChamada" text="Realizar Chamada" />
                             <!-- Aqui precisa de um onAction para mostrar a VBox de Alterar Falta Manualmente -->
-                            <Button maxWidth="120.0" minHeight="60.0" minWidth="120.0" mnemonicParsing="false" onAction="#mostrarAlterarFaltas" text="Alterar Faltas" />
+                            <Button maxWidth="120.0" minHeight="60.0" minWidth="120.0" mnemonicParsing="false" onAction="#mostrarAlunosFaltas" text="Alterar Faltas" />
                         </HBox>
                     </VBox>
                     <VBox fx:id="gRealizarChamada" alignment="TOP_CENTER" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="1110.0" prefWidth="1674.0" spacing="20.0" visible="false">
-                        <HBox alignment="TOP_CENTER" maxHeight="30.0" maxWidth="800.0" spacing="10.0" VBox.vgrow="ALWAYS">
+                        <HBox fx:id="hTurmaRealizarChamada" alignment="TOP_CENTER" maxHeight="30.0" maxWidth="800.0" spacing="10.0" VBox.vgrow="ALWAYS">
                             <VBox.margin>
                                 <Insets left="20.0" right="20.0" />
                             </VBox.margin>
                             <!-- Tem que preencher essa ComboBox com todas as turmas relacionadas as Disciplinas que esse Professor é responsável -->
-                            <ComboBox maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" promptText="Turmas" HBox.hgrow="ALWAYS" />
+                            <ComboBox fx:id="cbTurmaRealizarChamada" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" promptText="Turmas" HBox.hgrow="ALWAYS" />
                         </HBox>
-                        <!-- Tem que preencher essa TableView com todos os alunos nessa Turma -->
-                        <TableView maxHeight="1.7976931348623157E308" maxWidth="800.0" prefHeight="200.0" prefWidth="200.0" VBox.vgrow="ALWAYS">
-                            <columns>
-                                <TableColumn prefWidth="152.0" text="RA" />
-                                <TableColumn prefWidth="340.0" text="Nome" />
-                                <!-- Tem como fazer essa coluna mostrar CheckBox mas é meio complicado, depois mostro como faz -->
-                                <TableColumn prefWidth="120.0" text="Presente ?" />
-                            </columns>
+                        <HBox alignment="TOP_RIGHT" maxWidth="800.0" spacing="10.0">
                             <VBox.margin>
                                 <Insets left="20.0" right="20.0" />
                             </VBox.margin>
-                            <columnResizePolicy>
-                                <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
-                            </columnResizePolicy>
-                        </TableView>
-                  <HBox alignment="TOP_RIGHT" maxWidth="800.0" spacing="10.0">
-                     <children>
-                        <Label fx:id="mRealizarChamada" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" textFill="RED" HBox.hgrow="ALWAYS" />
-                        <Button fx:id="bFinalizarChamada" alignment="CENTER" minHeight="50.0" minWidth="100.0" mnemonicParsing="false" onAction="#finalizarChamada" text="Finalizar">
-                           <font>
-                              <Font size="12.0" />
-                           </font>
-                        </Button>
-                     </children>
-                     <VBox.margin>
-                        <Insets left="20.0" right="20.0" />
-                     </VBox.margin>
-                  </HBox>
+                            <Label fx:id="mRealizarChamada" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" textFill="RED" HBox.hgrow="ALWAYS" />
+                            <Button fx:id="bFinalizarChamada" alignment="CENTER" minHeight="50.0" minWidth="100.0" mnemonicParsing="false" onAction="#finalizarChamada" text="Finalizar">
+                                <font>
+                                    <Font size="12.0" />
+                                </font>
+                            </Button>
+                        </HBox>
                     </VBox>
-                    <VBox fx:id="gAlterarFaltas" alignment="TOP_CENTER" spacing="20.0">
+                    <VBox fx:id="gAlunosFaltas" alignment="TOP_CENTER" spacing="20.0" visible="false">
+                        <StackPane.margin>
+                            <Insets left="20.0" right="20.0" />
+                        </StackPane.margin>
+                        <HBox fx:id="hAtribuirFaltasTurma" alignment="CENTER" maxWidth="800.0" spacing="10.0">
+                            <ComboBox fx:id="cbAtribuirFaltasTurma" maxHeight="30.0" maxWidth="1.7976931348623157E308" minHeight="30.0" minWidth="300.0" promptText="Turma" HBox.hgrow="ALWAYS" />
+                        </HBox>
+                        <HBox alignment="TOP_RIGHT" maxWidth="800.0" spacing="10.0">
+                            <Label fx:id="mAtribuirFaltas" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" textFill="RED" HBox.hgrow="ALWAYS" />
+                            <Button fx:id="bConfirmarFaltas" alignment="CENTER" minHeight="50.0" minWidth="100.0" mnemonicParsing="false" onAction="#mostrarAlterarFaltas" text="Confirmar">
+                                <font>
+                                    <Font size="12.0" />
+                                </font>
+                            </Button>
+                        </HBox>
+                    </VBox>
+                    <VBox fx:id="gAlterarFaltas" alignment="TOP_CENTER" spacing="20.0" visible="false">
                         <HBox alignment="CENTER" maxWidth="800.0" spacing="10.0">
                             <VBox.margin>
                                 <Insets left="20.0" right="20.0" />
@@ -263,11 +247,7 @@
                                     <Font size="24.0" />
                                 </font>
                             </Label>
-                            <!-- Tem que preencher essa ComboBox com todas as turmas relacionadas as Disciplinas que esse Professor é responsável -->
-                            <ComboBox maxWidth="1.7976931348623157E308" minHeight="30.0" minWidth="300.0" promptText="Turma" HBox.hgrow="ALWAYS">
-                        <HBox.margin>
-                           <Insets />
-                        </HBox.margin></ComboBox>
+                     <TextField fx:id="tTurmaAlterarFaltas" disable="true" editable="false" focusTraversable="false" maxWidth="1.7976931348623157E308" minHeight="30.0" minWidth="300.0" HBox.hgrow="ALWAYS" />
                         </HBox>
                         <HBox alignment="CENTER" maxWidth="800.0" spacing="10.0">
                             <VBox.margin>
@@ -278,11 +258,7 @@
                                     <Font size="24.0" />
                                 </font>
                             </Label>
-                            <!-- Tem que preencher essa ComboBox com todos os alunos da Turma acima -->
-                            <ComboBox maxWidth="1.7976931348623157E308" minHeight="30.0" minWidth="300.0" promptText="Aluno" HBox.hgrow="ALWAYS">
-                        <HBox.margin>
-                           <Insets />
-                        </HBox.margin></ComboBox>
+                     <TextField fx:id="tAlunoAlterarFaltas" disable="true" editable="false" focusTraversable="false" maxWidth="1.7976931348623157E308" minHeight="30.0" minWidth="300.0" HBox.hgrow="ALWAYS" />
                         </HBox>
                         <HBox alignment="CENTER" maxWidth="800.0" spacing="10.0">
                             <VBox.margin>
