@@ -24,7 +24,7 @@ public class AlunoModel extends UsuarioModel {
     private static AlunoDAO alunoDAO = new AlunoDAO();
 
     public static List<AlunoModel> buscarTodosAlunos() {
-        return alunoDAO.buscarTodosAlunos();
+        return alunoDAO.buscarTodos();
     }
 
     public static List<AlunoModel> buscarAlunosForaDaTurma(Integer turmaId) {

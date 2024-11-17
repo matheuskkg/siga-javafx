@@ -53,7 +53,7 @@ public class UsuarioModel {
     public static void criarUsuario(UsuarioCriarRequest request, String tipo) {
         UsuarioModel u = definirTipoUsuario(request, tipo);
 
-        usuarioDAO.salvarUsuario(u);
+        usuarioDAO.salvar(u);
     }
 
     public static void atualizarUsuario(UsuarioCriarRequest request, String tipo, Integer id) {
@@ -63,17 +63,17 @@ public class UsuarioModel {
             excluirUsuario(usuarioAntigo);
             UsuarioModel usuarioNovo = definirTipoUsuario(request, tipo);
             usuarioNovo.setId(id);
-            usuarioDAO.salvarUsuario(usuarioNovo);
+            usuarioDAO.salvar(usuarioNovo);
         } else {
             usuarioAntigo.setNome(request.nome());
             usuarioAntigo.setEmail(request.email());
             usuarioAntigo.setSenha(request.senha());
-            usuarioDAO.salvarUsuario(usuarioAntigo);
+            usuarioDAO.salvar(usuarioAntigo);
         }
     }
 
     public static void excluirUsuario(UsuarioModel request) {
-        usuarioDAO.excluirUsuario(request);
+        usuarioDAO.excluir(request);
     }
 
     public static List<UsuarioModel> buscarTodosUsuarios() {

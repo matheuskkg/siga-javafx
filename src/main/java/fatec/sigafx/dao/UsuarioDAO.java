@@ -10,7 +10,7 @@ import java.util.List;
 public class UsuarioDAO {
     private EntityManagerFactory emf = EMF.getEmf();
 
-    public void salvarUsuario(UsuarioModel request) {
+    public void salvar(UsuarioModel request) {
         EntityManager em = emf.createEntityManager();
 
         try {
@@ -28,7 +28,7 @@ public class UsuarioDAO {
         }
     }
 
-    public void excluirUsuario(UsuarioModel request) {
+    public void excluir(UsuarioModel request) {
         EntityManager em = emf.createEntityManager();
 
         try {

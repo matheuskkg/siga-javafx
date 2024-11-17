@@ -32,7 +32,7 @@ public class DisciplinaModel {
     }
 
     public static void criarDisciplina(DisciplinaCriarRequest request) {
-        disciplinaDAO.salvarDisciplina(new DisciplinaModel(request));
+        disciplinaDAO.salvar(new DisciplinaModel(request));
     }
 
     public static void atualizarDisciplina(DisciplinaCriarRequest request, Integer id) {
@@ -40,11 +40,11 @@ public class DisciplinaModel {
         d.setNome(request.nome());
         d.setCargaHoraria(request.cargaHoraria());
 
-        disciplinaDAO.salvarDisciplina(d);
+        disciplinaDAO.salvar(d);
     }
 
     public static void excluirDisciplina(DisciplinaModel request) {
-        disciplinaDAO.excluirDisciplina(request);
+        disciplinaDAO.excluir(request);
     }
 
     public static List<DisciplinaModel> buscarTodasDisciplinas() {

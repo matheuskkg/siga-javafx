@@ -48,18 +48,18 @@ public class TurmaModel {
     }
 
     public static void criarTurma(TurmaCriarRequest request) {
-        turmaDAO.salvarTurma(new TurmaModel(request));
+        turmaDAO.salvar(new TurmaModel(request));
     }
 
     public static void atualizarTurma(TurmaCriarRequest request, Integer id) {
         TurmaModel t = new TurmaModel(request);
         t.setId(id);
 
-        turmaDAO.salvarTurma(t);
+        turmaDAO.salvar(t);
     }
 
     public static void excluirTurma(TurmaModel request) {
-        turmaDAO.excluirTurma(request);
+        turmaDAO.excluir(request);
     }
 
     public static List<TurmaModel> buscarTodasTurmas() {

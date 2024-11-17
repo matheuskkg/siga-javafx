@@ -10,7 +10,7 @@ import java.util.List;
 public class AlunoDAO {
     private EntityManagerFactory emf = EMF.getEmf();
 
-    public List<AlunoModel> buscarTodosAlunos() {
+    public List<AlunoModel> buscarTodos() {
         try (EntityManager em = emf.createEntityManager()) {
             List<AlunoModel> res = em.createQuery("FROM AlunoModel", AlunoModel.class)
                     .getResultList();
@@ -21,7 +21,7 @@ public class AlunoDAO {
         }
     }
 
-    public AlunoModel buscarAlunoPorNome(String nome) {
+    public AlunoModel buscarPorNome(String nome) {
         try (EntityManager em = emf.createEntityManager()) {
             return em.createQuery("FROM AlunoModel WHERE nome = :nome", AlunoModel.class)
                     .setParameter("nome", nome)

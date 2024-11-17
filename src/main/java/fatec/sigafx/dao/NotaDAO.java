@@ -9,7 +9,7 @@ import jakarta.persistence.EntityManagerFactory;
 public class NotaDAO {
     private EntityManagerFactory emf = EMF.getEmf();
 
-    public void salvarNota(Double valorNota, AlunoModel aluno) {
+    public void salvar(Double valorNota, AlunoModel aluno) {
         NotaModel nota = new NotaModel(valorNota, aluno);
 
         EntityManager em = emf.createEntityManager();

@@ -10,7 +10,7 @@ import java.util.List;
 public class TurmaDAO {
     private EntityManagerFactory emf = EMF.getEmf();
 
-    public void salvarTurma(TurmaModel request) {
+    public void salvar(TurmaModel request) {
         EntityManager em = emf.createEntityManager();
 
         try {
@@ -28,7 +28,7 @@ public class TurmaDAO {
         }
     }
 
-    public void excluirTurma(TurmaModel request) {
+    public void excluir(TurmaModel request) {
         EntityManager em = emf.createEntityManager();
 
         try {
