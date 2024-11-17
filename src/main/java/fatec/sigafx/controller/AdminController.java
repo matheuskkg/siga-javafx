@@ -768,16 +768,17 @@ public class AdminController
             return;
         }
 
-        TurmaCriarRequest request = new TurmaCriarRequest(cbCursoAdicionarTurma.getSelectionModel().getSelectedItem(), cbDisciplinaAdicionarTurma.getSelectionModel().getSelectedItem(), cbProfResponAdicionarTurma.getSelectionModel().getSelectedItem());
+        TurmaCriarRequest request = new TurmaCriarRequest(
+                cbCursoAdicionarTurma.getSelectionModel().getSelectedItem(),
+                cbDisciplinaAdicionarTurma.getSelectionModel().getSelectedItem(),
+                cbProfResponAdicionarTurma.getSelectionModel().getSelectedItem(),
+                tAdicionarAlunos.getSelectionModel().getSelectedItems());
 
         if (turmaSelecionada == null) {
             TurmaModel.criarTurma(request);
         } else {
             TurmaModel.atualizarTurma(request, turmaSelecionada.getId());
         }
-
-        //TODO: pegar esses alunos associados e mandar eles para a turma
-        //ObservableList<AlunoModel> alunosSelecionados = tAdicionarAlunos.getSelectionModel().getSelectedItems();
 
         limparCampos();
         initialize();

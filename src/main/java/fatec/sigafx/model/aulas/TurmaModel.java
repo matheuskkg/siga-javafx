@@ -44,6 +44,7 @@ public class TurmaModel {
         this.curso = request.curso();
         this.disciplina = request.disciplina();
         this.professor = request.professor();
+        this.alunos = request.alunos();
     }
 
     public static void criarTurma(TurmaCriarRequest request) {
