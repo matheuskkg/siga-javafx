@@ -2,7 +2,6 @@ package fatec.sigafx.dao;
 
 import fatec.sigafx.EMF;
 import fatec.sigafx.model.aulas.TurmaModel;
-import fatec.sigafx.model.usuarios.UsuarioModel;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.EntityManagerFactory;
 
@@ -24,6 +23,27 @@ public class TurmaDAO {
             }
             e.printStackTrace();
             System.out.println("Falha ao salvar turma.");
+        } finally {
+            em.close();
+        }
+    }
+
+    public void excluirTurma(TurmaModel request) {
+        EntityManager em = emf.createEntityManager();
+
+        try {
+            var t = em.find(TurmaModel.class, request.getId());
+
+            em.getTransaction().begin();
+            em.remove(t);
+            em.getTransaction().commit();
+        } catch (Exception e) {
+            if (em.getTransaction().isActive()) {
+                em.getTransaction().rollback();
+            }
+
+            System.out.println("Falha ao excluir turma.");
+            e.printStackTrace();
         } finally {
             em.close();
         }

@@ -57,6 +57,10 @@ public class TurmaModel {
         turmaDAO.salvarTurma(t);
     }
 
+    public static void excluirTurma(TurmaModel request) {
+        turmaDAO.excluirTurma(request);
+    }
+
     public static List<TurmaModel> buscarTodasTurmas() {
         return turmaDAO.buscarTodos();
     }

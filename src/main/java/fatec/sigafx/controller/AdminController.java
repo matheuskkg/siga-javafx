@@ -829,13 +829,12 @@ public class AdminController
         }
     }
 
-    public void confirmaExclusaoTurma(ActionEvent event) {
+    @FXML
+    private void confirmaExclusaoTurma(ActionEvent event) {
         String textoBotao = ((Button) event.getSource()).getText();
         switch (textoBotao) {
             case "Sim":
-                //Precisa fazer essa função de exclusão no TurmaModel
-                //TurmaModel.excluirTurma(turmaSelecionada);
-                System.out.println("Turma excluída ??");
+                TurmaModel.excluirTurma(turmaSelecionada);
                 initialize();
                 break;
             case "Não":
