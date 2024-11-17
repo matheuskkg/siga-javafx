@@ -10,7 +10,7 @@ public class AdminView {
     public static void mostrarHomeAdmin(){
         try{
             FXMLLoader fxmlLoader = new FXMLLoader(SigaApplication.class.getResource("/fxml/admin.fxml"));
-            Scene scene = new Scene(fxmlLoader.load(), 800, 600);
+            Scene scene = new Scene(fxmlLoader.load(), 900, 600);
 
             SigaApplication.getStage().setTitle("SIGA - Administrador");
             SigaApplication.getStage().setScene(scene);

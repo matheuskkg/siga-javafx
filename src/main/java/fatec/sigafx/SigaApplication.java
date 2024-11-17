@@ -26,10 +26,10 @@ public class SigaApplication extends Application
     public void start(Stage stage) {
         SigaApplication.stage = stage;
 
-        //LoginView.mostrarLogin();
+        LoginView.mostrarLogin();
 
         //Usar para testar a página de ADM
-        AdminView.mostrarHomeAdmin();
+        //AdminView.mostrarHomeAdmin();
 
         //Usar para testar a página de Aluno
         //AlunoView.mostrarHomeAluno();

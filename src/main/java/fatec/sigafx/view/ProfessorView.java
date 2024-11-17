@@ -10,7 +10,7 @@ public class ProfessorView {
     public static void mostrarHomeProf(){
         try{
             FXMLLoader fxmlLoader = new FXMLLoader(SigaApplication.class.getResource("/fxml/prof.fxml"));
-            Scene scene = new Scene(fxmlLoader.load(), 1280, 800);
+            Scene scene = new Scene(fxmlLoader.load(), 900, 600);
 
             SigaApplication.getStage().setTitle("SIGA - Professor");
             SigaApplication.getStage().setScene(scene);

@@ -28,6 +28,7 @@ import javafx.animation.PauseTransition;
 import javafx.util.Duration;
 
 import java.util.List;
+import java.util.Objects;
 
 import static fatec.sigafx.controller.LoginController.usuarioLogado;
 
@@ -555,11 +556,12 @@ public class AdminController
             mAlterarExcluirUsuario.setText("Selecione um usuário a ser excluído!");
         }
         else {
-            if(usuarioSelecionado == usuarioLogado){
+            if(Objects.equals(usuarioSelecionado.getEmail(), usuarioLogado.getEmail()) && Objects.equals(usuarioSelecionado.getNome(), usuarioLogado.getNome())){
                 mAlterarExcluirUsuario.setText("Você não pode se excluir");
+            }else{
+                mAlterarExcluirUsuario.setText("");
+                gConfirmaExclusao.setVisible(true);
             }
-            mAlterarExcluirUsuario.setText("");
-            gConfirmaExclusao.setVisible(true);
         }
     }
 

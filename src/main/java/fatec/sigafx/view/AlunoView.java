@@ -10,7 +10,7 @@ public class AlunoView {
     public static void mostrarHomeAluno(){
         try{
             FXMLLoader fxmlLoader = new FXMLLoader(SigaApplication.class.getResource("/fxml/aluno.fxml"));
-            Scene scene = new Scene(fxmlLoader.load(), 1280, 800);
+            Scene scene = new Scene(fxmlLoader.load(), 900, 600);
 
             SigaApplication.getStage().setTitle("SIGA - Aluno");
             SigaApplication.getStage().setScene(scene);
