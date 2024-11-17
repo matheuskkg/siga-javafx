@@ -58,6 +58,15 @@
                         <StackPane.margin>
                             <Insets left="20.0" right="20.0" />
                         </StackPane.margin>
+                        <HBox>
+                            <Label alignment="CENTER" maxHeight="1.7976931348623157E308"
+                                   maxWidth="1.7976931348623157E308" text="Alterar Notas" textAlignment="CENTER"
+                                   HBox.hgrow="ALWAYS">
+                                <font>
+                                    <Font size="18.0"/>
+                                </font>
+                            </Label>
+                        </HBox>
                         <HBox fx:id="hAtribuirNotasTurma" alignment="CENTER" maxWidth="800.0" spacing="10.0">
                             <ComboBox fx:id="cbAtribuirNotasTurma" maxHeight="30.0" maxWidth="1.7976931348623157E308" minHeight="30.0" minWidth="300.0" promptText="Turma" HBox.hgrow="ALWAYS">
                                 <HBox.margin>
@@ -195,24 +204,25 @@
                             <VBox.margin>
                                 <Insets left="20.0" right="20.0" />
                             </VBox.margin>
-                            <!-- Aqui precisa de um onAction para mostrar a VBox de Chamada -->
                             <Button minHeight="60.0" minWidth="120.0" mnemonicParsing="false" onAction="#mostrarRealizarChamada" text="Realizar Chamada" />
-                            <!-- Aqui precisa de um onAction para mostrar a VBox de Alterar Falta Manualmente -->
                             <Button maxWidth="120.0" minHeight="60.0" minWidth="120.0" mnemonicParsing="false" onAction="#mostrarAlunosFaltas" text="Alterar Faltas" />
                         </HBox>
                     </VBox>
                     <VBox fx:id="gRealizarChamada" alignment="TOP_CENTER" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="1110.0" prefWidth="1674.0" spacing="20.0" visible="false">
-                        <HBox fx:id="hTurmaRealizarChamada" alignment="TOP_CENTER" maxHeight="30.0" maxWidth="800.0" spacing="10.0" VBox.vgrow="ALWAYS">
-                            <VBox.margin>
-                                <Insets left="20.0" right="20.0" />
-                            </VBox.margin>
+                        <HBox>
+                            <Label alignment="CENTER" maxHeight="1.7976931348623157E308"
+                                   maxWidth="1.7976931348623157E308" text="Realizar Chamada" textAlignment="CENTER"
+                                   HBox.hgrow="ALWAYS">
+                                <font>
+                                    <Font size="18.0"/>
+                                </font>
+                            </Label>
+                        </HBox>
+                        <HBox fx:id="hTurmaRealizarChamada" alignment="TOP_CENTER" maxWidth="800.0" spacing="10.0">
                             <!-- Tem que preencher essa ComboBox com todas as turmas relacionadas as Disciplinas que esse Professor é responsável -->
-                            <ComboBox fx:id="cbTurmaRealizarChamada" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" promptText="Turmas" HBox.hgrow="ALWAYS" />
+                            <ComboBox fx:id="cbTurmaRealizarChamada" maxHeight="30.0" maxWidth="1.7976931348623157E308" minHeight="30.0" promptText="Turma" HBox.hgrow="ALWAYS" />
                         </HBox>
                         <HBox alignment="TOP_RIGHT" maxWidth="800.0" spacing="10.0">
-                            <VBox.margin>
-                                <Insets left="20.0" right="20.0" />
-                            </VBox.margin>
                             <Label fx:id="mRealizarChamada" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" textFill="RED" HBox.hgrow="ALWAYS" />
                             <Button fx:id="bFinalizarChamada" alignment="CENTER" minHeight="50.0" minWidth="100.0" mnemonicParsing="false" onAction="#finalizarChamada" text="Finalizar">
                                 <font>
@@ -220,11 +230,23 @@
                                 </font>
                             </Button>
                         </HBox>
+                  <StackPane.margin>
+                     <Insets left="20.0" right="20.0" />
+                  </StackPane.margin>
                     </VBox>
                     <VBox fx:id="gAlunosFaltas" alignment="TOP_CENTER" spacing="20.0" visible="false">
                         <StackPane.margin>
                             <Insets left="20.0" right="20.0" />
                         </StackPane.margin>
+                        <HBox>
+                            <Label alignment="CENTER" maxHeight="1.7976931348623157E308"
+                                   maxWidth="1.7976931348623157E308" text="Alterar Faltas" textAlignment="CENTER"
+                                   HBox.hgrow="ALWAYS">
+                                <font>
+                                    <Font size="18.0"/>
+                                </font>
+                            </Label>
+                        </HBox>
                         <HBox fx:id="hAtribuirFaltasTurma" alignment="CENTER" maxWidth="800.0" spacing="10.0">
                             <ComboBox fx:id="cbAtribuirFaltasTurma" maxHeight="30.0" maxWidth="1.7976931348623157E308" minHeight="30.0" minWidth="300.0" promptText="Turma" HBox.hgrow="ALWAYS" />
                         </HBox>
@@ -247,7 +269,7 @@
                                     <Font size="24.0" />
                                 </font>
                             </Label>
-                     <TextField fx:id="tTurmaAlterarFaltas" disable="true" editable="false" focusTraversable="false" maxWidth="1.7976931348623157E308" minHeight="30.0" minWidth="300.0" HBox.hgrow="ALWAYS" />
+                     <TextField fx:id="tfTurmaAlterarFaltas" disable="true" editable="false" focusTraversable="false" maxWidth="1.7976931348623157E308" minHeight="30.0" minWidth="300.0" HBox.hgrow="ALWAYS" />
                         </HBox>
                         <HBox alignment="CENTER" maxWidth="800.0" spacing="10.0">
                             <VBox.margin>
@@ -258,7 +280,7 @@
                                     <Font size="24.0" />
                                 </font>
                             </Label>
-                     <TextField fx:id="tAlunoAlterarFaltas" disable="true" editable="false" focusTraversable="false" maxWidth="1.7976931348623157E308" minHeight="30.0" minWidth="300.0" HBox.hgrow="ALWAYS" />
+                     <TextField fx:id="tfAlunoAlterarFaltas" disable="true" editable="false" focusTraversable="false" maxWidth="1.7976931348623157E308" minHeight="30.0" minWidth="300.0" HBox.hgrow="ALWAYS" />
                         </HBox>
                         <HBox alignment="CENTER" maxWidth="800.0" spacing="10.0">
                             <VBox.margin>
@@ -270,7 +292,7 @@
                                 </font>
                             </Label>
                             <!-- Precisa de um fx::id nesse Spinner para já aparecer com as faltas desse aluno e poder aumentar ou diminuir -->
-                            <Spinner editable="true" maxWidth="1.7976931348623157E308" minHeight="30.0" minWidth="300.0" HBox.hgrow="ALWAYS">
+                            <Spinner fx:id="sFaltas" editable="true" maxWidth="1.7976931348623157E308" minHeight="30.0" minWidth="300.0" HBox.hgrow="ALWAYS">
                         <HBox.margin>
                            <Insets />
                         </HBox.margin></Spinner>
@@ -280,9 +302,8 @@
                                 <Insets left="20.0" right="20.0" />
                             </VBox.margin>
                             <!-- Precisa de um onAction nesse botão para Concluir a Chamada -->
-                            <Button alignment="CENTER" minHeight="50.0" minWidth="100.0" mnemonicParsing="false" text="Atribuir" />
-                            <!-- Precisa de um onAction nesse botão para Limpar tudo -->
-                            <Button alignment="CENTER" minHeight="50.0" minWidth="100.0" mnemonicParsing="false" text="Limpar" />
+                            <Button alignment="CENTER" minHeight="50.0" minWidth="100.0" mnemonicParsing="false" onAction="#atribuirFaltas" text="Atribuir" />
+                            <Button alignment="CENTER" minHeight="50.0" minWidth="100.0" mnemonicParsing="false" onAction="#mostrarAlunosFaltas" text="Voltar" />
                         </HBox>
                     </VBox>
                 </StackPane>

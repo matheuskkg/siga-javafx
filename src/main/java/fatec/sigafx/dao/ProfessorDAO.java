@@ -30,4 +30,6 @@ public class ProfessorDAO {
             return null;
         }
     }
+
+    //TODO: Função que busca quais Turmas o Professor é responsável (aqui ou em TurmaDAO, n sei)
 }

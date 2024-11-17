@@ -3,12 +3,14 @@ package fatec.sigafx.controller;
 import fatec.sigafx.model.aulas.TurmaModel;
 import fatec.sigafx.model.usuarios.AlunoModel;
 import fatec.sigafx.view.LoginView;
+import javafx.beans.property.SimpleBooleanProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.geometry.Pos;
 import javafx.scene.control.*;
+import javafx.scene.control.cell.CheckBoxTableCell;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Priority;
@@ -50,8 +52,9 @@ public class ProfessorController
     public VBox gRealizarAlterar;
 
     public VBox gAlterarFaltas;
-    public TextField tTurmaAlterarFaltas;
-    public TextField tAlunoAlterarFaltas;
+    public TextField tfTurmaAlterarFaltas;
+    public TextField tfAlunoAlterarFaltas;
+    public Spinner<Integer> sFaltas;
 
     public VBox gRealizarChamada;
     public HBox hTurmaRealizarChamada;
@@ -71,10 +74,11 @@ public class ProfessorController
 
     @FXML
     public void initialize() {
-        configuraSpinnersNotas();
+        configuraSpinners();
+        carregarComboBoxTurmas();
     }
 
-    private SpinnerValueFactory<Double> montaSpinnerNota() {
+    private SpinnerValueFactory<Double> montaSpinners() {
         SpinnerValueFactory<Double> valueFactory = new SpinnerValueFactory.DoubleSpinnerValueFactory(0, 10) {
             @Override
             public void increment(int steps) {
@@ -100,10 +104,36 @@ public class ProfessorController
 
     }
 
-    public void configuraSpinnersNotas(){
-        sP1.setValueFactory(montaSpinnerNota());
-        sP2.setValueFactory(montaSpinnerNota());
-        sP3.setValueFactory(montaSpinnerNota());
+    private SpinnerValueFactory<Integer> montaSpinnerFaltas(int max) {
+        SpinnerValueFactory<Integer> valueFactory = new SpinnerValueFactory.IntegerSpinnerValueFactory(0, max) {
+            @Override
+            public void increment(int steps) {
+                if (getValue() == null) {
+                    setValue(0);
+                } else {
+                    super.increment(steps);
+                }
+            }
+
+            @Override
+            public void decrement(int steps) {
+                if (getValue() == null || getValue() == 0) {
+                    setValue(null);
+                }else {
+                    super.decrement(steps);
+                }
+            }
+        };
+
+        valueFactory.setValue(null);
+        return valueFactory;
+
+    }
+
+    public void configuraSpinners(){
+        sP1.setValueFactory(montaSpinners());
+        sP2.setValueFactory(montaSpinners());
+        sP3.setValueFactory(montaSpinners());
     }
 
     private <T> ComboBox<T> reconstruirComboBox(ComboBox<T> comboBox, HBox hboxPai) {
@@ -153,9 +183,9 @@ public class ProfessorController
     private void carregarDadosTableView(TableView<AlunoModel> tabela, TurmaModel turmaSelecionada) {
         ObservableList<AlunoModel> alunos = FXCollections.observableArrayList();
 
-        //Para quando tiver alunos nas turmas
-        // alunos.addAll(AlunoModel.buscarAlunosNaTurma(turmaSelecionada.getId()));
-        alunos.addAll(AlunoModel.buscarTodosAlunos());
+        if (!AlunoModel.buscarTodosAlunos().isEmpty()) {
+            alunos.addAll(AlunoModel.buscarAlunosNaTurma(turmaSelecionada.getId()));
+        }
 
         tabela.setItems(alunos);
     }
@@ -182,11 +212,22 @@ public class ProfessorController
     private List<TableColumn<AlunoModel, ?>> criarColunasChamada() {
         List<TableColumn<AlunoModel, ?>> colunas = new ArrayList<>(criarColunasPadrao());
 
-        TableColumn<AlunoModel, Integer> colunaChamada = criarColunaTableView("Presente", 80, 120);
-        colunas.add(colunaChamada);
+        // Criar a coluna com checkboxes
+        TableColumn<AlunoModel, Boolean> colunaPresente = new TableColumn<>("Presente");
+        colunaPresente.setMinWidth(80);
+        colunaPresente.setMaxWidth(120);
+
+        // Configurar a célula com CheckBoxTableCell
+        colunaPresente.setCellValueFactory(param -> new SimpleBooleanProperty(false));
+        colunaPresente.setCellFactory(CheckBoxTableCell.forTableColumn(param -> {
+            return null; // Nenhuma ação extra necessária
+        }));
+
+        colunas.add(colunaPresente);
 
         return colunas;
     }
+
 
     private List<TableColumn<AlunoModel, ?>> criarColunasFaltas() {
         List<TableColumn<AlunoModel, ?>> colunas = new ArrayList<>(criarColunasPadrao());
@@ -199,10 +240,11 @@ public class ProfessorController
 
     private void carregarTableView(TableView<AlunoModel> tabela, TurmaModel turmaSelecionada, List<TableColumn<AlunoModel, ?>> colunas) {
         tabela.getColumns().setAll(colunas);
-        configurarPropriedadesTableView(tabela, colunas.getFirst()); // Ordenar pela primeira coluna
+        configurarPropriedadesTableView(tabela, colunas.getFirst());
         carregarDadosTableView(tabela, turmaSelecionada);
         definirAlunoSelecionado(tabela);
     }
+
 
     private TableView<AlunoModel> criarTableView(TableView<AlunoModel> tabela, VBox vbGerencia, HBox hbContainer, ComboBox<TurmaModel> cbTurma, List<TableColumn<AlunoModel, ?>> colunas) {
         if (tabela == null) {
@@ -244,6 +286,11 @@ public class ProfessorController
         cbTurmaRealizarChamada = reconstruirComboBox(cbTurmaRealizarChamada, hTurmaRealizarChamada);
         cbAtribuirFaltasTurma = reconstruirComboBox(cbAtribuirFaltasTurma, hAtribuirFaltasTurma);
 
+        mAtribuirNotas.setText("");
+        mAtribuirNotasAluno.setText("");
+        mRealizarChamada.setText("");
+        mAtribuirFaltas.setText("");
+
         if (tAtribuirNotasAlunos != null) {
             tAtribuirNotasAlunos.getSelectionModel().clearSelection();
             tAtribuirNotasAlunos = removeTableView(tAtribuirNotasAlunos, gAlunosTurma);
@@ -276,7 +323,6 @@ public class ProfessorController
         esconderPaineis();
         gNotas.setVisible(true);
         gAlunosTurma.setVisible(true);
-        carregarComboBoxTurmas();
         turmaSelecionada = null;
         alunoSelecionado = null;
 
@@ -291,10 +337,16 @@ public class ProfessorController
 
     @FXML
     public void mostrarAtribuirNotas() {
-        gNotas.setVisible(true);
-        gAlunosTurma.setVisible(false);
-        gAtribuirNotas.setVisible(true);
-        mAtribuirNotasAluno.setText("");
+        if (alunoSelecionado == null) {
+            mAtribuirNotas.setText("Selecione uma turma e um aluno para prosseguir.");
+        }else {
+            gNotas.setVisible(true);
+            gAlunosTurma.setVisible(false);
+            gAtribuirNotas.setVisible(true);
+            mAtribuirNotasAluno.setText("");
+
+            nomeAlunoNota.setText(alunoSelecionado.getNome());
+        }
     }
 
     private boolean verificarCamposVaziosAtribuirNotas() {
@@ -319,19 +371,19 @@ public class ProfessorController
     @FXML
     public void mostrarP1() {
         hAtribuirP1.setDisable(!checkP1.isSelected());
-        sP1.setValueFactory(montaSpinnerNota());
+        sP1.setValueFactory(montaSpinners());
     }
 
     @FXML
     public void mostrarP2() {
         hAtribuirP2.setDisable(!checkP2.isSelected());
-        sP2.setValueFactory(montaSpinnerNota());
+        sP2.setValueFactory(montaSpinners());
     }
 
     @FXML
     public void mostrarP3() {
         hAtribuirP3.setDisable(!checkP3.isSelected());
-        sP3.setValueFactory(montaSpinnerNota());
+        sP3.setValueFactory(montaSpinners());
     }
 
     // Mostrar *Faltas*
@@ -349,7 +401,6 @@ public class ProfessorController
         esconderPaineis();
         gFaltas.setVisible(true);
         gRealizarChamada.setVisible(true);
-        carregarComboBoxTurmas();
 
         cbTurmaRealizarChamada.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> {
             if (newValue != null) {
@@ -366,7 +417,6 @@ public class ProfessorController
         gFaltas.setVisible(true);
         gAlunosFaltas.setVisible(true);
 
-        carregarComboBoxTurmas();
         cbAtribuirFaltasTurma.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> {
             if (newValue != null) {
                 turmaSelecionada = newValue;
@@ -385,15 +435,25 @@ public class ProfessorController
 
             String turma = turmaSelecionada.getCurso() + " || " + turmaSelecionada.getDisciplina().getNome() + " || " + turmaSelecionada.getProfessor().getNome();
 
-            tTurmaAlterarFaltas.setText(turma);
-            tAlunoAlterarFaltas.setText(alunoSelecionado.getNome());
+            tfTurmaAlterarFaltas.setText(turma);
+            tfAlunoAlterarFaltas.setText(alunoSelecionado.getNome());
+
+            sFaltas.setValueFactory(montaSpinnerFaltas(turmaSelecionada.getDisciplina().getCargaHoraria()));
+
+        }else {
+            mAtribuirFaltas.setText("Selecione uma turma e um aluno para prosseguir.");
         }
 
     }
 
     @FXML
     public void finalizarChamada() {
+        //Função a ser acionada ao finalizar chamada
+    }
 
+    @FXML
+    public void atribuirFaltas() {
+        //Função a ser acionada ao alterar Faltas
     }
 
     private AlunoModel alunoSelecionado;
@@ -409,4 +469,6 @@ public class ProfessorController
         LoginView.mostrarLogin();
 
     }
+
+
 }

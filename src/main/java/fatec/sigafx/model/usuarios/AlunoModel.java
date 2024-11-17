@@ -31,5 +31,6 @@ public class AlunoModel extends UsuarioModel {
         return alunoDAO.buscarAlunosNaTurma(turmaId);
     }
 
+    //TODO: Aluno precisa de Faltas, P1, P2, P3 e alguma função para usar no Realizar Chamada
 
 }
