@@ -335,10 +335,6 @@ public class ProfessorController
         gPrincipal.setVisible(true);
         turmaSelecionada = null;
         alunoSelecionado = null;
-
-        //debug apenas
-        NotaDAO dao = new NotaDAO();
-        dao.buscarTodos();
     }
 
     // Mostrar *Notas*
@@ -406,7 +402,6 @@ public class ProfessorController
         NotaModel.criarNota(requestP2);
 
         NotaModel.criarNota(requestP1);
-
     }
 
     //Da pra deixar mais funcional e fazer só uma função, mas tô com preguiça

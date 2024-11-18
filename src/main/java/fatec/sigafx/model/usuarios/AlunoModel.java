@@ -1,6 +1,7 @@
 package fatec.sigafx.model.usuarios;
 
 import fatec.sigafx.dao.AlunoDAO;
+import fatec.sigafx.model.aulas.FrequenciaModel;
 import fatec.sigafx.model.aulas.NotaModel;
 import fatec.sigafx.model.aulas.TurmaModel;
 import fatec.sigafx.model.usuarios.dto.UsuarioCriarRequest;
@@ -15,8 +16,12 @@ public class AlunoModel extends UsuarioModel {
     @ManyToMany(mappedBy = "alunos")
     private List<TurmaModel> turmas;
 
-    @OneToMany(mappedBy = "aluno", cascade = CascadeType.ALL, orphanRemoval = true)
+    @OneToMany(mappedBy = "aluno", fetch = FetchType.EAGER, cascade = CascadeType.ALL, orphanRemoval = true)
     private List<NotaModel> notas;
+
+    // Utilizar na view do Aluno
+    @OneToMany(mappedBy = "aluno", fetch = FetchType.EAGER, cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<FrequenciaModel> frequencias;
 
     public AlunoModel() {}
 
@@ -53,5 +58,4 @@ public class AlunoModel extends UsuarioModel {
 
 
     //TODO: Aluno precisa de Faltas, P1, P2, P3 e alguma função para usar no Realizar Chamada
-
 }

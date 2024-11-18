@@ -34,6 +34,10 @@ public class TurmaModel {
     )
     private List<AlunoModel> alunos;
 
+    // Utilizar para editar uma chamada
+    @OneToMany(mappedBy = "turma", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<ChamadaModel> chamadas;
+
     @Transient
     private static TurmaDAO turmaDAO = new TurmaDAO();
 

@@ -2,10 +2,8 @@
 <persistence xmlns="https://jakarta.ee/xml/ns/persistence"
              version="3.0">
     <persistence-unit name="siga" transaction-type="RESOURCE_LOCAL">
-        <!-- Provedor de persistência -->
         <provider>org.hibernate.jpa.HibernatePersistenceProvider</provider>
 
-        <!-- Mapeamento das entidades -->
         <class>fatec.sigafx.model.usuarios.UsuarioModel</class>
         <class>fatec.sigafx.model.usuarios.AlunoModel</class>
         <class>fatec.sigafx.model.usuarios.AdminModel</class>
@@ -13,15 +11,12 @@
         <class>fatec.sigafx.model.aulas.DisciplinaModel</class>
         <class>fatec.sigafx.model.aulas.NotaModel</class>
         <class>fatec.sigafx.model.aulas.TurmaModel</class>
-        <!-- Adicione outras classes de entidades se necessário -->
+        <class>fatec.sigafx.model.aulas.FrequenciaModel</class>
+        <class>fatec.sigafx.model.aulas.ChamadaModel</class>
 
-        <!-- Propriedades de conexão com o banco de dados -->
         <properties>
-            <!-- URL de conexão ao banco -->
             <property name="jakarta.persistence.jdbc.url" value="jdbc:postgresql://localhost:5432/siga"/>
-            <!-- Driver JDBC -->
             <property name="jakarta.persistence.jdbc.driver" value="org.postgresql.Driver"/>
-            <!-- Usuário e senha -->
             <!--WARNING: Altere as credênciais antes de executar-->
             <property name="jakarta.persistence.jdbc.user" value="javaLogin"/>
             <property name="jakarta.persistence.jdbc.password" value="shindasAdmin"/>
