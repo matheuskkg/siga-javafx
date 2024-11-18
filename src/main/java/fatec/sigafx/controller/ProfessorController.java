@@ -1,5 +1,7 @@
 package fatec.sigafx.controller;
 
+import fatec.sigafx.model.aulas.ChamadaModel;
+import fatec.sigafx.model.aulas.FrequenciaModel;
 import fatec.sigafx.model.aulas.NotaModel;
 import fatec.sigafx.model.aulas.TurmaModel;
 import fatec.sigafx.model.aulas.dto.NotaCriarRequest;
@@ -19,6 +21,7 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.Priority;
 import javafx.scene.layout.VBox;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
@@ -81,6 +84,9 @@ public class ProfessorController
     public TableView<AlunoModel> tRealizarChamada;
     public TableView<AlunoModel> tAtribuirFaltasAlunos;
 
+    private TurmaModel turmaSelecionada;
+    private AlunoModel alunoSelecionado;
+
     @FXML
     public void initialize() {
         carregarComboBoxTurmas();
@@ -109,7 +115,6 @@ public class ProfessorController
 
         valueFactory.setValue(nota);
         return valueFactory;
-
     }
 
     private SpinnerValueFactory<Integer> montaSpinnerFaltas(int max) {
@@ -135,7 +140,6 @@ public class ProfessorController
 
         valueFactory.setValue(null);
         return valueFactory;
-
     }
 
     public void configuraSpinners(){
@@ -232,16 +236,14 @@ public class ProfessorController
     private List<TableColumn<AlunoModel, ?>> criarColunasChamada() {
         List<TableColumn<AlunoModel, ?>> colunas = new ArrayList<>(criarColunasPadrao());
 
-        // Criar a coluna com checkboxes
+        // Criar coluna de presença com checkboxes
         TableColumn<AlunoModel, Boolean> colunaPresente = new TableColumn<>("Presente");
         colunaPresente.setMinWidth(80);
         colunaPresente.setMaxWidth(120);
 
-        // Configurar a célula com CheckBoxTableCell
-        colunaPresente.setCellValueFactory(param -> new SimpleBooleanProperty(false));
-        colunaPresente.setCellFactory(CheckBoxTableCell.forTableColumn(param -> {
-            return null; // Nenhuma ação extra necessária
-        }));
+        // Vincular a propriedade transiente
+        colunaPresente.setCellValueFactory(cellData -> cellData.getValue().presenteProperty());
+        colunaPresente.setCellFactory(CheckBoxTableCell.forTableColumn(colunaPresente::getCellObservableValue));
 
         colunas.add(colunaPresente);
 
@@ -311,6 +313,9 @@ public class ProfessorController
         mostrarP2();
         checkP3.setSelected(false);
         mostrarP3();
+
+        dpRealizarChamada.setValue(null);
+        dpAlterarFaltas.setValue(null);
 
         if (tAtribuirNotasAlunos != null) {
             tAtribuirNotasAlunos.getSelectionModel().clearSelection();
@@ -442,6 +447,7 @@ public class ProfessorController
                 turmaSelecionada = newValue;
                 tRealizarChamada = removeTableView(tRealizarChamada, gRealizarChamada);
                 tRealizarChamada = criarTableView(tRealizarChamada, gRealizarChamada, hDataRealizarChamada, cbTurmaRealizarChamada, criarColunasChamada());
+                tRealizarChamada.setEditable(true);
             }
         });
     }
@@ -463,7 +469,7 @@ public class ProfessorController
 
     @FXML
     public void mostrarAlterarFaltas() {
-        if (alunoSelecionado != null) {
+        if (turmaSelecionada != null || alunoSelecionado != null || dpAlterarFaltas.getValue() != null) {
             esconderPaineis();
             gFaltas.setVisible(true);
             gAlterarFaltas.setVisible(true);
@@ -476,23 +482,41 @@ public class ProfessorController
             sFaltas.setValueFactory(montaSpinnerFaltas(turmaSelecionada.getDisciplina().getCargaHoraria()));
 
         }else {
-            mAtribuirFaltas.setText("Selecione uma turma e um aluno para prosseguir.");
+            mAtribuirFaltas.setText("Selecione uma turma, uma data e um aluno para prosseguir.");
         }
 
     }
 
     @FXML
     public void finalizarChamada() {
-        //Função a ser acionada ao finalizar chamada
+        mRealizarChamada.setText("");
+
+        if (cbTurmaRealizarChamada.getSelectionModel().getSelectedItem() == null || dpRealizarChamada.getValue() == null) {
+            mRealizarChamada.setText("Selecione uma turma e uma data para realizar a chamada.");
+            return;
+        }
+
+        TurmaModel turmaSelecionada = cbTurmaRealizarChamada.getSelectionModel().getSelectedItem();
+        LocalDate dataChamada = dpRealizarChamada.getValue();
+
+        ChamadaModel chamada = new ChamadaModel();
+        chamada.setTurma(turmaSelecionada);
+        chamada.setData(dataChamada);
+
+        List<FrequenciaModel> frequencias = new ArrayList<>();
+        for (AlunoModel aluno : tRealizarChamada.getItems()) {
+            FrequenciaModel frequencia = new FrequenciaModel();
+            frequencia.setAluno(aluno);
+            frequencia.setStatus(aluno.isPresente());
+            frequencias.add(frequencia);
+        }
+        chamada.setFrequencias(frequencias);
     }
 
     @FXML
     public void atribuirFaltas() {
         //Função a ser acionada ao alterar Faltas
     }
-
-    private AlunoModel alunoSelecionado;
-    private TurmaModel turmaSelecionada;
 
     private void definirAlunoSelecionado(TableView<AlunoModel> tabelaAlunos) {
         tabelaAlunos.setOnMouseClicked((MouseEvent) -> alunoSelecionado = tabelaAlunos.getSelectionModel().getSelectedItem());

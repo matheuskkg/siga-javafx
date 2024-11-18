@@ -6,6 +6,8 @@ import fatec.sigafx.model.aulas.NotaModel;
 import fatec.sigafx.model.aulas.TurmaModel;
 import fatec.sigafx.model.usuarios.dto.UsuarioCriarRequest;
 import jakarta.persistence.*;
+import javafx.beans.property.BooleanProperty;
+import javafx.beans.property.SimpleBooleanProperty;
 
 import java.util.List;
 
@@ -54,6 +56,21 @@ public class AlunoModel extends UsuarioModel {
 
     public Double getNotaP3() {
         return notas != null && notas.size() > 2 ? notas.get(2).getNota() : null;
+    }
+
+    @Transient
+    private BooleanProperty presente = new SimpleBooleanProperty(false);
+
+    public BooleanProperty presenteProperty() {
+        return presente;
+    }
+
+    public boolean isPresente() {
+        return presente.get();
+    }
+
+    public void setPresente(boolean presente) {
+        this.presente.set(presente);
     }
 
 

@@ -34,6 +34,10 @@ public class FrequenciaModel {
         this.aluno = aluno;
     }
 
+    public void setStatus(Boolean status) {
+        this.status = status;
+    }
+
     @Override
     public String toString() {
         return "Aluno: " + aluno +
