@@ -4,6 +4,7 @@ import fatec.sigafx.EMF;
 import fatec.sigafx.model.usuarios.AlunoModel;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.EntityManagerFactory;
+import org.hibernate.Hibernate;
 
 import java.util.List;
 
@@ -33,16 +34,22 @@ public class AlunoDAO {
 
     public List<AlunoModel> buscarAlunosNaTurma(Integer turmaId) {
         try (EntityManager em = emf.createEntityManager()) {
-            return em.createQuery(
+            List<AlunoModel> alunos = em.createQuery(
                             "SELECT a FROM AlunoModel a WHERE a.id IN (" +
                                     "SELECT at.id FROM TurmaModel t JOIN t.alunos at WHERE t.id = :turmaId" +
                                     ")", AlunoModel.class)
                     .setParameter("turmaId", turmaId)
                     .getResultList();
+
+            // Inicializar a coleção de notas de cada aluno
+            alunos.forEach(aluno -> Hibernate.initialize(aluno.getNotas()));
+
+            return alunos;
         } catch (Exception e) {
             e.printStackTrace();
-            return null;
+            return List.of();
         }
     }
+
 
 }

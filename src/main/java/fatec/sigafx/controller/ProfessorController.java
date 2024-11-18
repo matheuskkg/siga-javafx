@@ -7,6 +7,7 @@ import fatec.sigafx.model.aulas.dto.NotaCriarRequest;
 import fatec.sigafx.model.usuarios.AlunoModel;
 import fatec.sigafx.view.LoginView;
 import javafx.beans.property.SimpleBooleanProperty;
+import javafx.beans.property.SimpleObjectProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -81,11 +82,10 @@ public class ProfessorController
 
     @FXML
     public void initialize() {
-        configuraSpinners();
         carregarComboBoxTurmas();
     }
 
-    private SpinnerValueFactory<Double> montaSpinners() {
+    private SpinnerValueFactory<Double> montaSpinners(Double nota) {
         SpinnerValueFactory<Double> valueFactory = new SpinnerValueFactory.DoubleSpinnerValueFactory(0, 10) {
             @Override
             public void increment(int steps) {
@@ -106,7 +106,7 @@ public class ProfessorController
             }
         };
 
-        valueFactory.setValue(null);
+        valueFactory.setValue(nota);
         return valueFactory;
 
     }
@@ -138,9 +138,9 @@ public class ProfessorController
     }
 
     public void configuraSpinners(){
-        sP1.setValueFactory(montaSpinners());
-        sP2.setValueFactory(montaSpinners());
-        sP3.setValueFactory(montaSpinners());
+        sP1.setValueFactory(montaSpinners(alunoSelecionado.getNotaP1()));
+        sP2.setValueFactory(montaSpinners(alunoSelecionado.getNotaP2()));
+        sP3.setValueFactory(montaSpinners(alunoSelecionado.getNotaP3()));
     }
 
     private <T> ComboBox<T> reconstruirComboBox(ComboBox<T> comboBox, HBox hboxPai) {
@@ -198,9 +198,9 @@ public class ProfessorController
     }
 
     private List<TableColumn<AlunoModel, ?>> criarColunasPadrao() {
-        TableColumn<AlunoModel, Integer> colunaId = criarColunaTableView("Id", 80, 80);
-        TableColumn<AlunoModel, String> colunaNome = criarColunaTableView("Nome", 200, 400);
-        TableColumn<AlunoModel, String> colunaEmail = criarColunaTableView("Email", 300, Integer.MAX_VALUE);
+        TableColumn<AlunoModel, Integer> colunaId = criarColunaTableView("Id", 50, 50);
+        TableColumn<AlunoModel, String> colunaNome = criarColunaTableView("Nome", 150, 300);
+        TableColumn<AlunoModel, String> colunaEmail = criarColunaTableView("Email", 150, Integer.MAX_VALUE);
 
         return List.of(colunaId, colunaNome, colunaEmail);
     }
@@ -208,9 +208,21 @@ public class ProfessorController
     private List<TableColumn<AlunoModel, ?>> criarColunasNotas() {
         List<TableColumn<AlunoModel, ?>> colunas = new ArrayList<>(criarColunasPadrao());
 
-        TableColumn<AlunoModel, Double> colunaP1 = criarColunaTableView("P1", 50, 90);
-        TableColumn<AlunoModel, Double> colunaP2 = criarColunaTableView("P2", 50, 90);
-        TableColumn<AlunoModel, Double> colunaP3 = criarColunaTableView("P3", 50, 90);
+        // Configurar colunas de notas
+        TableColumn<AlunoModel, Double> colunaP1 = new TableColumn<>("P1");
+        colunaP1.setCellValueFactory(cellData -> new SimpleObjectProperty<>(cellData.getValue().getNotaP1()));
+        colunaP1.setMinWidth(50);
+        colunaP1.setMaxWidth(90);
+
+        TableColumn<AlunoModel, Double> colunaP2 = new TableColumn<>("P2");
+        colunaP2.setCellValueFactory(cellData -> new SimpleObjectProperty<>(cellData.getValue().getNotaP2()));
+        colunaP2.setMinWidth(50);
+        colunaP2.setMaxWidth(90);
+
+        TableColumn<AlunoModel, Double> colunaP3 = new TableColumn<>("P3");
+        colunaP3.setCellValueFactory(cellData -> new SimpleObjectProperty<>(cellData.getValue().getNotaP3()));
+        colunaP3.setMinWidth(50);
+        colunaP3.setMaxWidth(90);
 
         colunas.addAll(List.of(colunaP1, colunaP2, colunaP3));
         return colunas;
@@ -235,7 +247,6 @@ public class ProfessorController
         return colunas;
     }
 
-
     private List<TableColumn<AlunoModel, ?>> criarColunasFaltas() {
         List<TableColumn<AlunoModel, ?>> colunas = new ArrayList<>(criarColunasPadrao());
 
@@ -252,7 +263,6 @@ public class ProfessorController
         definirAlunoSelecionado(tabela);
     }
 
-
     private TableView<AlunoModel> criarTableView(TableView<AlunoModel> tabela, VBox vbGerencia, HBox hbContainer, ComboBox<TurmaModel> cbTurma, List<TableColumn<AlunoModel, ?>> colunas) {
         if (tabela == null) {
             tabela = new TableView<>();
@@ -267,10 +277,6 @@ public class ProfessorController
     private TableView<AlunoModel> removeTableView(TableView<AlunoModel> tabela, VBox vbGerencia) {
         if (tabela != null) {
             vbGerencia.getChildren().remove(tabela);
-            System.out.println("removido");
-        }
-        else {
-            System.out.println("nao foi encontrado");
         }
         return null;
     }
@@ -297,6 +303,13 @@ public class ProfessorController
         mAtribuirNotasAluno.setText("");
         mRealizarChamada.setText("");
         mAtribuirFaltas.setText("");
+
+        checkP1.setSelected(false);
+        mostrarP1();
+        checkP2.setSelected(false);
+        mostrarP2();
+        checkP3.setSelected(false);
+        mostrarP3();
 
         if (tAtribuirNotasAlunos != null) {
             tAtribuirNotasAlunos.getSelectionModel().clearSelection();
@@ -357,6 +370,7 @@ public class ProfessorController
             mAtribuirNotasAluno.setText("");
 
             nomeAlunoNota.setText(alunoSelecionado.getNome());
+            configuraSpinners();
         }
     }
 
@@ -374,33 +388,41 @@ public class ProfessorController
         boolean camposVazios = verificarCamposVaziosAtribuirNotas();
         if (camposVazios) {
             mAtribuirNotasAluno.setText("Selecione alguma nota e atribua um valor a ela para prosseguir.");
+            return;
         }
 
-        NotaCriarRequest requestP1 = null;
-        if (checkP1.isSelected() && sP1.getValue() != null) {
-            requestP1 = new NotaCriarRequest(sP1.getValue(), alunoSelecionado, turmaSelecionada);
-        }
+        NotaCriarRequest requestP1;
+        requestP1 = new NotaCriarRequest(sP1.getValue(), alunoSelecionado, turmaSelecionada);
+
+        NotaCriarRequest requestP2;
+        requestP2 = new NotaCriarRequest(sP2.getValue(), alunoSelecionado, turmaSelecionada);
+
+        NotaCriarRequest requestP3;
+        requestP3 = new NotaCriarRequest(sP3.getValue(), alunoSelecionado, turmaSelecionada);
+
+
+        NotaModel.criarNota(requestP3);
+
+        NotaModel.criarNota(requestP2);
 
         NotaModel.criarNota(requestP1);
+
     }
 
     //Da pra deixar mais funcional e fazer só uma função, mas tô com preguiça
     @FXML
     public void mostrarP1() {
         hAtribuirP1.setDisable(!checkP1.isSelected());
-        sP1.setValueFactory(montaSpinners());
     }
 
     @FXML
     public void mostrarP2() {
         hAtribuirP2.setDisable(!checkP2.isSelected());
-        sP2.setValueFactory(montaSpinners());
     }
 
     @FXML
     public void mostrarP3() {
         hAtribuirP3.setDisable(!checkP3.isSelected());
-        sP3.setValueFactory(montaSpinners());
     }
 
     // Mostrar *Faltas*
@@ -486,6 +508,4 @@ public class ProfessorController
         LoginView.mostrarLogin();
 
     }
-
-
 }
