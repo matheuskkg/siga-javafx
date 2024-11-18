@@ -1,6 +1,5 @@
 package fatec.sigafx.controller;
 
-import fatec.sigafx.dao.NotaDAO;
 import fatec.sigafx.model.aulas.NotaModel;
 import fatec.sigafx.model.aulas.TurmaModel;
 import fatec.sigafx.model.aulas.dto.NotaCriarRequest;
@@ -23,7 +22,6 @@ import javafx.scene.layout.VBox;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
-import java.util.stream.Collectors;
 
 import static fatec.sigafx.controller.LoginController.usuarioLogado;
 
@@ -56,25 +54,28 @@ public class ProfessorController
 
     @FXML
     private VBox gFaltas;
-
     public VBox gRealizarAlterar;
-
-    public VBox gAlterarFaltas;
-    public TextField tfTurmaAlterarFaltas;
-    public TextField tfAlunoAlterarFaltas;
-    public Spinner<Integer> sFaltas;
 
     public VBox gRealizarChamada;
     public HBox hTurmaRealizarChamada;
     public ComboBox<TurmaModel> cbTurmaRealizarChamada;
+    public HBox hDataRealizarChamada;
+    public DatePicker dpRealizarChamada;
     public Label mRealizarChamada;
     public Button bFinalizarChamada;
 
     public VBox gAlunosFaltas;
     public HBox hAtribuirFaltasTurma;
     public ComboBox<TurmaModel> cbAtribuirFaltasTurma;
+    public HBox hDataAlunosFaltas;
+    public DatePicker dpAlterarFaltas;
     public Label mAtribuirFaltas;
     public Button bConfirmarFaltas;
+
+    public VBox gAlterarFaltas;
+    public TextField tfTurmaAlterarFaltas;
+    public TextField tfAlunoAlterarFaltas;
+    public Spinner<Integer> sFaltas;
 
     public TableView<AlunoModel> tAtribuirNotasAlunos;
     public TableView<AlunoModel> tRealizarChamada;
@@ -440,7 +441,7 @@ public class ProfessorController
             if (newValue != null) {
                 turmaSelecionada = newValue;
                 tRealizarChamada = removeTableView(tRealizarChamada, gRealizarChamada);
-                tRealizarChamada = criarTableView(tRealizarChamada, gRealizarChamada, hTurmaRealizarChamada, cbTurmaRealizarChamada, criarColunasChamada());
+                tRealizarChamada = criarTableView(tRealizarChamada, gRealizarChamada, hDataRealizarChamada, cbTurmaRealizarChamada, criarColunasChamada());
             }
         });
     }
@@ -455,7 +456,7 @@ public class ProfessorController
             if (newValue != null) {
                 turmaSelecionada = newValue;
                 tAtribuirFaltasAlunos = removeTableView(tAtribuirFaltasAlunos, gAlunosFaltas);
-                tAtribuirFaltasAlunos = criarTableView(tAtribuirFaltasAlunos, gAlunosFaltas, hAtribuirFaltasTurma, cbAtribuirFaltasTurma, criarColunasFaltas());
+                tAtribuirFaltasAlunos = criarTableView(tAtribuirFaltasAlunos, gAlunosFaltas, hDataAlunosFaltas, cbAtribuirFaltasTurma, criarColunasFaltas());
             }
         });
     }

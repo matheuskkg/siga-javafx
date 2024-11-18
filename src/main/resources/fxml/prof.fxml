@@ -4,6 +4,7 @@
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.CheckBox?>
 <?import javafx.scene.control.ComboBox?>
+<?import javafx.scene.control.DatePicker?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.Separator?>
 <?import javafx.scene.control.Spinner?>
@@ -59,11 +60,9 @@
                             <Insets left="20.0" right="20.0" />
                         </StackPane.margin>
                         <HBox>
-                            <Label alignment="CENTER" maxHeight="1.7976931348623157E308"
-                                   maxWidth="1.7976931348623157E308" text="Alterar Notas" textAlignment="CENTER"
-                                   HBox.hgrow="ALWAYS">
+                            <Label alignment="CENTER" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" text="Alterar Notas" textAlignment="CENTER" HBox.hgrow="ALWAYS">
                                 <font>
-                                    <Font size="18.0"/>
+                                    <Font size="18.0" />
                                 </font>
                             </Label>
                         </HBox>
@@ -210,17 +209,17 @@
                     </VBox>
                     <VBox fx:id="gRealizarChamada" alignment="TOP_CENTER" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="1110.0" prefWidth="1674.0" spacing="20.0" visible="false">
                         <HBox>
-                            <Label alignment="CENTER" maxHeight="1.7976931348623157E308"
-                                   maxWidth="1.7976931348623157E308" text="Realizar Chamada" textAlignment="CENTER"
-                                   HBox.hgrow="ALWAYS">
+                            <Label alignment="CENTER" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" text="Realizar Chamada" textAlignment="CENTER" HBox.hgrow="ALWAYS">
                                 <font>
-                                    <Font size="18.0"/>
+                                    <Font size="18.0" />
                                 </font>
                             </Label>
                         </HBox>
                         <HBox fx:id="hTurmaRealizarChamada" alignment="TOP_CENTER" maxWidth="800.0" spacing="10.0">
-                            <!-- Tem que preencher essa ComboBox com todas as turmas relacionadas as Disciplinas que esse Professor é responsável -->
-                            <ComboBox fx:id="cbTurmaRealizarChamada" maxHeight="30.0" maxWidth="1.7976931348623157E308" minHeight="30.0" promptText="Turma" HBox.hgrow="ALWAYS" />
+                            <ComboBox fx:id="cbTurmaRealizarChamada" maxHeight="30.0" maxWidth="1.7976931348623157E308" minHeight="30.0" promptText="Turma" HBox.hgrow="ALWAYS"/>
+                        </HBox>
+                        <HBox fx:id="hDataRealizarChamada" alignment="TOP_CENTER" maxWidth="800.0" spacing="10.0">
+                            <DatePicker fx:id="dpRealizarChamada" maxWidth="1.7976931348623157E308" minHeight="30.0" promptText="Data" HBox.hgrow="ALWAYS"/>
                         </HBox>
                         <HBox alignment="TOP_RIGHT" maxWidth="800.0" spacing="10.0">
                             <Label fx:id="mRealizarChamada" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" textFill="RED" HBox.hgrow="ALWAYS" />
@@ -239,16 +238,17 @@
                             <Insets left="20.0" right="20.0" />
                         </StackPane.margin>
                         <HBox>
-                            <Label alignment="CENTER" maxHeight="1.7976931348623157E308"
-                                   maxWidth="1.7976931348623157E308" text="Alterar Faltas" textAlignment="CENTER"
-                                   HBox.hgrow="ALWAYS">
+                            <Label alignment="CENTER" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" text="Alterar Faltas" textAlignment="CENTER" HBox.hgrow="ALWAYS">
                                 <font>
-                                    <Font size="18.0"/>
+                                    <Font size="18.0" />
                                 </font>
                             </Label>
                         </HBox>
                         <HBox fx:id="hAtribuirFaltasTurma" alignment="CENTER" maxWidth="800.0" spacing="10.0">
                             <ComboBox fx:id="cbAtribuirFaltasTurma" maxHeight="30.0" maxWidth="1.7976931348623157E308" minHeight="30.0" minWidth="300.0" promptText="Turma" HBox.hgrow="ALWAYS" />
+                        </HBox>
+                        <HBox fx:id="hDataAlunosFaltas" alignment="TOP_CENTER" maxWidth="800.0" spacing="10.0">
+                            <DatePicker fx:id="dpAlterarFaltas" maxWidth="1.7976931348623157E308" minHeight="30.0" promptText="Data" HBox.hgrow="ALWAYS"/>
                         </HBox>
                         <HBox alignment="TOP_RIGHT" maxWidth="800.0" spacing="10.0">
                             <Label fx:id="mAtribuirFaltas" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" textFill="RED" HBox.hgrow="ALWAYS" />
