@@ -7,6 +7,7 @@ import fatec.sigafx.model.aulas.TurmaModel;
 import fatec.sigafx.model.aulas.dto.NotaCriarRequest;
 import fatec.sigafx.model.usuarios.AlunoModel;
 import fatec.sigafx.view.LoginView;
+import javafx.beans.property.BooleanProperty;
 import javafx.beans.property.SimpleBooleanProperty;
 import javafx.beans.property.SimpleObjectProperty;
 import javafx.collections.FXCollections;
@@ -442,14 +443,42 @@ public class ProfessorController
         gFaltas.setVisible(true);
         gRealizarChamada.setVisible(true);
 
-        cbTurmaRealizarChamada.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> {
-            if (newValue != null) {
-                turmaSelecionada = newValue;
+        cbTurmaRealizarChamada.getSelectionModel().selectedItemProperty().addListener((obsTurma, turmaAtual, turmaNova) -> {
+            if (turmaNova != null) {
+
+                turmaSelecionada = turmaNova;
                 tRealizarChamada = removeTableView(tRealizarChamada, gRealizarChamada);
                 tRealizarChamada = criarTableView(tRealizarChamada, gRealizarChamada, hDataRealizarChamada, cbTurmaRealizarChamada, criarColunasChamada());
                 tRealizarChamada.setEditable(true);
+
+                if (dpRealizarChamada.getValue() == null) {
+                    tRealizarChamada.setDisable(true);
+                }
+
+                dpRealizarChamada.valueProperty().addListener((obsDatePicker, dpValorAntigo, dpValorNovo) -> {
+                    if (dpValorNovo != null && tRealizarChamada != null) {
+                        resetarValoresChamada();
+                        tRealizarChamada.setDisable(false);
+                    }
+                });
             }
         });
+    }
+
+    //Acho que tem algo errado em usar isso aqui mas vou deixar por enquanto
+    @FXML
+    public void resetarValoresChamada() {
+        // Percorre todos os itens da tabela
+        for (AlunoModel aluno : tRealizarChamada.getItems()) {
+            // Obtém a propriedade associada à coluna "Presente"
+            BooleanProperty presenteProperty = aluno.presenteProperty();
+
+            // Reseta o valor para `false` (ou outro valor padrão)
+            presenteProperty.set(false);
+        }
+
+        // Atualiza a tabela visualmente
+        tRealizarChamada.refresh();
     }
 
     @FXML
@@ -463,6 +492,16 @@ public class ProfessorController
                 turmaSelecionada = newValue;
                 tAtribuirFaltasAlunos = removeTableView(tAtribuirFaltasAlunos, gAlunosFaltas);
                 tAtribuirFaltasAlunos = criarTableView(tAtribuirFaltasAlunos, gAlunosFaltas, hDataAlunosFaltas, cbAtribuirFaltasTurma, criarColunasFaltas());
+
+                if (dpAlterarFaltas.getValue() == null) {
+                    tAtribuirFaltasAlunos.setDisable(true);
+                }
+
+                dpAlterarFaltas.valueProperty().addListener((observable1, oldValue1, newValue1) -> {
+                    if (newValue1 != null && tAtribuirFaltasAlunos != null) {
+                        tAtribuirFaltasAlunos.setDisable(false);
+                    }
+                });
             }
         });
     }
