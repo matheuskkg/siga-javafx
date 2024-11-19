@@ -1,6 +1,7 @@
 package fatec.sigafx.model.aulas;
 
 import fatec.sigafx.dao.TurmaDAO;
+import fatec.sigafx.model.aulas.dto.AlunoNotasResponse;
 import fatec.sigafx.model.aulas.dto.TurmaCriarRequest;
 import fatec.sigafx.model.usuarios.AlunoModel;
 import fatec.sigafx.model.usuarios.ProfessorModel;
@@ -26,7 +27,7 @@ public class TurmaModel {
     @JoinColumn(name = "professor_id", nullable = false)
     private ProfessorModel professor;
 
-    @ManyToMany
+    @ManyToMany(fetch = FetchType.EAGER)
     @JoinTable(
             name = "turma_alunos",
             joinColumns = @JoinColumn(name = "turma_id"),
@@ -37,6 +38,9 @@ public class TurmaModel {
     // Utilizar para editar uma chamada
     @OneToMany(mappedBy = "turma", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<ChamadaModel> chamadas;
+
+    @Transient
+    private List<AlunoNotasResponse> alunosComNotas;
 
     @Transient
     private static TurmaDAO turmaDAO = new TurmaDAO();
@@ -107,6 +111,14 @@ public class TurmaModel {
 
     public void setAlunos(List<AlunoModel> alunos) {
         this.alunos = alunos;
+    }
+
+    public List<AlunoNotasResponse> getAlunosComNotas() {
+        return alunosComNotas;
+    }
+
+    public void setAlunosComNotas(List<AlunoNotasResponse> alunosComNotas) {
+        this.alunosComNotas = alunosComNotas;
     }
 
     @Override

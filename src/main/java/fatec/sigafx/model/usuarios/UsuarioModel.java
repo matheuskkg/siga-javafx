@@ -56,6 +56,10 @@ public class UsuarioModel {
         usuarioDAO.salvar(u);
     }
 
+    public static void atualizarUsuario(UsuarioModel request) {
+        usuarioDAO.salvar(request);
+    }
+
     public static void atualizarUsuario(UsuarioCriarRequest request, String tipo, Integer id) {
         UsuarioModel usuarioAntigo = usuarioDAO.buscarPorId(id);
 

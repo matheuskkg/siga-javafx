@@ -8,7 +8,6 @@ import fatec.sigafx.model.aulas.dto.NotaCriarRequest;
 import fatec.sigafx.model.usuarios.AlunoModel;
 import fatec.sigafx.view.LoginView;
 import javafx.beans.property.BooleanProperty;
-import javafx.beans.property.SimpleBooleanProperty;
 import javafx.beans.property.SimpleObjectProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -394,21 +393,31 @@ public class ProfessorController
             return;
         }
 
-        NotaCriarRequest requestP1;
-        requestP1 = new NotaCriarRequest(sP1.getValue(), alunoSelecionado, turmaSelecionada);
+        try {
+            alunoSelecionado.getNotas().get(0).setNota(sP1.getValue());
+        } catch (IndexOutOfBoundsException e) {
+            NotaCriarRequest requestP1 = new NotaCriarRequest(sP1.getValue(), alunoSelecionado, turmaSelecionada);
+            NotaModel p1 = new NotaModel(requestP1);
+            alunoSelecionado.getNotas().add(p1);
+        }
 
-        NotaCriarRequest requestP2;
-        requestP2 = new NotaCriarRequest(sP2.getValue(), alunoSelecionado, turmaSelecionada);
+        try {
+            alunoSelecionado.getNotas().get(1).setNota(sP2.getValue());
+        } catch (IndexOutOfBoundsException e) {
+            NotaCriarRequest requestP2 = new NotaCriarRequest(sP2.getValue(), alunoSelecionado, turmaSelecionada);
+            NotaModel p2 = new NotaModel(requestP2);
+            alunoSelecionado.getNotas().add(p2);
+        }
 
-        NotaCriarRequest requestP3;
-        requestP3 = new NotaCriarRequest(sP3.getValue(), alunoSelecionado, turmaSelecionada);
+        try {
+            alunoSelecionado.getNotas().get(2).setNota(sP3.getValue());
+        } catch (IndexOutOfBoundsException e) {
+            NotaCriarRequest requestP3 = new NotaCriarRequest(sP3.getValue(), alunoSelecionado, turmaSelecionada);
+            NotaModel p3 = new NotaModel(requestP3);
+            alunoSelecionado.getNotas().add(p3);
+        }
 
-
-        NotaModel.criarNota(requestP3);
-
-        NotaModel.criarNota(requestP2);
-
-        NotaModel.criarNota(requestP1);
+        AlunoModel.atualizarUsuario(alunoSelecionado);
     }
 
     //Da pra deixar mais funcional e fazer só uma função, mas tô com preguiça

@@ -18,12 +18,9 @@ public class AlunoModel extends UsuarioModel {
     @ManyToMany(mappedBy = "alunos")
     private List<TurmaModel> turmas;
 
-    @OneToMany(mappedBy = "aluno", fetch = FetchType.EAGER, cascade = CascadeType.ALL, orphanRemoval = true)
+    //remover dps q alterar a exibição
+    @OneToMany(mappedBy = "aluno", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<NotaModel> notas;
-
-    // Utilizar na view do Aluno
-    @OneToMany(mappedBy = "aluno", fetch = FetchType.EAGER, cascade = CascadeType.ALL, orphanRemoval = true)
-    private List<FrequenciaModel> frequencias;
 
     public AlunoModel() {}
 
@@ -44,6 +41,10 @@ public class AlunoModel extends UsuarioModel {
 
     public List<NotaModel> getNotas() {
         return notas;
+    }
+
+    public void setNotas(List<NotaModel> notas) {
+        this.notas = notas;
     }
 
     public Double getNotaP1() {

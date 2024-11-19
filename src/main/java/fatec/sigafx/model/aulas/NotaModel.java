@@ -77,6 +77,7 @@ public class NotaModel {
     @Override
     public String toString() {
         return "Nota: " + nota +
-                ", Disciplina: " + turma.getDisciplina();
+                ", Disciplina: " + turma.getDisciplina() +
+                ", Aluno: " + aluno.getEmail();
     }
 }
