@@ -451,11 +451,15 @@ public class AdminController
         label.setText(mensagem);
     }
 
-    private void exibirMensagemTemporaria(Label label, String mensagem) {
+    private void exibirMensagemTemporaria(VBox vbox ,Label label, String mensagem) {
+        vbox.setVisible(true);
         label.setText(mensagem);
 
-        PauseTransition pause = new PauseTransition(Duration.seconds(2));
-        pause.setOnFinished(event -> label.setText(""));
+        PauseTransition pause = new PauseTransition(Duration.seconds(1.5));
+        pause.setOnFinished(event -> {
+            label.setText("");
+            vbox.setVisible(false);
+        });
         pause.play();
     }
 
@@ -491,10 +495,6 @@ public class AdminController
         }
 
         if (errosCampos) return;
-
-        //Primeira condição: Está sendo criado um novo usuário, deve verificar se o e-mail não está em uso
-        //Segunda condição: Um usuário está sendo alterado, deve verificar se o e-mail não está em uso apenas caso tenha sido alterado
-        //Caso nenhuma das duas condições sejam verdadeiras, não há necessidade de verificar o e-mail
         if (usuarioSelecionado == null || !usuarioSelecionado.getEmail().equals(email)) {
             if (validador.verificarEmailEmUso()) {
                 exibirMensagem(mAdicionarUsuarioErroEmail, "Email já cadastrado.");
@@ -516,7 +516,10 @@ public class AdminController
         limparCampos();
         initialize();
 
-        exibirMensagemTemporaria(mAdicionarUsuarioErroCampos, "Usuário salvo com sucesso.");
+        gAdicionarAlterarUsuario.setVisible(false);
+        mostrarGerenciarUsuarios();
+
+        exibirMensagemTemporaria(gMensagemSucesso, mSucesso, "Usuário salvo com sucesso.");
 
         usuarioSelecionado = null;
     }
@@ -648,7 +651,10 @@ public class AdminController
         limparCampos();
         initialize();
 
-        exibirMensagemTemporaria(mAdicionarDisciplinas, "Disciplina salva com sucesso.");
+        gAdicionarDisciplinas.setVisible(false);
+        mostrarGerenciarDisciplinas();
+
+        exibirMensagemTemporaria(gMensagemSucesso, mSucesso, "Disciplina salva com sucesso.");
     }
 
     private void mostrarAlterarExcluirDisciplinas() {
@@ -765,8 +771,7 @@ public class AdminController
     private boolean verificarCamposVaziosAdicionarTurma() {
         return cbCursoAdicionarTurma.getSelectionModel().getSelectedItem() == null
                 || cbDisciplinaAdicionarTurma.getSelectionModel().getSelectedItem() == null
-                || cbProfResponAdicionarTurma.getSelectionModel().getSelectedItem() == null
-                || tAdicionarAlunos.getSelectionModel().getSelectedItem() == null;
+                || cbProfResponAdicionarTurma.getSelectionModel().getSelectedItem() == null;
     }
 
     @FXML
@@ -796,7 +801,10 @@ public class AdminController
         limparCampos();
         initialize();
 
-        exibirMensagemTemporaria(mTurmas, "Turma salva com sucesso.");
+        gAdicionarTurmas.setVisible(false);
+        mostrarGerenciarTurmas();
+
+        exibirMensagemTemporaria(gMensagemSucesso, mSucesso, "Turma salva com sucesso.");
     }
 
     private void mostrarAlterarExcluirTurmas() {

@@ -8,16 +8,14 @@ import fatec.sigafx.model.aulas.dto.DisciplinaCriarRequest;
 import fatec.sigafx.model.usuarios.AlunoModel;
 import fatec.sigafx.model.usuarios.ProfessorModel;
 import fatec.sigafx.view.LoginView;
-import fatec.sigafx.view.AdminView;
-import fatec.sigafx.view.AlunoView;
-import fatec.sigafx.view.ProfessorView;
 import javafx.application.Application;
+import javafx.scene.image.Image;
 import javafx.stage.Stage;
 
 import fatec.sigafx.model.usuarios.UsuarioModel;
 import fatec.sigafx.model.usuarios.dto.UsuarioCriarRequest;
 
-import java.util.List;
+import java.util.Objects;
 
 public class SigaApplication extends Application
 {
@@ -33,6 +31,8 @@ public class SigaApplication extends Application
         }
 
         SigaApplication.stage = stage;
+
+        stage.getIcons().add(new Image(getClass().getResourceAsStream("/icons/icone.png")));
 
         LoginView.mostrarLogin();
 
