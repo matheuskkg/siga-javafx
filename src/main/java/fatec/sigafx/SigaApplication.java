@@ -4,7 +4,6 @@ import fatec.sigafx.dao.TurmaDAO;
 import fatec.sigafx.model.aulas.DisciplinaModel;
 import fatec.sigafx.model.aulas.NotaModel;
 import fatec.sigafx.model.aulas.TurmaModel;
-import fatec.sigafx.model.aulas.dto.AlunoNotasResponse;
 import fatec.sigafx.model.aulas.dto.DisciplinaCriarRequest;
 import fatec.sigafx.model.usuarios.AlunoModel;
 import fatec.sigafx.model.usuarios.ProfessorModel;

@@ -4,6 +4,9 @@ import fatec.sigafx.dao.NotaDAO;
 import fatec.sigafx.model.aulas.dto.NotaCriarRequest;
 import fatec.sigafx.model.usuarios.AlunoModel;
 import jakarta.persistence.*;
+import jakarta.persistence.criteria.CriteriaBuilder;
+
+import java.util.List;
 
 @Entity
 @Table(name = "notas")
@@ -36,6 +39,18 @@ public class NotaModel {
 
     public static void excluirPorTurma(Integer turmaId) {
         notaDAO.excluirPorTurma(turmaId);
+    }
+
+    public static void salvarNota(NotaModel nota){
+        notaDAO.salvarNota(nota);
+    }
+
+    public static NotaModel buscarNotaPorId(Integer id) {
+        return notaDAO.buscarNotaPorId(id);
+    }
+
+    public static List<NotaModel> buscarNotasPorAlunoETurma(Integer alunoId, Integer turmaId){
+        return notaDAO.buscarNotasPorAlunoETurma(alunoId, turmaId);
     }
 
     public Integer getId() {

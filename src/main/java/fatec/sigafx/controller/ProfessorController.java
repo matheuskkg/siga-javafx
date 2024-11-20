@@ -390,37 +390,54 @@ public class ProfessorController
     public void atribuirNotas() {
         mAtribuirNotasAluno.setText("");
 
-        boolean camposVazios = verificarCamposVaziosAtribuirNotas();
-        if (camposVazios) {
+        // Verifica se os campos estão vazios
+        if (verificarCamposVaziosAtribuirNotas()) {
             mAtribuirNotasAluno.setText("Selecione alguma nota e atribua um valor a ela para prosseguir.");
             return;
         }
 
+        // Atribuir ou criar e salvar as notas (P1, P2, P3)
         try {
-            alunoSelecionado.getNotas().get(0).setNota(sP1.getValue());
-        } catch (IndexOutOfBoundsException e) {
-            NotaCriarRequest requestP1 = new NotaCriarRequest(sP1.getValue(), alunoSelecionado, turmaSelecionada);
-            NotaModel p1 = new NotaModel(requestP1);
-            alunoSelecionado.getNotas().add(p1);
-        }
+            NotaModel notaP1;
+            try {
+                notaP1 = alunoSelecionado.getNotas().get(0);
+                notaP1.setNota(sP1.getValue()); // Atualiza valor da nota
+            } catch (IndexOutOfBoundsException e) {
+                NotaCriarRequest requestP1 = new NotaCriarRequest(sP1.getValue(), alunoSelecionado, turmaSelecionada);
+                notaP1 = new NotaModel(requestP1); // Cria nova nota
+                alunoSelecionado.getNotas().add(notaP1);
+            }
+            NotaModel.salvarNota(notaP1); // Persiste a nota P1
 
-        try {
-            alunoSelecionado.getNotas().get(1).setNota(sP2.getValue());
-        } catch (IndexOutOfBoundsException e) {
-            NotaCriarRequest requestP2 = new NotaCriarRequest(sP2.getValue(), alunoSelecionado, turmaSelecionada);
-            NotaModel p2 = new NotaModel(requestP2);
-            alunoSelecionado.getNotas().add(p2);
-        }
+            NotaModel notaP2;
+            try {
+                notaP2 = alunoSelecionado.getNotas().get(1);
+                notaP2.setNota(sP2.getValue());
+            } catch (IndexOutOfBoundsException e) {
+                NotaCriarRequest requestP2 = new NotaCriarRequest(sP2.getValue(), alunoSelecionado, turmaSelecionada);
+                notaP2 = new NotaModel(requestP2);
+                alunoSelecionado.getNotas().add(notaP2);
+            }
+            NotaModel.salvarNota(notaP2); // Persiste a nota P2
 
-        try {
-            alunoSelecionado.getNotas().get(2).setNota(sP3.getValue());
-        } catch (IndexOutOfBoundsException e) {
-            NotaCriarRequest requestP3 = new NotaCriarRequest(sP3.getValue(), alunoSelecionado, turmaSelecionada);
-            NotaModel p3 = new NotaModel(requestP3);
-            alunoSelecionado.getNotas().add(p3);
-        }
+            NotaModel notaP3;
+            try {
+                notaP3 = alunoSelecionado.getNotas().get(2);
+                notaP3.setNota(sP3.getValue());
+            } catch (IndexOutOfBoundsException e) {
+                NotaCriarRequest requestP3 = new NotaCriarRequest(sP3.getValue(), alunoSelecionado, turmaSelecionada);
+                notaP3 = new NotaModel(requestP3);
+                alunoSelecionado.getNotas().add(notaP3);
+            }
+            NotaModel.salvarNota(notaP3); // Persiste a nota P3
 
-        AlunoModel.atualizarUsuario(alunoSelecionado);
+            // Feedback ao usuário
+            mAtribuirNotasAluno.setText("Notas atribuídas e salvas com sucesso!");
+
+        } catch (Exception e) {
+            mAtribuirNotasAluno.setText("Erro ao salvar as notas. Tente novamente.");
+            e.printStackTrace();
+        }
     }
 
     //Da pra deixar mais funcional e fazer só uma função, mas tô com preguiça
