@@ -34,11 +34,13 @@ import static fatec.sigafx.controller.LoginController.usuarioLogado;
 
 public class AdminController
 {
-
     // Início
     @FXML
     private VBox gPrincipal;
     public Label lBoasVindas;
+
+    public VBox gMensagemSucesso;
+    public Label mSucesso;
 
     // Gerenciar Usuários
     @FXML

@@ -25,7 +25,7 @@
     -fx-background-color: #bd3030;
 }
 
-#gConfirmaExclusao, #gConfirmaExclusaoDisciplina, #gConfirmaExclusaoTurma, #gConfirmaRemoverAluno{
+#gConfirmaExclusao, #gConfirmaExclusaoDisciplina, #gConfirmaExclusaoTurma, #gConfirmaRemoverAluno, #gMensagemSucesso{
     -fx-background-color: #3B5998;
     -fx-background-radius: 10px;
 }
