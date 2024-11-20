@@ -50,6 +50,4 @@ public class AlunoDAO {
             return List.of();
         }
     }
-
-
 }

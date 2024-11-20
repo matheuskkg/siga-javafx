@@ -1,7 +1,6 @@
 package fatec.sigafx.model.usuarios;
 
 import fatec.sigafx.dao.AlunoDAO;
-import fatec.sigafx.model.aulas.FrequenciaModel;
 import fatec.sigafx.model.aulas.NotaModel;
 import fatec.sigafx.model.aulas.TurmaModel;
 import fatec.sigafx.model.usuarios.dto.UsuarioCriarRequest;
@@ -18,8 +17,7 @@ public class AlunoModel extends UsuarioModel {
     @ManyToMany(mappedBy = "alunos")
     private List<TurmaModel> turmas;
 
-    //remover dps q alterar a exibição
-    @OneToMany(mappedBy = "aluno", cascade = CascadeType.ALL, orphanRemoval = true)
+    @OneToMany(mappedBy = "aluno", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.EAGER)
     private List<NotaModel> notas;
 
     public AlunoModel() {}

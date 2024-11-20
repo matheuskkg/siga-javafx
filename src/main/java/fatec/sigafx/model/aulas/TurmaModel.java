@@ -1,10 +1,10 @@
 package fatec.sigafx.model.aulas;
 
 import fatec.sigafx.dao.TurmaDAO;
-import fatec.sigafx.model.aulas.dto.AlunoNotasResponse;
 import fatec.sigafx.model.aulas.dto.TurmaCriarRequest;
 import fatec.sigafx.model.usuarios.AlunoModel;
 import fatec.sigafx.model.usuarios.ProfessorModel;
+import fatec.sigafx.model.util.AulasUtil;
 import jakarta.persistence.*;
 
 import java.util.List;
@@ -35,15 +35,21 @@ public class TurmaModel {
     )
     private List<AlunoModel> alunos;
 
+    @OneToMany(mappedBy = "turma", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.EAGER)
+    private List<NotaModel> notas;
+
     // Utilizar para editar uma chamada
     @OneToMany(mappedBy = "turma", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<ChamadaModel> chamadas;
 
     @Transient
-    private List<AlunoNotasResponse> alunosComNotas;
+    private List<AlunoModel> alunosView;
 
     @Transient
     private static TurmaDAO turmaDAO = new TurmaDAO();
+
+    @Transient
+    private static AulasUtil aulasUtil = new AulasUtil();
 
     public TurmaModel() {}
 
@@ -70,7 +76,11 @@ public class TurmaModel {
     }
 
     public static List<TurmaModel> buscarTodasTurmas() {
-        return turmaDAO.buscarTodos();
+        return aulasUtil.filtrarNotasAlunosTurmas(turmaDAO.buscarTodos());
+    }
+
+    public static List<TurmaModel> buscarPorProfessor(ProfessorModel professor) {
+        return aulasUtil.filtrarNotasAlunosTurmas(turmaDAO.buscarPorProfessor(professor));
     }
 
     public Integer getId() {
@@ -113,12 +123,12 @@ public class TurmaModel {
         this.alunos = alunos;
     }
 
-    public List<AlunoNotasResponse> getAlunosComNotas() {
-        return alunosComNotas;
+    public List<AlunoModel> getAlunosView() {
+        return alunosView;
     }
 
-    public void setAlunosComNotas(List<AlunoNotasResponse> alunosComNotas) {
-        this.alunosComNotas = alunosComNotas;
+    public void setAlunosView(List<AlunoModel> alunosView) {
+        this.alunosView = alunosView;
     }
 
     @Override

@@ -1,6 +1,5 @@
 package fatec.sigafx.model.aulas;
 
-import fatec.sigafx.dao.NotaDAO;
 import fatec.sigafx.model.aulas.dto.NotaCriarRequest;
 import fatec.sigafx.model.usuarios.AlunoModel;
 import jakarta.persistence.*;
@@ -27,19 +26,12 @@ public class NotaModel {
     @JoinColumn(name = "turma_id", nullable = false)
     private TurmaModel turma;
 
-    @Transient
-    private static NotaDAO notaDAO = new NotaDAO();
-
     public NotaModel() {}
 
     public NotaModel(NotaCriarRequest request) {
         this.nota = request.nota();
         this.aluno = request.aluno();
         this.turma = request.turma();
-    }
-
-    public static void criarNota(NotaCriarRequest request) {
-        notaDAO.salvar(new NotaModel(request));
     }
 
     public Integer getId() {
@@ -77,7 +69,8 @@ public class NotaModel {
     @Override
     public String toString() {
         return "Nota: " + nota +
-                ", Disciplina: " + turma.getDisciplina() +
+                ", Curso: " + turma.getCurso() +
+                ", Disciplina: " + turma.getDisciplina().getNome() +
                 ", Aluno: " + aluno.getEmail();
     }
 }

@@ -6,6 +6,7 @@ import fatec.sigafx.model.aulas.NotaModel;
 import fatec.sigafx.model.aulas.TurmaModel;
 import fatec.sigafx.model.aulas.dto.NotaCriarRequest;
 import fatec.sigafx.model.usuarios.AlunoModel;
+import fatec.sigafx.model.util.AulasUtil;
 import fatec.sigafx.view.LoginView;
 import javafx.beans.property.BooleanProperty;
 import javafx.beans.property.SimpleObjectProperty;
@@ -160,6 +161,7 @@ public class ProfessorController
         return novaComboBox;
     }
 
+    //TODO: utilizar a função TurmaModel.buscarPorProfessor
     private void carregarComboBoxTurmas(){
         List<TurmaModel> turmas = TurmaModel.buscarTodasTurmas();
         List<TurmaModel> turmasProfLogado = turmas.stream().filter(p -> Objects.equals(p.getProfessor().getEmail(), usuarioLogado.getEmail())).toList();
@@ -193,13 +195,20 @@ public class ProfessorController
     }
 
     private void carregarDadosTableView(TableView<AlunoModel> tabela, TurmaModel turmaSelecionada) {
-        ObservableList<AlunoModel> alunos = FXCollections.observableArrayList();
+        ObservableList<AlunoModel> res = FXCollections.observableArrayList();
 
+        //TODO: agora a turma possui o campo alunosView que está com as notas corretas para aquela turma,
+        //      com isso é possível remover o for loop, basta alterar o campo do qual são extraídos os alunos
         if (!AlunoModel.buscarTodosAlunos().isEmpty()) {
-            alunos.addAll(AlunoModel.buscarAlunosNaTurma(turmaSelecionada.getId()));
+            List<AlunoModel> alunos = new ArrayList<>(AlunoModel.buscarAlunosNaTurma(turmaSelecionada.getId()));
+
+            AulasUtil util = new AulasUtil();
+            for (AlunoModel aluno : alunos) {
+                res.add(util.filtrarNotasAlunos(aluno, turmaSelecionada.getId()));
+            }
         }
 
-        tabela.setItems(alunos);
+        tabela.setItems(res);
     }
 
     private List<TableColumn<AlunoModel, ?>> criarColunasPadrao() {
