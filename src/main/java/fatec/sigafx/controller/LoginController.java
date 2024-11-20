@@ -2,7 +2,7 @@ package fatec.sigafx.controller;
 
 import fatec.sigafx.model.usuarios.dto.UsuarioLoginRequest;
 import fatec.sigafx.model.usuarios.UsuarioModel;
-import fatec.sigafx.model.util.UsuarioValidador;
+import fatec.sigafx.util.UsuariosUtil;
 import fatec.sigafx.view.AdminView;
 import fatec.sigafx.view.AlunoView;
 import fatec.sigafx.view.ProfessorView;
@@ -25,7 +25,7 @@ public class LoginController {
 
     @FXML
     private void confirmarLogin() {
-        String login = UsuarioValidador.login(new UsuarioLoginRequest(usuarioEmail.getText(), usuarioSenha.getText()));
+        String login = UsuariosUtil.login(new UsuarioLoginRequest(usuarioEmail.getText(), usuarioSenha.getText()));
 
         if (login == null) {
             mensagemErroLogin.setVisible(true);

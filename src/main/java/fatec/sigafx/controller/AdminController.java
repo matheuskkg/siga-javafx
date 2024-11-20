@@ -8,7 +8,7 @@ import fatec.sigafx.model.usuarios.AlunoModel;
 import fatec.sigafx.model.usuarios.ProfessorModel;
 import fatec.sigafx.model.usuarios.UsuarioModel;
 import fatec.sigafx.model.usuarios.dto.UsuarioCriarRequest;
-import fatec.sigafx.model.util.UsuarioValidador;
+import fatec.sigafx.util.UsuariosUtil;
 import fatec.sigafx.view.LoginView;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -469,7 +469,7 @@ public class AdminController
         String confirmarSenha = confirmarSenhaAdicionarUsuario.getText();
         String tipo = cbTipoAdicionarUsuario.getValue();
 
-        UsuarioValidador validador = new UsuarioValidador(nome, email, senha, confirmarSenha, tipo);
+        UsuariosUtil validador = new UsuariosUtil(nome, email, senha, confirmarSenha, tipo);
 
         boolean errosCampos = false;
 

@@ -1,11 +1,11 @@
-package fatec.sigafx.model.util;
+package fatec.sigafx.util;
 
 import fatec.sigafx.model.usuarios.AdminModel;
 import fatec.sigafx.model.usuarios.AlunoModel;
 import fatec.sigafx.model.usuarios.UsuarioModel;
 import fatec.sigafx.model.usuarios.dto.UsuarioLoginRequest;
 
-public class UsuarioValidador {
+public class UsuariosUtil {
 
     private String nome;
     private String email;
@@ -13,7 +13,7 @@ public class UsuarioValidador {
     private String confirmarSenha;
     private String tipo;
 
-    public UsuarioValidador(String nome, String email, String senha, String confirmarSenha, String tipo) {
+    public UsuariosUtil(String nome, String email, String senha, String confirmarSenha, String tipo) {
         this.nome = nome;
         this.email = email;
         this.senha = senha;

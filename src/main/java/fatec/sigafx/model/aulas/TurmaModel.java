@@ -4,7 +4,7 @@ import fatec.sigafx.dao.TurmaDAO;
 import fatec.sigafx.model.aulas.dto.TurmaCriarRequest;
 import fatec.sigafx.model.usuarios.AlunoModel;
 import fatec.sigafx.model.usuarios.ProfessorModel;
-import fatec.sigafx.model.util.AulasUtil;
+import fatec.sigafx.util.AulasUtil;
 import jakarta.persistence.*;
 
 import java.util.List;
@@ -35,7 +35,7 @@ public class TurmaModel {
     )
     private List<AlunoModel> alunos;
 
-    @OneToMany(mappedBy = "turma", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.EAGER)
+    @OneToMany(mappedBy = "turma", cascade = CascadeType.ALL, orphanRemoval = true/*, fetch = FetchType.EAGER*/)
     private List<NotaModel> notas;
 
     // Utilizar para editar uma chamada
@@ -125,6 +125,22 @@ public class TurmaModel {
 
     public static List<TurmaModel> buscarPorAluno(AlunoModel aluno) {
         return aulasUtil.filtrarNotasAlunosTurmas(turmaDAO.buscarPorAluno(aluno));
+    }
+
+    public List<NotaModel> getNotas() {
+        return notas;
+    }
+
+    public void setNotas(List<NotaModel> notas) {
+        this.notas = notas;
+    }
+
+    public List<ChamadaModel> getChamadas() {
+        return chamadas;
+    }
+
+    public void setChamadas(List<ChamadaModel> chamadas) {
+        this.chamadas = chamadas;
     }
 
     public List<AlunoModel> getAlunosView() {

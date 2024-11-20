@@ -1,4 +1,4 @@
-package fatec.sigafx.model.util;
+package fatec.sigafx.util;
 
 import fatec.sigafx.model.aulas.TurmaModel;
 import fatec.sigafx.model.usuarios.AlunoModel;
