@@ -37,6 +37,10 @@ public class AlunoModel extends UsuarioModel {
         return alunoDAO.buscarAlunosNaTurma(turmaId);
     }
 
+    public static Integer contarFaltasAlunoTurma(Integer alunoId, Integer turmaId) {
+        return alunoDAO.contarFaltasAlunoTurma(alunoId, turmaId);
+    }
+
     public List<NotaModel> getNotas() {
         return notas;
     }

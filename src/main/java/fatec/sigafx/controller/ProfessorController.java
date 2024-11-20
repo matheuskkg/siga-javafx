@@ -28,8 +28,7 @@ import java.util.List;
 
 import static fatec.sigafx.controller.LoginController.usuarioLogado;
 
-public class ProfessorController
-{
+public class ProfessorController {
 
     @FXML
     private VBox gPrincipal;
@@ -110,7 +109,7 @@ public class ProfessorController
             public void decrement(int steps) {
                 if (getValue() == null || getValue() == 0.0) {
                     setValue(null);
-                }else {
+                } else {
                     super.decrement(steps);
                 }
             }
@@ -135,7 +134,7 @@ public class ProfessorController
             public void decrement(int steps) {
                 if (getValue() == null || getValue() == 0) {
                     setValue(null);
-                }else {
+                } else {
                     super.decrement(steps);
                 }
             }
@@ -145,7 +144,7 @@ public class ProfessorController
         return valueFactory;
     }
 
-    public void configuraSpinners(){
+    public void configuraSpinners() {
         sP1.setValueFactory(montaSpinners(alunoSelecionado.getNotaP1()));
         sP2.setValueFactory(montaSpinners(alunoSelecionado.getNotaP2()));
         sP3.setValueFactory(montaSpinners(alunoSelecionado.getNotaP3()));
@@ -153,7 +152,7 @@ public class ProfessorController
 
     private <T> ComboBox<T> reconstruirComboBox(ComboBox<T> comboBox, HBox hboxPai) {
         ComboBox<T> novaComboBox = new ComboBox<>(comboBox.getItems());
-        novaComboBox.setMaxSize(Double.MAX_VALUE,30);
+        novaComboBox.setMaxSize(Double.MAX_VALUE, 30);
         HBox.setHgrow(novaComboBox, Priority.ALWAYS);
         hboxPai.setAlignment(Pos.CENTER);
         novaComboBox.setPromptText(comboBox.getPromptText());
@@ -163,7 +162,7 @@ public class ProfessorController
         return novaComboBox;
     }
 
-    private void carregarComboBoxTurmas(){
+    private void carregarComboBoxTurmas() {
         List<TurmaModel> turmas = TurmaModel.buscarPorProfessor((ProfessorModel) usuarioLogado);
         ObservableList<TurmaModel> obsTurmas = FXCollections.observableArrayList();
         obsTurmas.addAll(turmas);
@@ -368,7 +367,7 @@ public class ProfessorController
     public void mostrarAtribuirNotas() {
         if (alunoSelecionado == null) {
             mAtribuirNotas.setText("Selecione uma turma e um aluno para prosseguir.");
-        }else {
+        } else {
             gNotas.setVisible(true);
             gAlunosTurma.setVisible(false);
             gAtribuirNotas.setVisible(true);
@@ -549,7 +548,7 @@ public class ProfessorController
 
             sFaltas.setValueFactory(montaSpinnerFaltas(turmaSelecionada.getDisciplina().getCargaHoraria()));
 
-        }else {
+        } else {
             mAtribuirFaltas.setText("Selecione uma turma, uma data e um aluno para prosseguir.");
         }
 
@@ -576,9 +575,12 @@ public class ProfessorController
             FrequenciaModel frequencia = new FrequenciaModel();
             frequencia.setAluno(aluno);
             frequencia.setStatus(aluno.isPresente());
+            frequencia.setChamada(chamada);
             frequencias.add(frequencia);
         }
+
         chamada.setFrequencias(frequencias);
+        ChamadaModel.salvar(chamada);
     }
 
     @FXML

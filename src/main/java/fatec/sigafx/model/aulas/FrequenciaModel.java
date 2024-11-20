@@ -18,6 +18,10 @@ public class FrequenciaModel {
     @Column(nullable = false)
     private Boolean status;
 
+    @ManyToOne
+    @JoinColumn(name = "chamada_id", nullable = false)
+    private ChamadaModel chamada;
+
     public Integer getId() {
         return id;
     }
@@ -34,8 +38,20 @@ public class FrequenciaModel {
         this.aluno = aluno;
     }
 
+    public Boolean getStatus() {
+        return status;
+    }
+
     public void setStatus(Boolean status) {
         this.status = status;
+    }
+
+    public ChamadaModel getChamada() {
+        return chamada;
+    }
+
+    public void setChamada(ChamadaModel chamada) {
+        this.chamada = chamada;
     }
 
     @Override

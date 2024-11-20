@@ -38,8 +38,7 @@ public class TurmaModel {
     @OneToMany(mappedBy = "turma", cascade = CascadeType.ALL, orphanRemoval = true/*, fetch = FetchType.EAGER*/)
     private List<NotaModel> notas;
 
-    // Utilizar para editar uma chamada
-    @OneToMany(mappedBy = "turma", cascade = CascadeType.ALL, orphanRemoval = true)
+    @OneToMany(mappedBy = "turma", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.EAGER)
     private List<ChamadaModel> chamadas;
 
     @Transient
@@ -97,6 +96,10 @@ public class TurmaModel {
         return aulasUtil.filtrarNotasAlunosTurmas(turmaDAO.buscarPorProfessor(professor));
     }
 
+    public static List<TurmaModel> buscarPorAluno(AlunoModel aluno) {
+        return aulasUtil.filtrarNotasAlunosTurmas(turmaDAO.buscarPorAluno(aluno));
+    }
+
     public Integer getId() {
         return id;
     }
@@ -135,10 +138,6 @@ public class TurmaModel {
 
     public void setAlunos(List<AlunoModel> alunos) {
         this.alunos = alunos;
-    }
-
-    public static List<TurmaModel> buscarPorAluno(AlunoModel aluno) {
-        return aulasUtil.filtrarNotasAlunosTurmas(turmaDAO.buscarPorAluno(aluno));
     }
 
     public List<NotaModel> getNotas() {

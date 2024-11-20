@@ -1,5 +1,6 @@
 package fatec.sigafx.model.aulas;
 
+import fatec.sigafx.dao.ChamadaDAO;
 import jakarta.persistence.*;
 
 import java.time.LocalDate;
@@ -17,11 +18,20 @@ public class ChamadaModel {
     @JoinColumn(name = "turma_id", nullable = false)
     private TurmaModel turma;
 
-    @OneToMany
+    @OneToMany(mappedBy = "chamada", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.EAGER)
     private List<FrequenciaModel> frequencias;
 
     @Column(nullable = false)
     private LocalDate data;
+
+    @Transient
+    private static ChamadaDAO chamadaDAO = new ChamadaDAO();
+
+    public ChamadaModel() {}
+
+    public static void salvar(ChamadaModel request) {
+        chamadaDAO.salvar(request);
+    }
 
     public Integer getId() {
         return id;
