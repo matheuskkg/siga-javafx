@@ -123,6 +123,10 @@ public class TurmaModel {
         this.alunos = alunos;
     }
 
+    public static List<TurmaModel> buscarPorAluno(AlunoModel aluno) {
+        return aulasUtil.filtrarNotasAlunosTurmas(turmaDAO.buscarPorAluno(aluno));
+    }
+
     public List<AlunoModel> getAlunosView() {
         return alunosView;
     }

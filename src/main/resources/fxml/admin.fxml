@@ -39,7 +39,7 @@
     <center>
         <StackPane stylesheets="@../css/adm.css">
             <VBox fx:id="gPrincipal" alignment="TOP_CENTER" spacing="20" style="-fx-padding: 20px;">
-                <Label styleClass="admin-header" text="Bem-vindo, Administrador!">
+                <Label fx:id="lBoasVindas" styleClass="admin-header" text="Bem-vindo, Administrador!">
                     <font>
                         <Font size="28.0" />
                     </font>

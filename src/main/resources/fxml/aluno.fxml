@@ -12,7 +12,7 @@
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="900.0" xmlns="http://javafx.com/javafx/22" xmlns:fx="http://javafx.com/fxml/1" fx:controller="fatec.sigafx.controller.AlunoController">
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="900.0" xmlns="http://javafx.com/javafx/23" xmlns:fx="http://javafx.com/fxml/1" fx:controller="fatec.sigafx.controller.AlunoController">
 
 <left>
     <VBox maxWidth="500.0" minWidth="200.0" spacing="20.0" style="-fx-background-color: #174871; -fx-padding: 10px;" stylesheets="@../css/aluno.css">
@@ -34,7 +34,7 @@
 <center>
     <StackPane stylesheets="@../css/aluno.css">
         <VBox fx:id="gPrincipal" alignment="TOP_CENTER" spacing="20" styleClass="vBox">
-            <Label styleClass="admin-header" text="Bem-vindo, Aluno!">
+            <Label fx:id="lBoasVindas" styleClass="admin-header" text="Bem-vindo, Aluno!">
                 <font>
                     <Font size="28.0" />
                 </font>
@@ -49,20 +49,23 @@
                     <Font size="28.0" />
                 </font>
             </Label>
-             <VBox maxWidth="1000.0" prefWidth="500.0">
+             <VBox maxHeight="1.7976931348623157E308" maxWidth="1000.0" VBox.vgrow="ALWAYS">
                  <!-- Tem que preencher essa TableView com todas as Disciplinas e as notas do aluno nelas -->
-                 <TableView prefHeight="1047.0" prefWidth="1000.0">
+                 <TableView fx:id="tabelaNotas" prefHeight="1047.0" prefWidth="1000.0">
                  <columns>
-                     <TableColumn maxWidth="1.7976931348623157E308" minWidth="130.0" prefWidth="-1.0" text="Disciplina" />
-                     <TableColumn maxWidth="100.0" minWidth="80.0" prefWidth="-1.0" text="P1" />
-                     <TableColumn maxWidth="100.0" minWidth="80.0" prefWidth="-1.0" text="P2" />
-                     <TableColumn maxWidth="100.0" minWidth="80.0" prefWidth="-1.0" text="P3" />
-                     <TableColumn maxWidth="200.0" minWidth="100.0" prefWidth="-1.0" text="Situação" />
+                     <TableColumn fx:id="turmaDisciplinaNotas" maxWidth="1.7976931348623157E308" minWidth="130.0" prefWidth="-1.0" text="Disciplina" />
+                     <TableColumn fx:id="alunoP1" maxWidth="100.0" minWidth="80.0" prefWidth="-1.0" text="P1" />
+                     <TableColumn fx:id="alunoP2" maxWidth="100.0" minWidth="80.0" prefWidth="-1.0" text="P2" />
+                     <TableColumn fx:id="alunoP3" maxWidth="100.0" minWidth="80.0" prefWidth="-1.0" text="P3" />
+                     <TableColumn fx:id="alunoSituacaoNotas" maxWidth="200.0" minWidth="100.0" prefWidth="-1.0" text="Situação" />
                  </columns>
                   <columnResizePolicy>
                      <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
                   </columnResizePolicy>
                </TableView>
+               <VBox.margin>
+                  <Insets left="20.0" right="20.0" />
+               </VBox.margin>
              </VBox>
             <StackPane.margin>
                 <Insets />
@@ -74,18 +77,21 @@
                     <Font size="28.0" />
                 </font>
             </Label>
-            <VBox maxWidth="1000.0" prefWidth="500.0">
+            <VBox maxHeight="1.7976931348623157E308" maxWidth="1000.0" VBox.vgrow="ALWAYS">
                 <!-- Tem que preencher essa TableView com todas as Disciplinas e as faltas do aluno nelas -->
-                <TableView prefHeight="1047.0" prefWidth="1000.0">
+                <TableView fx:id="tabelaFaltas" prefHeight="1047.0" prefWidth="1000.0">
                     <columns>
-                      <TableColumn maxWidth="1.7976931348623157E308" minWidth="130.0" prefWidth="-1.0" text="Disciplina"/>
-                      <TableColumn maxWidth="100.0" minWidth="80.0" prefWidth="-1.0" text="Faltas"/>
-                      <TableColumn maxWidth="200.0" minWidth="100.0" prefWidth="-1.0" text="Situação"/>
+                      <TableColumn fx:id="turmaDisciplinaFaltas" maxWidth="1.7976931348623157E308" minWidth="130.0" prefWidth="-1.0" text="Disciplina" />
+                      <TableColumn fx:id="alunoFaltas" maxWidth="100.0" minWidth="80.0" prefWidth="-1.0" text="Faltas" />
+                      <TableColumn fx:id="alunoSituacaoFaltas" maxWidth="200.0" minWidth="100.0" prefWidth="-1.0" text="Situação" />
                     </columns>
                     <columnResizePolicy>
-                        <TableView fx:constant="CONSTRAINED_RESIZE_POLICY"/>
+                        <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
                     </columnResizePolicy>
                 </TableView>
+               <VBox.margin>
+                  <Insets left="20.0" right="20.0" />
+               </VBox.margin>
             </VBox>
         </VBox>
     </StackPane>

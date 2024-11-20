@@ -34,9 +34,11 @@ import static fatec.sigafx.controller.LoginController.usuarioLogado;
 
 public class AdminController
 {
+
     // Início
     @FXML
     private VBox gPrincipal;
+    public Label lBoasVindas;
 
     // Gerenciar Usuários
     @FXML
@@ -172,6 +174,7 @@ public class AdminController
 
     @FXML
     public void initialize() {
+        lBoasVindas.setText("Bem vindo(a), " + usuarioLogado.getNome() + "!");
         carregarTableViewUsuarios();
         carregarComboBoxTipoUsuario();
         definirUsuarioSelecionado();
@@ -308,8 +311,9 @@ public class AdminController
         tAdicionarAlunos.setMaxSize(1000,Double.MAX_VALUE);
         tAdicionarAlunos.setPrefHeight(1000);
         VBox.setVgrow(tAdicionarAlunos, Priority.ALWAYS);
+        VBox.setMargin(tAdicionarAlunos, new Insets(0,20,0,20));
         tAdicionarAlunos.getSelectionModel().setSelectionMode(SelectionMode.MULTIPLE);
-        tAdicionarAlunos.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY);
+        tAdicionarAlunos.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY_FLEX_LAST_COLUMN);
 
 
         ObservableList<AlunoModel> alunos = FXCollections.observableArrayList();

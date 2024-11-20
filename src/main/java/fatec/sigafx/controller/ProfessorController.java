@@ -7,7 +7,6 @@ import fatec.sigafx.model.aulas.TurmaModel;
 import fatec.sigafx.model.aulas.dto.NotaCriarRequest;
 import fatec.sigafx.model.usuarios.AlunoModel;
 import fatec.sigafx.model.usuarios.ProfessorModel;
-import fatec.sigafx.model.util.AulasUtil;
 import fatec.sigafx.view.LoginView;
 import javafx.beans.property.BooleanProperty;
 import javafx.beans.property.SimpleObjectProperty;
@@ -26,14 +25,15 @@ import javafx.scene.layout.VBox;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Objects;
 
 import static fatec.sigafx.controller.LoginController.usuarioLogado;
 
 public class ProfessorController
 {
+
     @FXML
     private VBox gPrincipal;
+    public Label lBoasVindas;
 
     @FXML
     private VBox gNotas;
@@ -91,6 +91,7 @@ public class ProfessorController
 
     @FXML
     public void initialize() {
+        lBoasVindas.setText("Bem vindo(a), " + usuarioLogado.getNome() + "!");
         carregarComboBoxTurmas();
     }
 
@@ -476,7 +477,7 @@ public class ProfessorController
         });
     }
 
-    //Acho que tem algo errado em usar isso aqui mas vou deixar por enquanto
+    //Acho que tem algo errado em usar isso aqui, mas vou deixar por enquanto
     @FXML
     public void resetarValoresChamada() {
         // Percorre todos os itens da tabela

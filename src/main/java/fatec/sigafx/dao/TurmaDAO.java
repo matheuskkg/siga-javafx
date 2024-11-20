@@ -2,6 +2,7 @@ package fatec.sigafx.dao;
 
 import fatec.sigafx.EMF;
 import fatec.sigafx.model.aulas.TurmaModel;
+import fatec.sigafx.model.usuarios.AlunoModel;
 import fatec.sigafx.model.usuarios.ProfessorModel;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.EntityManagerFactory;
@@ -72,4 +73,21 @@ public class TurmaDAO {
             return null;
         }
     }
+
+    public List<TurmaModel> buscarPorAluno(AlunoModel aluno) {
+        EntityManager em = emf.createEntityManager();
+
+        try {
+            return em.createQuery(
+                            "SELECT t FROM TurmaModel t JOIN t.alunos a WHERE a.id = :alunoId", TurmaModel.class)
+                    .setParameter("alunoId", aluno.getId())
+                    .getResultList();
+        } catch (Exception e) {
+            e.printStackTrace();
+            return List.of();
+        } finally {
+            em.close();
+        }
+    }
+
 }
