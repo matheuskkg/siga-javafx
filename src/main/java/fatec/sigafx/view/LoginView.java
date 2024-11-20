@@ -16,7 +16,7 @@ public class LoginView {
             SigaApplication.getStage().setScene(scene);
             SigaApplication.getStage().show();
         } catch (IOException e) {
-            e.printStackTrace();
+            //e.printStackTrace();
         }
     }
 }

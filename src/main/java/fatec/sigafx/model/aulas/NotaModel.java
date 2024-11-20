@@ -22,7 +22,7 @@ public class NotaModel {
     @JoinColumn(name = "aluno_id", nullable = false)
     private AlunoModel aluno;
 
-    @ManyToOne
+    @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "turma_id", nullable = false)
     private TurmaModel turma;
 

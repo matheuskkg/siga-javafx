@@ -33,17 +33,6 @@ public class SigaApplication extends Application
             UsuarioModel.criarUsuario(new UsuarioCriarRequest("professor", "professor@professor", "professor"), "Professor");
         }
 
-        TurmaDAO dao = new TurmaDAO();
-        List<TurmaModel> turmas = dao.buscarTodos();
-
-        for (TurmaModel t : turmas) {
-            List<AlunoNotasResponse> alunos = t.getAlunosComNotas();
-
-            for (AlunoNotasResponse a : alunos) {
-                System.out.println(a);
-            }
-        }
-
         SigaApplication.stage = stage;
 
         LoginView.mostrarLogin();
