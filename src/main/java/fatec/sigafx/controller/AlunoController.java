@@ -50,18 +50,15 @@ public class AlunoController {
     }
 
     private void carregarTabelaNotas() {
-        // Obter as turmas do aluno logado
         List<TurmaModel> turmas = TurmaModel.buscarPorAluno((AlunoModel) usuarioLogado);
 
-        // Adicionar as notas do aluno às turmas
         for (TurmaModel turma : turmas) {
             List<NotaModel> notas = NotaModel.buscarNotasPorAlunoETurma(usuarioLogado.getId(), turma.getId());
-            turma.setNotasAluno(notas);
+            turma.setNotas(notas);
         }
 
         ObservableList<TurmaModel> turmasObs = FXCollections.observableArrayList(turmas);
 
-        // Configurar a coluna de disciplina
         turmaDisciplinaNotas.setCellValueFactory(param -> new SimpleStringProperty(param.getValue().getDisciplina().getNome()));
 
         alunoP1.setCellValueFactory(param -> new SimpleObjectProperty<>(param.getValue().getNotaAlunoPorIndice(0)));
@@ -72,8 +69,6 @@ public class AlunoController {
 
         tabelaNotas.setItems(turmasObs);
     }
-
-
 
     private void carregarTabelaFaltas() {
         List<TurmaModel> turmas = TurmaModel.buscarPorAluno((AlunoModel) usuarioLogado);

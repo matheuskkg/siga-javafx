@@ -215,25 +215,38 @@ public class ProfessorController {
     private List<TableColumn<AlunoModel, ?>> criarColunasNotas() {
         List<TableColumn<AlunoModel, ?>> colunas = new ArrayList<>(criarColunasPadrao());
 
-        // Configurar colunas de notas
         TableColumn<AlunoModel, Double> colunaP1 = new TableColumn<>("P1");
-        colunaP1.setCellValueFactory(cellData -> new SimpleObjectProperty<>(cellData.getValue().getNotaP1()));
+        colunaP1.setCellValueFactory(cellData -> {
+            AlunoModel aluno = cellData.getValue();
+            // Buscar notas do aluno para a turma selecionada
+            List<NotaModel> notas = NotaModel.buscarNotasPorAlunoETurma(aluno.getId(), turmaSelecionada.getId());
+            return new SimpleObjectProperty<>(notas != null && notas.size() > 0 ? notas.get(0).getNota() : null);
+        });
         colunaP1.setMinWidth(50);
         colunaP1.setMaxWidth(90);
 
         TableColumn<AlunoModel, Double> colunaP2 = new TableColumn<>("P2");
-        colunaP2.setCellValueFactory(cellData -> new SimpleObjectProperty<>(cellData.getValue().getNotaP2()));
+        colunaP2.setCellValueFactory(cellData -> {
+            AlunoModel aluno = cellData.getValue();
+            List<NotaModel> notas = NotaModel.buscarNotasPorAlunoETurma(aluno.getId(), turmaSelecionada.getId());
+            return new SimpleObjectProperty<>(notas != null && notas.size() > 1 ? notas.get(1).getNota() : null);
+        });
         colunaP2.setMinWidth(50);
         colunaP2.setMaxWidth(90);
 
         TableColumn<AlunoModel, Double> colunaP3 = new TableColumn<>("P3");
-        colunaP3.setCellValueFactory(cellData -> new SimpleObjectProperty<>(cellData.getValue().getNotaP3()));
+        colunaP3.setCellValueFactory(cellData -> {
+            AlunoModel aluno = cellData.getValue();
+            List<NotaModel> notas = NotaModel.buscarNotasPorAlunoETurma(aluno.getId(), turmaSelecionada.getId());
+            return new SimpleObjectProperty<>(notas != null && notas.size() > 2 ? notas.get(2).getNota() : null);
+        });
         colunaP3.setMinWidth(50);
         colunaP3.setMaxWidth(90);
 
         colunas.addAll(List.of(colunaP1, colunaP2, colunaP3));
         return colunas;
     }
+
 
     private List<TableColumn<AlunoModel, ?>> criarColunasChamada() {
         List<TableColumn<AlunoModel, ?>> colunas = new ArrayList<>(criarColunasPadrao());
@@ -431,7 +444,7 @@ public class ProfessorController {
             NotaModel.salvarNota(notaP3); // Persiste a nota P3
 
             // Feedback ao usuário
-            mAtribuirNotasAluno.setText("Notas atribuídas e salvas com sucesso!");
+            mAtribuirNotasAluno.setText("Notas atribuídas com sucesso!");
 
         } catch (Exception e) {
             mAtribuirNotasAluno.setText("Erro ao salvar as notas. Tente novamente.");

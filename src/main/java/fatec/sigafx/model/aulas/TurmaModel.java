@@ -50,9 +50,6 @@ public class TurmaModel {
     @Transient
     private static AulasUtil aulasUtil = new AulasUtil();
 
-    @Transient
-    private List<NotaModel> notasAluno; // Notas associadas ao aluno na turma
-
     public TurmaModel() {}
 
     public TurmaModel(TurmaCriarRequest request) {
@@ -60,17 +57,6 @@ public class TurmaModel {
         this.disciplina = request.disciplina();
         this.professor = request.professor();
         this.alunos = request.alunos();
-    }
-
-    public void setNotasAluno(List<NotaModel> notas) {
-        this.notasAluno = notas;
-    }
-
-    public Double getNotaAlunoPorIndice(int indice) {
-        if (notasAluno != null && notasAluno.size() > indice) {
-            return notasAluno.get(indice).getNota();
-        }
-        return null; // Retorna null se a nota não existir
     }
 
     public static void criarTurma(TurmaCriarRequest request) {
@@ -142,6 +128,13 @@ public class TurmaModel {
 
     public List<NotaModel> getNotas() {
         return notas;
+    }
+
+    public Double getNotaAlunoPorIndice(int indice) {
+        if (notas != null && notas.size() > indice) {
+            return notas.get(indice).getNota();
+        }
+        return null; // Retorna null se a nota não existir
     }
 
     public void setNotas(List<NotaModel> notas) {
