@@ -65,9 +65,11 @@ public class TurmaModel {
         turmaDAO.salvar(new TurmaModel(request));
     }
 
-    public static void atualizarTurma(TurmaCriarRequest request, Integer id) {
+    public static void atualizarTurma(TurmaCriarRequest request, TurmaModel turmaAntiga) {
         TurmaModel t = new TurmaModel(request);
-        t.setId(id);
+        t.setId(turmaAntiga.getId());
+        t.setNotas(turmaAntiga.getNotas());
+        t.setChamadas(turmaAntiga.getChamadas());
 
         turmaDAO.salvar(t);
     }

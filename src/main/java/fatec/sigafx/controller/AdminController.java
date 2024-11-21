@@ -803,7 +803,6 @@ public class AdminController
             return;
         }
 
-        //TODO: Arrumar isso aqui pq não ta alterando a Turma
         TurmaCriarRequest request;
         if (turmaSelecionada == null) {
             request = new TurmaCriarRequest(cbCursoAdicionarTurma.getSelectionModel().getSelectedItem(),
@@ -816,7 +815,7 @@ public class AdminController
                     cbDisciplinaAdicionarTurma.getSelectionModel().getSelectedItem(),
                     cbProfResponAdicionarTurma.getSelectionModel().getSelectedItem(),
                     turmaSelecionada.getAlunos());
-            TurmaModel.atualizarTurma(request, turmaSelecionada.getId());
+            TurmaModel.atualizarTurma(request, turmaSelecionada);
         }
 
         limparCampos();
