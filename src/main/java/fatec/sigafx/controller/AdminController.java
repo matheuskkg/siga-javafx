@@ -10,6 +10,7 @@ import fatec.sigafx.model.usuarios.UsuarioModel;
 import fatec.sigafx.model.usuarios.dto.UsuarioCriarRequest;
 import fatec.sigafx.util.UsuariosUtil;
 import fatec.sigafx.view.LoginView;
+import javafx.beans.property.SimpleStringProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
@@ -34,6 +35,7 @@ import static fatec.sigafx.controller.LoginController.usuarioLogado;
 
 public class AdminController
 {
+
     // Início
     @FXML
     private VBox gPrincipal;
@@ -88,6 +90,8 @@ public class AdminController
     private TableColumn<UsuarioModel, String> usuarioNome;
     @FXML
     private TableColumn<UsuarioModel, String> usuarioEmail;
+    @FXML
+    public TableColumn<UsuarioModel, String> usuarioTipo;
 
     // Gerenciar Disciplinas
     @FXML
@@ -205,6 +209,11 @@ public class AdminController
         usuarioId.setCellValueFactory(new PropertyValueFactory<>("id"));
         usuarioNome.setCellValueFactory(new PropertyValueFactory<>("nome"));
         usuarioEmail.setCellValueFactory(new PropertyValueFactory<>("email"));
+        usuarioTipo.setCellValueFactory(cellData -> {
+            UsuarioModel usuario = cellData.getValue();
+            String tipo = UsuarioModel.definirTipoUsuario(usuario);
+            return new SimpleStringProperty(tipo);
+        });
         atualizarTableViewUsuarios();
     }
 
@@ -782,19 +791,21 @@ public class AdminController
 
         if (camposVazios) {
             exibirMensagem(mTurmas, "Todos os campos devem ser preenchidos.");
-
             return;
         }
 
-        TurmaCriarRequest request = new TurmaCriarRequest(
-                cbCursoAdicionarTurma.getSelectionModel().getSelectedItem(),
-                cbDisciplinaAdicionarTurma.getSelectionModel().getSelectedItem(),
-                cbProfResponAdicionarTurma.getSelectionModel().getSelectedItem(),
-                tAdicionarAlunos.getSelectionModel().getSelectedItems());
-
+        TurmaCriarRequest request;
         if (turmaSelecionada == null) {
+            request = new TurmaCriarRequest(cbCursoAdicionarTurma.getSelectionModel().getSelectedItem(),
+                    cbDisciplinaAdicionarTurma.getSelectionModel().getSelectedItem(),
+                    cbProfResponAdicionarTurma.getSelectionModel().getSelectedItem(),
+                    tAdicionarAlunos.getSelectionModel().getSelectedItems());
             TurmaModel.criarTurma(request);
         } else {
+            request = new TurmaCriarRequest(cbCursoAdicionarTurma.getSelectionModel().getSelectedItem(),
+                    cbDisciplinaAdicionarTurma.getSelectionModel().getSelectedItem(),
+                    cbProfResponAdicionarTurma.getSelectionModel().getSelectedItem(),
+                    turmaSelecionada.getAlunos());
             TurmaModel.atualizarTurma(request, turmaSelecionada.getId());
         }
 
