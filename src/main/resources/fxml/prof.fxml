@@ -216,10 +216,10 @@
                             </Label>
                         </HBox>
                         <HBox fx:id="hTurmaRealizarChamada" alignment="TOP_CENTER" maxWidth="800.0" spacing="10.0">
-                            <ComboBox fx:id="cbTurmaRealizarChamada" maxHeight="30.0" maxWidth="1.7976931348623157E308" minHeight="30.0" promptText="Turma" HBox.hgrow="ALWAYS"/>
+                            <ComboBox fx:id="cbTurmaRealizarChamada" maxHeight="30.0" maxWidth="1.7976931348623157E308" minHeight="30.0" promptText="Turma" HBox.hgrow="ALWAYS" />
                         </HBox>
                         <HBox fx:id="hDataRealizarChamada" alignment="TOP_CENTER" maxWidth="800.0" spacing="10.0">
-                            <DatePicker fx:id="dpRealizarChamada" maxWidth="1.7976931348623157E308" minHeight="30.0" promptText="Data" HBox.hgrow="ALWAYS"/>
+                            <DatePicker fx:id="dpRealizarChamada" maxWidth="1.7976931348623157E308" minHeight="30.0" promptText="Data" HBox.hgrow="ALWAYS" />
                         </HBox>
                         <HBox alignment="TOP_RIGHT" maxWidth="800.0" spacing="10.0">
                             <Label fx:id="mRealizarChamada" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" textFill="RED" HBox.hgrow="ALWAYS" />
@@ -247,11 +247,8 @@
                         <HBox fx:id="hAtribuirFaltasTurma" alignment="CENTER" maxWidth="800.0" spacing="10.0">
                             <ComboBox fx:id="cbAtribuirFaltasTurma" maxHeight="30.0" maxWidth="1.7976931348623157E308" minHeight="30.0" minWidth="300.0" promptText="Turma" HBox.hgrow="ALWAYS" />
                         </HBox>
-                        <HBox fx:id="hDataAlunosFaltas" alignment="TOP_CENTER" maxWidth="800.0" spacing="10.0">
-                            <DatePicker fx:id="dpAlterarFaltas" maxWidth="1.7976931348623157E308" minHeight="30.0" promptText="Data" HBox.hgrow="ALWAYS"/>
-                        </HBox>
                         <HBox alignment="TOP_RIGHT" maxWidth="800.0" spacing="10.0">
-                            <Label fx:id="mAtribuirFaltas" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" textFill="RED" HBox.hgrow="ALWAYS" />
+                            <Label fx:id="mAlunosFaltas" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" textFill="RED" HBox.hgrow="ALWAYS" />
                             <Button fx:id="bConfirmarFaltas" alignment="CENTER" minHeight="50.0" minWidth="100.0" mnemonicParsing="false" onAction="#mostrarAlterarFaltas" text="Confirmar">
                                 <font>
                                     <Font size="12.0" />
@@ -301,6 +298,7 @@
                             <VBox.margin>
                                 <Insets left="20.0" right="20.0" />
                             </VBox.margin>
+                     <Label fx:id="mAlterarFaltas" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" textFill="RED" HBox.hgrow="ALWAYS" />
                             <!-- Precisa de um onAction nesse botão para Concluir a Chamada -->
                             <Button alignment="CENTER" minHeight="50.0" minWidth="100.0" mnemonicParsing="false" onAction="#atribuirFaltas" text="Atribuir" />
                             <Button alignment="CENTER" minHeight="50.0" minWidth="100.0" mnemonicParsing="false" onAction="#mostrarAlunosFaltas" text="Voltar" />

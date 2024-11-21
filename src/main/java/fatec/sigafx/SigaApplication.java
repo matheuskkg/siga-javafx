@@ -32,7 +32,7 @@ public class SigaApplication extends Application
 
         SigaApplication.stage = stage;
 
-        stage.getIcons().add(new Image(getClass().getResourceAsStream("/icons/icone.png")));
+        stage.getIcons().add(new Image(Objects.requireNonNull(getClass().getResourceAsStream("/icons/icone.png"))));
 
         LoginView.mostrarLogin();
 

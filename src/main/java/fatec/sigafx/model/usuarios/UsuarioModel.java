@@ -21,6 +21,12 @@ public class UsuarioModel {
 
     private String senha;
 
+    private enum tipo{
+        Administrador,
+        Professor,
+        Aluno
+    }
+
     @Transient
     private static UsuarioDAO usuarioDAO = new UsuarioDAO();
 

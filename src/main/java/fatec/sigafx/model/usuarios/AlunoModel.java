@@ -76,6 +76,4 @@ public class AlunoModel extends UsuarioModel {
         this.presente.set(presente);
     }
 
-
-    //TODO: Aluno precisa de Faltas, P1, P2, P3 e alguma função para usar no Realizar Chamada
 }

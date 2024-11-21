@@ -29,7 +29,6 @@ import java.util.List;
 import static fatec.sigafx.controller.LoginController.usuarioLogado;
 
 public class ProfessorController {
-
     @FXML
     private VBox gPrincipal;
     public Label lBoasVindas;
@@ -71,15 +70,14 @@ public class ProfessorController {
     public VBox gAlunosFaltas;
     public HBox hAtribuirFaltasTurma;
     public ComboBox<TurmaModel> cbAtribuirFaltasTurma;
-    public HBox hDataAlunosFaltas;
-    public DatePicker dpAlterarFaltas;
-    public Label mAtribuirFaltas;
+    public Label mAlunosFaltas;
     public Button bConfirmarFaltas;
 
     public VBox gAlterarFaltas;
     public TextField tfTurmaAlterarFaltas;
     public TextField tfAlunoAlterarFaltas;
     public Spinner<Integer> sFaltas;
+    public Label mAlterarFaltas;
 
     public TableView<AlunoModel> tAtribuirNotasAlunos;
     public TableView<AlunoModel> tRealizarChamada;
@@ -119,7 +117,7 @@ public class ProfessorController {
         return valueFactory;
     }
 
-    private SpinnerValueFactory<Integer> montaSpinnerFaltas(int max) {
+    private SpinnerValueFactory<Integer> montaSpinnerFaltas(Integer faltas, int max) {
         SpinnerValueFactory<Integer> valueFactory = new SpinnerValueFactory.IntegerSpinnerValueFactory(0, max) {
             @Override
             public void increment(int steps) {
@@ -140,7 +138,7 @@ public class ProfessorController {
             }
         };
 
-        valueFactory.setValue(null);
+        valueFactory.setValue(faltas);
         return valueFactory;
     }
 
@@ -218,7 +216,6 @@ public class ProfessorController {
         TableColumn<AlunoModel, Double> colunaP1 = new TableColumn<>("P1");
         colunaP1.setCellValueFactory(cellData -> {
             AlunoModel aluno = cellData.getValue();
-            // Buscar notas do aluno para a turma selecionada
             List<NotaModel> notas = NotaModel.buscarNotasPorAlunoETurma(aluno.getId(), turmaSelecionada.getId());
             return new SimpleObjectProperty<>(notas != null && notas.size() > 0 ? notas.get(0).getNota() : null);
         });
@@ -247,7 +244,6 @@ public class ProfessorController {
         return colunas;
     }
 
-
     private List<TableColumn<AlunoModel, ?>> criarColunasChamada() {
         List<TableColumn<AlunoModel, ?>> colunas = new ArrayList<>(criarColunasPadrao());
 
@@ -268,7 +264,15 @@ public class ProfessorController {
     private List<TableColumn<AlunoModel, ?>> criarColunasFaltas() {
         List<TableColumn<AlunoModel, ?>> colunas = new ArrayList<>(criarColunasPadrao());
 
-        TableColumn<AlunoModel, Integer> colunaFaltas = criarColunaTableView("Faltas", 80, 120);
+        TableColumn<AlunoModel, Integer> colunaFaltas = new TableColumn<>("Faltas");
+        colunaFaltas.setCellValueFactory(cellData -> {
+            AlunoModel aluno = cellData.getValue();
+            Integer faltas = AlunoModel.contarFaltasAlunoTurma(aluno.getId(), turmaSelecionada.getId());
+            return new SimpleObjectProperty<>(faltas);
+        });
+        colunaFaltas.setMinWidth(50);
+        colunaFaltas.setMaxWidth(90);
+
         colunas.add(colunaFaltas);
 
         return colunas;
@@ -320,7 +324,7 @@ public class ProfessorController {
         mAtribuirNotas.setText("");
         mAtribuirNotasAluno.setText("");
         mRealizarChamada.setText("");
-        mAtribuirFaltas.setText("");
+        mAlunosFaltas.setText("");
 
         checkP1.setSelected(false);
         mostrarP1();
@@ -330,7 +334,6 @@ public class ProfessorController {
         mostrarP3();
 
         dpRealizarChamada.setValue(null);
-        dpAlterarFaltas.setValue(null);
 
         if (tAtribuirNotasAlunos != null) {
             tAtribuirNotasAlunos.getSelectionModel().clearSelection();
@@ -532,37 +535,26 @@ public class ProfessorController {
             if (newValue != null) {
                 turmaSelecionada = newValue;
                 tAtribuirFaltasAlunos = removeTableView(tAtribuirFaltasAlunos, gAlunosFaltas);
-                tAtribuirFaltasAlunos = criarTableView(tAtribuirFaltasAlunos, gAlunosFaltas, hDataAlunosFaltas, cbAtribuirFaltasTurma, criarColunasFaltas());
-
-                if (dpAlterarFaltas.getValue() == null) {
-                    tAtribuirFaltasAlunos.setDisable(true);
-                }
-
-                dpAlterarFaltas.valueProperty().addListener((observable1, oldValue1, newValue1) -> {
-                    if (newValue1 != null && tAtribuirFaltasAlunos != null) {
-                        tAtribuirFaltasAlunos.setDisable(false);
-                    }
-                });
+                tAtribuirFaltasAlunos = criarTableView(tAtribuirFaltasAlunos, gAlunosFaltas, hAtribuirFaltasTurma, cbAtribuirFaltasTurma, criarColunasFaltas());
             }
         });
     }
 
     @FXML
     public void mostrarAlterarFaltas() {
-        if (turmaSelecionada != null || alunoSelecionado != null || dpAlterarFaltas.getValue() != null) {
+        if (turmaSelecionada != null && alunoSelecionado != null) {
             esconderPaineis();
             gFaltas.setVisible(true);
             gAlterarFaltas.setVisible(true);
 
-            String turma = turmaSelecionada.getCurso() + " || " + turmaSelecionada.getDisciplina().getNome() + " || " + turmaSelecionada.getProfessor().getNome();
-
-            tfTurmaAlterarFaltas.setText(turma);
+            tfTurmaAlterarFaltas.setText(turmaSelecionada.toString());
             tfAlunoAlterarFaltas.setText(alunoSelecionado.getNome());
 
-            sFaltas.setValueFactory(montaSpinnerFaltas(turmaSelecionada.getDisciplina().getCargaHoraria()));
+            sFaltas.setValueFactory(montaSpinnerFaltas(AlunoModel.contarFaltasAlunoTurma(alunoSelecionado.getId(),
+                    turmaSelecionada.getId()), turmaSelecionada.getDisciplina().getCargaHoraria()));
 
         } else {
-            mAtribuirFaltas.setText("Selecione uma turma, uma data e um aluno para prosseguir.");
+            mAlunosFaltas.setText("Selecione uma turma e um aluno para prosseguir.");
         }
 
     }
@@ -598,8 +590,15 @@ public class ProfessorController {
 
     @FXML
     public void atribuirFaltas() {
-        //Função a ser acionada ao alterar Faltas
+        // Validar a seleção de um aluno e turma
+        if (sFaltas.getValue() == null) {
+            mAlterarFaltas.setText("Atribua um valor a Faltas.");
+            return;
+        }
+
+        mAlterarFaltas.setText("Faltas atualizadas com sucesso.");
     }
+
 
     private void definirAlunoSelecionado(TableView<AlunoModel> tabelaAlunos) {
         tabelaAlunos.setOnMouseClicked((MouseEvent) -> alunoSelecionado = tabelaAlunos.getSelectionModel().getSelectedItem());

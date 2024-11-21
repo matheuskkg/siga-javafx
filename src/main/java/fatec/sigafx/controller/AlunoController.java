@@ -71,15 +71,29 @@ public class AlunoController {
     }
 
     private void carregarTabelaFaltas() {
+        // Obter as turmas em que o aluno logado está registrado
         List<TurmaModel> turmas = TurmaModel.buscarPorAluno((AlunoModel) usuarioLogado);
+
+        // Para cada turma, buscar o número de faltas e associar
+        for (TurmaModel turma : turmas) {
+            Integer faltas = AlunoModel.contarFaltasAlunoTurma(usuarioLogado.getId(), turma.getId());
+            turma.setFaltas(faltas);
+        }
+
+        // Converter para ObservableList
         ObservableList<TurmaModel> turmasObs = FXCollections.observableArrayList(turmas);
 
         // Configurar a coluna de disciplina
         turmaDisciplinaFaltas.setCellValueFactory(param ->
                 new SimpleStringProperty(param.getValue().getDisciplina().getNome()));
 
+        // Configurar a coluna de faltas
+        alunoFaltas.setCellValueFactory(param ->
+                new SimpleObjectProperty<>(param.getValue().getFaltas()));
+
         tabelaFaltas.setItems(turmasObs);
     }
+
 
     // Esconder todos os painéis
     private void esconderPaineis() {

@@ -50,6 +50,8 @@ public class TurmaModel {
     @Transient
     private static AulasUtil aulasUtil = new AulasUtil();
 
+    private Integer faltas;
+
     public TurmaModel() {}
 
     public TurmaModel(TurmaCriarRequest request) {
@@ -155,6 +157,14 @@ public class TurmaModel {
 
     public void setAlunosView(List<AlunoModel> alunosView) {
         this.alunosView = alunosView;
+    }
+
+    public Integer getFaltas() {
+        return faltas;
+    }
+
+    public void setFaltas(Integer faltas) {
+        this.faltas = faltas;
     }
 
     @Override
