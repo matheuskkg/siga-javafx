@@ -22,6 +22,7 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Priority;
 import javafx.scene.layout.VBox;
+import org.hibernate.internal.build.AllowSysOut;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
@@ -604,10 +605,23 @@ public class ProfessorController {
         }
         List<FrequenciaModel> aulasRecentes = FrequenciaModel.listagemAulas(alunoSelecionado.getId(), turmaSelecionada.getId());
 
-        for (int i=0; i<sFaltas.getValue(); i++) {
-            FrequenciaModel aula = aulasRecentes.get(i);
-            aula.setStatus(false);
-            FrequenciaModel.salvar(aula);
+        List<FrequenciaModel> diasPresentes = aulasRecentes.stream().filter(FrequenciaModel::getStatus).toList();
+        List<FrequenciaModel> diasAusentes = aulasRecentes.stream().filter(freq -> !freq.getStatus()).toList();
+
+        System.out.println(diasAusentes.size());
+        if(sFaltas.getValue() > diasAusentes.size()){
+            int forQtd = Math.abs(sFaltas.getValue() - diasAusentes.size());
+            for (int i=0; i<forQtd; i++) {
+                FrequenciaModel aula = diasPresentes.get(i);
+                aula.setStatus(false);
+                FrequenciaModel.salvar(aula);
+            }
+        }else{
+            for (int i=diasAusentes.size(); i> sFaltas.getValue(); i--) {
+                FrequenciaModel aulaP = diasAusentes.get(i -1);
+                aulaP.setStatus(true);
+                FrequenciaModel.salvar(aulaP);
+            }
         }
         mAlterarFaltas.setText("Faltas atualizadas com sucesso.");
     }
