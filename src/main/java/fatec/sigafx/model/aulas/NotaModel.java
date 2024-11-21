@@ -4,7 +4,6 @@ import fatec.sigafx.dao.NotaDAO;
 import fatec.sigafx.model.aulas.dto.NotaCriarRequest;
 import fatec.sigafx.model.usuarios.AlunoModel;
 import jakarta.persistence.*;
-import jakarta.persistence.criteria.CriteriaBuilder;
 
 import java.util.List;
 
@@ -17,6 +16,9 @@ public class NotaModel {
     private Integer id;
 
     private Double nota;
+
+    @Enumerated(EnumType.STRING)
+    private TipoNota tipo;
 
     @ManyToOne
     @JoinColumn(name = "aluno_id", nullable = false)
@@ -67,6 +69,14 @@ public class NotaModel {
 
     public void setNota(Double nota) {
         this.nota = nota;
+    }
+
+    public TipoNota getTipo() {
+        return tipo;
+    }
+
+    public void setTipo(TipoNota tipo) {
+        this.tipo = tipo;
     }
 
     public AlunoModel getAluno() {
