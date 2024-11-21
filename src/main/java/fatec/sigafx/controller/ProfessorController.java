@@ -1,5 +1,6 @@
 package fatec.sigafx.controller;
 
+import fatec.sigafx.dao.FrequenciaDAO;
 import fatec.sigafx.model.aulas.ChamadaModel;
 import fatec.sigafx.model.aulas.FrequenciaModel;
 import fatec.sigafx.model.aulas.NotaModel;
@@ -591,11 +592,23 @@ public class ProfessorController {
     @FXML
     public void atribuirFaltas() {
         // Validar a seleção de um aluno e turma
+
         if (sFaltas.getValue() == null) {
             mAlterarFaltas.setText("Atribua um valor a Faltas.");
             return;
         }
+        Integer aulasQtd = FrequenciaModel.buscarQuantidade(alunoSelecionado.getId(), turmaSelecionada.getId());
+        if(sFaltas.getValue() > aulasQtd){
+            mAlterarFaltas.setText("Não pode atribuir mais faltas do que aulas dadas, no momento o máximo de aulas é: " + aulasQtd + ".");
+            return;
+        }
+        List<FrequenciaModel> aulasRecentes = FrequenciaModel.listagemAulas(alunoSelecionado.getId(), turmaSelecionada.getId());
 
+        for (int i=0; i<sFaltas.getValue(); i++) {
+            FrequenciaModel aula = aulasRecentes.get(i);
+            aula.setStatus(false);
+            FrequenciaModel.salvar(aula);
+        }
         mAlterarFaltas.setText("Faltas atualizadas com sucesso.");
     }
 

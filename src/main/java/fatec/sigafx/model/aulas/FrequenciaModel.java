@@ -1,7 +1,10 @@
 package fatec.sigafx.model.aulas;
 
+import fatec.sigafx.dao.FrequenciaDAO;
 import fatec.sigafx.model.usuarios.AlunoModel;
 import jakarta.persistence.*;
+
+import java.util.List;
 
 @Entity
 @Table(name = "frequencias")
@@ -21,6 +24,8 @@ public class FrequenciaModel {
     @ManyToOne
     @JoinColumn(name = "chamada_id", nullable = false)
     private ChamadaModel chamada;
+
+    private static FrequenciaDAO frequenciaDAO = new FrequenciaDAO();
 
     public Integer getId() {
         return id;
@@ -58,5 +63,17 @@ public class FrequenciaModel {
     public String toString() {
         return "Aluno: " + aluno +
                 ", Status: " + status;
+    }
+
+    public static Integer buscarQuantidade(int alunoId, int turmaId){
+        return frequenciaDAO.buscarQuantidade(alunoId, turmaId);
+    }
+
+    public static List<FrequenciaModel> listagemAulas(int alunoId, int turmaId){
+        return frequenciaDAO.listagemAulas(alunoId, turmaId);
+    }
+
+    public static void salvar(FrequenciaModel request){
+        frequenciaDAO.salvar(request);
     }
 }
