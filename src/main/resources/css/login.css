@@ -1,9 +1,9 @@
 .background {
-    -fx-background-color: #0598ff;
+    -fx-background-color: #00ACEA;
 }
 
 .login-input {
-    -fx-border-color: #0598ff;
+    -fx-border-color: #00ACEA;
     -fx-border-width: 0 0 2px 0;
     -fx-background-color: transparent;
 }
