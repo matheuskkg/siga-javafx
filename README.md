@@ -41,9 +41,9 @@ Este é um projeto acadêmico desenvolvido na disciplina de Linguagem de Program
     </td>
     </td>
       <td align="center">
-      <a href="https://github.com/lukshima"><img src="https://avatars.githubusercontent.com/u/183426312?v=4" alt="Lucas Nakashima" style="border-radius: 50%; width: 10vw;"></a>
+      <a href="https://github.com/joaovkk"><img src="https://avatars.githubusercontent.com/u/174809913?v=4" alt="João Santos" style="border-radius: 50%; width: 10vw;"></a>
       <br />
-      <b>Lucas Nakashima</b>
+      <b>João Santos</b>
       <br />
       Desenvolvedor
     </td>
