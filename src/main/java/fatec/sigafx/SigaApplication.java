@@ -35,15 +35,6 @@ public class SigaApplication extends Application
         stage.getIcons().add(new Image(Objects.requireNonNull(getClass().getResourceAsStream("/icons/icone.png"))));
 
         LoginView.mostrarLogin();
-
-        //Usar para testar a página de ADM
-        //AdminView.mostrarHomeAdmin();
-
-        //Usar para testar a página de Aluno
-        //AlunoView.mostrarHomeAluno();
-
-        //Usar para testar a página de Professor
-        //ProfessorView.mostrarHomeProf();
     }
 
     public static Stage getStage() {

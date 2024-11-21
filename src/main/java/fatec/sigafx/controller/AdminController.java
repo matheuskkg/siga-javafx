@@ -778,9 +778,18 @@ public class AdminController
     }
 
     private boolean verificarCamposVaziosAdicionarTurma() {
-        return cbCursoAdicionarTurma.getSelectionModel().getSelectedItem() == null
-                || cbDisciplinaAdicionarTurma.getSelectionModel().getSelectedItem() == null
-                || cbProfResponAdicionarTurma.getSelectionModel().getSelectedItem() == null;
+        return isCampoVazio(cbCursoAdicionarTurma)
+                || isCampoVazio(cbDisciplinaAdicionarTurma)
+                || isCampoVazio(cbProfResponAdicionarTurma)
+                || (turmaSelecionada == null && isCampoVazio(tAdicionarAlunos));
+    }
+
+    private boolean isCampoVazio(ComboBox<?> comboBox) {
+        return comboBox.getSelectionModel().getSelectedItem() == null;
+    }
+
+    private boolean isCampoVazio(TableView<?> tableView) {
+        return tableView.getSelectionModel().getSelectedItem() == null;
     }
 
     @FXML
@@ -794,6 +803,7 @@ public class AdminController
             return;
         }
 
+        //TODO: Arrumar isso aqui pq não ta alterando a Turma
         TurmaCriarRequest request;
         if (turmaSelecionada == null) {
             request = new TurmaCriarRequest(cbCursoAdicionarTurma.getSelectionModel().getSelectedItem(),
