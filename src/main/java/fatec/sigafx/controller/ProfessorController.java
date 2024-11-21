@@ -1,10 +1,7 @@
 package fatec.sigafx.controller;
 
 import fatec.sigafx.dao.FrequenciaDAO;
-import fatec.sigafx.model.aulas.ChamadaModel;
-import fatec.sigafx.model.aulas.FrequenciaModel;
-import fatec.sigafx.model.aulas.NotaModel;
-import fatec.sigafx.model.aulas.TurmaModel;
+import fatec.sigafx.model.aulas.*;
 import fatec.sigafx.model.aulas.dto.NotaCriarRequest;
 import fatec.sigafx.model.usuarios.AlunoModel;
 import fatec.sigafx.model.usuarios.ProfessorModel;
@@ -31,9 +28,13 @@ import java.util.List;
 import static fatec.sigafx.controller.LoginController.usuarioLogado;
 
 public class ProfessorController {
+
     @FXML
     private VBox gPrincipal;
     public Label lBoasVindas;
+
+    public VBox gMensagemSucesso; //TODO: Daniel, aqui é a Vbox onde tem a mensagem
+    public Label mSucesso;        //TODO: E aqui é a mensagem em si
 
     @FXML
     private VBox gNotas;
@@ -145,10 +146,28 @@ public class ProfessorController {
     }
 
     public void configuraSpinners() {
-        sP1.setValueFactory(montaSpinners(alunoSelecionado.getNotaP1()));
-        sP2.setValueFactory(montaSpinners(alunoSelecionado.getNotaP2()));
-        sP3.setValueFactory(montaSpinners(alunoSelecionado.getNotaP3()));
+        List<NotaModel> notas = NotaModel.buscarNotasPorAlunoETurma(alunoSelecionado.getId(), turmaSelecionada.getId());
+
+        NotaModel notaP1 = notas.stream()
+                .filter(nota -> nota.getTipo() == TipoNota.P1)
+                .findFirst()
+                .orElse(null);
+
+        NotaModel notaP2 = notas.stream()
+                .filter(nota -> nota.getTipo() == TipoNota.P2)
+                .findFirst()
+                .orElse(null);
+
+        NotaModel notaP3 = notas.stream()
+                .filter(nota -> nota.getTipo() == TipoNota.P3)
+                .findFirst()
+                .orElse(null);
+
+        sP1.setValueFactory(montaSpinners(notaP1 != null ? notaP1.getNota() : null));
+        sP2.setValueFactory(montaSpinners(notaP2 != null ? notaP2.getNota() : null));
+        sP3.setValueFactory(montaSpinners(notaP3 != null ? notaP3.getNota() : null));
     }
+
 
     private <T> ComboBox<T> reconstruirComboBox(ComboBox<T> comboBox, HBox hboxPai) {
         ComboBox<T> novaComboBox = new ComboBox<>(comboBox.getItems());
@@ -215,33 +234,49 @@ public class ProfessorController {
     private List<TableColumn<AlunoModel, ?>> criarColunasNotas() {
         List<TableColumn<AlunoModel, ?>> colunas = new ArrayList<>(criarColunasPadrao());
 
+        // Configura coluna para P1
         TableColumn<AlunoModel, Double> colunaP1 = new TableColumn<>("P1");
         colunaP1.setCellValueFactory(cellData -> {
             AlunoModel aluno = cellData.getValue();
             List<NotaModel> notas = NotaModel.buscarNotasPorAlunoETurma(aluno.getId(), turmaSelecionada.getId());
-            return new SimpleObjectProperty<>(notas != null && notas.size() > 0 ? notas.get(0).getNota() : null);
+            NotaModel notaP1 = notas.stream()
+                    .filter(nota -> nota.getTipo() == TipoNota.P1)
+                    .findFirst()
+                    .orElse(null);
+            return new SimpleObjectProperty<>(notaP1 != null ? notaP1.getNota() : null);
         });
         colunaP1.setMinWidth(50);
         colunaP1.setMaxWidth(90);
 
+        // Configura coluna para P2
         TableColumn<AlunoModel, Double> colunaP2 = new TableColumn<>("P2");
         colunaP2.setCellValueFactory(cellData -> {
             AlunoModel aluno = cellData.getValue();
             List<NotaModel> notas = NotaModel.buscarNotasPorAlunoETurma(aluno.getId(), turmaSelecionada.getId());
-            return new SimpleObjectProperty<>(notas != null && notas.size() > 1 ? notas.get(1).getNota() : null);
+            NotaModel notaP2 = notas.stream()
+                    .filter(nota -> nota.getTipo() == TipoNota.P2)
+                    .findFirst()
+                    .orElse(null);
+            return new SimpleObjectProperty<>(notaP2 != null ? notaP2.getNota() : null);
         });
         colunaP2.setMinWidth(50);
         colunaP2.setMaxWidth(90);
 
+        // Configura coluna para P3
         TableColumn<AlunoModel, Double> colunaP3 = new TableColumn<>("P3");
         colunaP3.setCellValueFactory(cellData -> {
             AlunoModel aluno = cellData.getValue();
             List<NotaModel> notas = NotaModel.buscarNotasPorAlunoETurma(aluno.getId(), turmaSelecionada.getId());
-            return new SimpleObjectProperty<>(notas != null && notas.size() > 2 ? notas.get(2).getNota() : null);
+            NotaModel notaP3 = notas.stream()
+                    .filter(nota -> nota.getTipo() == TipoNota.P3)
+                    .findFirst()
+                    .orElse(null);
+            return new SimpleObjectProperty<>(notaP3 != null ? notaP3.getNota() : null);
         });
         colunaP3.setMinWidth(50);
         colunaP3.setMaxWidth(90);
 
+        // Adiciona todas as colunas criadas
         colunas.addAll(List.of(colunaP1, colunaP2, colunaP3));
         return colunas;
     }
@@ -327,6 +362,7 @@ public class ProfessorController {
         mAtribuirNotasAluno.setText("");
         mRealizarChamada.setText("");
         mAlunosFaltas.setText("");
+        mAlterarFaltas.setText("");
 
         checkP1.setSelected(false);
         mostrarP1();
@@ -413,40 +449,35 @@ public class ProfessorController {
             return;
         }
 
-        // Atribuir ou criar e salvar as notas (P1, P2, P3)
         try {
-            NotaModel notaP1;
-            try {
-                notaP1 = alunoSelecionado.getNotas().get(0);
-                notaP1.setNota(sP1.getValue()); // Atualiza valor da nota
-            } catch (IndexOutOfBoundsException e) {
-                NotaCriarRequest requestP1 = new NotaCriarRequest(sP1.getValue(), alunoSelecionado, turmaSelecionada);
-                notaP1 = new NotaModel(requestP1); // Cria nova nota
-                alunoSelecionado.getNotas().add(notaP1);
-            }
-            NotaModel.salvarNota(notaP1); // Persiste a nota P1
+            // Processa as notas P1, P2 e P3 com base no tipo
+            for (TipoNota tipoNota : TipoNota.values()) {
+                Double valorNota = switch (tipoNota) {
+                    case P1 -> sP1.getValue();
+                    case P2 -> sP2.getValue();
+                    case P3 -> sP3.getValue();
+                };
 
-            NotaModel notaP2;
-            try {
-                notaP2 = alunoSelecionado.getNotas().get(1);
-                notaP2.setNota(sP2.getValue());
-            } catch (IndexOutOfBoundsException e) {
-                NotaCriarRequest requestP2 = new NotaCriarRequest(sP2.getValue(), alunoSelecionado, turmaSelecionada);
-                notaP2 = new NotaModel(requestP2);
-                alunoSelecionado.getNotas().add(notaP2);
-            }
-            NotaModel.salvarNota(notaP2); // Persiste a nota P2
+                // Busca a nota existente para o tipo e atualiza, ou cria uma nova
+                NotaModel nota = alunoSelecionado.getNotas().stream()
+                        .filter(n -> n.getTipo() == tipoNota && n.getTurma().equals(turmaSelecionada))
+                        .findFirst()
+                        .orElse(null);
 
-            NotaModel notaP3;
-            try {
-                notaP3 = alunoSelecionado.getNotas().get(2);
-                notaP3.setNota(sP3.getValue());
-            } catch (IndexOutOfBoundsException e) {
-                NotaCriarRequest requestP3 = new NotaCriarRequest(sP3.getValue(), alunoSelecionado, turmaSelecionada);
-                notaP3 = new NotaModel(requestP3);
-                alunoSelecionado.getNotas().add(notaP3);
+                if (nota == null) {
+                    // Cria uma nova nota se não existir
+                    NotaCriarRequest request = new NotaCriarRequest(valorNota, alunoSelecionado, turmaSelecionada);
+                    nota = new NotaModel(request);
+                    nota.setTipo(tipoNota);
+                    alunoSelecionado.getNotas().add(nota);
+                } else {
+                    // Atualiza o valor da nota existente
+                    nota.setNota(valorNota);
+                }
+
+                // Salva a nota no banco de dados
+                NotaModel.salvarNota(nota);
             }
-            NotaModel.salvarNota(notaP3); // Persiste a nota P3
 
             // Feedback ao usuário
             mAtribuirNotasAluno.setText("Notas atribuídas com sucesso!");
@@ -588,6 +619,7 @@ public class ProfessorController {
 
         chamada.setFrequencias(frequencias);
         ChamadaModel.salvar(chamada);
+        mRealizarChamada.setText("Chamada finalizada com sucesso.");
     }
 
     @FXML
@@ -625,7 +657,6 @@ public class ProfessorController {
         }
         mAlterarFaltas.setText("Faltas atualizadas com sucesso.");
     }
-
 
     private void definirAlunoSelecionado(TableView<AlunoModel> tabelaAlunos) {
         tabelaAlunos.setOnMouseClicked((MouseEvent) -> alunoSelecionado = tabelaAlunos.getSelectionModel().getSelectedItem());

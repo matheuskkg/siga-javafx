@@ -29,3 +29,7 @@
     -fx-background-color: #e7ecf0;
     -fx-padding: 20px;
 }
+#gMensagemSucesso{
+    -fx-background-color: #3B5998;
+    -fx-background-radius: 10px;
+}
