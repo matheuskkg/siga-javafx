@@ -168,7 +168,6 @@ public class ProfessorController {
         sP3.setValueFactory(montaSpinners(notaP3 != null ? notaP3.getNota() : null));
     }
 
-
     private <T> ComboBox<T> reconstruirComboBox(ComboBox<T> comboBox, HBox hboxPai) {
         ComboBox<T> novaComboBox = new ComboBox<>(comboBox.getItems());
         novaComboBox.setMaxSize(Double.MAX_VALUE, 30);
@@ -563,6 +562,9 @@ public class ProfessorController {
         esconderPaineis();
         gFaltas.setVisible(true);
         gAlunosFaltas.setVisible(true);
+
+        alunoSelecionado = null;
+        turmaSelecionada = null;
 
         cbAtribuirFaltasTurma.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> {
             if (newValue != null) {
