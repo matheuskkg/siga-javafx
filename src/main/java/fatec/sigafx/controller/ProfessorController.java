@@ -6,6 +6,7 @@ import fatec.sigafx.model.aulas.dto.NotaCriarRequest;
 import fatec.sigafx.model.usuarios.AlunoModel;
 import fatec.sigafx.model.usuarios.ProfessorModel;
 import fatec.sigafx.view.LoginView;
+import javafx.animation.PauseTransition;
 import javafx.beans.property.BooleanProperty;
 import javafx.beans.property.SimpleObjectProperty;
 import javafx.collections.FXCollections;
@@ -19,6 +20,7 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Priority;
 import javafx.scene.layout.VBox;
+import javafx.util.Duration;
 import org.hibernate.internal.build.AllowSysOut;
 
 import java.time.LocalDate;
@@ -339,6 +341,18 @@ public class ProfessorController {
         return null;
     }
 
+    private void exibirMensagemTemporaria(VBox vbox ,Label label, String mensagem) {
+        vbox.setVisible(true);
+        label.setText(mensagem);
+
+        PauseTransition pause = new PauseTransition(Duration.seconds(1.5));
+        pause.setOnFinished(event -> {
+            label.setText("");
+            vbox.setVisible(false);
+        });
+        pause.play();
+    }
+
     // Esconder todos os painéis
     private void esconderPaineis() {
         gPrincipal.setVisible(false);
@@ -479,7 +493,11 @@ public class ProfessorController {
             }
 
             // Feedback ao usuário
-            mAtribuirNotasAluno.setText("Notas atribuídas com sucesso!");
+
+            esconderPaineis();
+            mostrarNotas();
+
+            exibirMensagemTemporaria(gMensagemSucesso,mSucesso,"Notas atribuídas com sucesso!");
 
         } catch (Exception e) {
             mAtribuirNotasAluno.setText("Erro ao salvar as notas. Tente novamente.");
@@ -621,7 +639,11 @@ public class ProfessorController {
 
         chamada.setFrequencias(frequencias);
         ChamadaModel.salvar(chamada);
-        mRealizarChamada.setText("Chamada finalizada com sucesso.");
+
+        esconderPaineis();
+        mostrarFaltas();
+
+        exibirMensagemTemporaria(gMensagemSucesso, mSucesso, "Chamada finalizada com sucesso.");
     }
 
     @FXML
@@ -657,7 +679,11 @@ public class ProfessorController {
                 FrequenciaModel.salvar(aulaP);
             }
         }
-        mAlterarFaltas.setText("Faltas atualizadas com sucesso.");
+
+        esconderPaineis();
+        mostrarFaltas();
+
+        exibirMensagemTemporaria(gMensagemSucesso, mSucesso, "Faltas atualizadas com sucesso.");
     }
 
     private void definirAlunoSelecionado(TableView<AlunoModel> tabelaAlunos) {

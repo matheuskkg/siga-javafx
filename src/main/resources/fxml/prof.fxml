@@ -122,7 +122,6 @@
                                         <Font size="24.0" />
                                     </font>
                                 </Label>
-                                <!-- Aqui é onde o professor colocará a P1, precisa de um fx::id -->
                                 <Spinner fx:id="sP1" editable="true" maxHeight="35.0" maxWidth="1.7976931348623157E308" minWidth="300.0" HBox.hgrow="ALWAYS">
                                     <HBox.margin>
                                         <Insets left="10.0" />
@@ -177,7 +176,6 @@
                                 <Insets left="20.0" right="20.0" />
                             </VBox.margin>
                             <Label fx:id="mAtribuirNotasAluno" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" textFill="RED" HBox.hgrow="ALWAYS" />
-                            <!-- Aqui é onde o professor clica pra lançar as notas, precisa de um onAction -->
                             <Button fx:id="bAtribuirNotas" alignment="CENTER" minHeight="50.0" minWidth="100.0" mnemonicParsing="false" onAction="#atribuirNotas" text="Atribuir">
                                 <font>
                                     <Font size="12.0" />
@@ -288,7 +286,6 @@
                                     <Font size="24.0" />
                                 </font>
                             </Label>
-                            <!-- Precisa de um fx::id nesse Spinner para já aparecer com as faltas desse aluno e poder aumentar ou diminuir -->
                             <Spinner fx:id="sFaltas" editable="true" maxWidth="1.7976931348623157E308" minHeight="30.0" minWidth="300.0" HBox.hgrow="ALWAYS">
                         <HBox.margin>
                            <Insets />
@@ -299,7 +296,6 @@
                                 <Insets left="20.0" right="20.0" />
                             </VBox.margin>
                      <Label fx:id="mAlterarFaltas" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" textFill="RED" HBox.hgrow="ALWAYS" />
-                            <!-- Precisa de um onAction nesse botão para Concluir a Chamada -->
                             <Button alignment="CENTER" minHeight="50.0" minWidth="100.0" mnemonicParsing="false" onAction="#atribuirFaltas" text="Atribuir" />
                             <Button alignment="CENTER" minHeight="50.0" minWidth="100.0" mnemonicParsing="false" onAction="#mostrarAlunosFaltas" text="Voltar" />
                         </HBox>

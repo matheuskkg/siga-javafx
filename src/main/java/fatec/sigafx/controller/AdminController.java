@@ -756,6 +756,8 @@ public class AdminController
         bLimparAdicionarTurma.setVisible(true);
         criarTableViewAlunos();
 
+        mAdicionarAlterarTurma.setText("Adicionar Turma");
+        mAdicionarAlterarTurma.requestFocus();
     }
 
     private void criarTableViewAlunos(){

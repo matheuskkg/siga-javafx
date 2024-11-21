@@ -414,7 +414,7 @@
                         </HBox>
                     </VBox>
                      <VBox fx:id="gAdicionarTurmas" alignment="TOP_CENTER" spacing="10.0" visible="false">
-                         <Label fx:id="mAdicionarAlterarTurma" alignment="TOP_CENTER" maxHeight="-Infinity" maxWidth="1.7976931348623157E308" minHeight="40.0" minWidth="680.0" text="Criar nova turma" VBox.vgrow="ALWAYS">
+                         <Label fx:id="mAdicionarAlterarTurma" alignment="TOP_CENTER" maxHeight="-Infinity" maxWidth="1.7976931348623157E308" minHeight="40.0" minWidth="680.0" VBox.vgrow="ALWAYS">
                              <font>
                                  <Font size="28.0" />
                              </font>
