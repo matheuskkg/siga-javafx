@@ -16,7 +16,7 @@ import fatec.sigafx.model.usuarios.UsuarioModel;
 import fatec.sigafx.model.usuarios.dto.UsuarioCriarRequest;
 
 import java.util.Objects;
-//
+
 public class SigaApplication extends Application
 {
 
