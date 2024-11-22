@@ -5,6 +5,7 @@ import fatec.sigafx.model.aulas.FrequenciaModel;
 import fatec.sigafx.model.aulas.NotaModel;
 import fatec.sigafx.model.aulas.TurmaModel;
 import fatec.sigafx.model.usuarios.AlunoModel;
+import fatec.sigafx.model.usuarios.ProfessorModel;
 import fatec.sigafx.model.usuarios.UsuarioModel;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.EntityManagerFactory;
@@ -47,6 +48,12 @@ public class UsuarioDAO {
                 NotaModel.excluirPorAluno(request.getId());
                 for (TurmaModel turma : ((AlunoModel) request).getTurmas()) {
                     turma.getAlunos().remove(request);
+                }
+            }
+
+            if (request instanceof ProfessorModel) {
+                for (TurmaModel turma : ((ProfessorModel) request).getTurmas()) {
+                    turma.setProfessor(null);
                 }
             }
 

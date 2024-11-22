@@ -28,6 +28,14 @@ public class ProfessorModel extends UsuarioModel {
         return professorDAO.buscarTodos();
     }
 
+    public List<TurmaModel> getTurmas() {
+        return turmas;
+    }
+
+    public void setTurmas(List<TurmaModel> turmas) {
+        this.turmas = turmas;
+    }
+
     @Override
     public String toString() {
         return "Nome: " + getNome() +
