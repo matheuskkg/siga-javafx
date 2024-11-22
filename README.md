@@ -60,6 +60,7 @@ Este é um projeto acadêmico desenvolvido na disciplina de Linguagem de Program
             - **controller/**: Contém os controladores do sistema, responsáveis por parte das funções e integração com a parte visual da aplicação.
             - **dao/**: Contém funções de conexão com o banco de dados de cada uma das classes.
             - **model/**: Contém todas as models (classes/entidades) do sistema.
+            - **util/**: Contém funções utilitárias utilizadas nas outras classes.  
             - **view/**: Contém uma configuração e um controle da parte visual da aplicação.
             - `EMF`: Arquivo de criação do gerenciador de entidades.
             - `SigaApplication`: Core da aplicação.
