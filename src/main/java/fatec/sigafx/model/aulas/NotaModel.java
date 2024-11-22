@@ -47,6 +47,10 @@ public class NotaModel {
         notaDAO.excluirPorTurma(turmaId);
     }
 
+    public static void excluirPorAluno(Integer alunoId) {
+        notaDAO.excluirPorAluno(alunoId);
+    }
+
     public static List<NotaModel> buscarPorAlunoTurma(Integer alunoId, Integer turmaId){
         return notaDAO.buscarNotasPorAlunoETurma(alunoId, turmaId);
     }

@@ -56,6 +56,28 @@ public class NotaDAO {
         }
     }
 
+    public void excluirPorAluno(Integer alunoId) {
+        EntityManager em = emf.createEntityManager();
+
+        try {
+            em.getTransaction().begin();
+
+            em.createQuery("DELETE FROM NotaModel n WHERE n.aluno.id = :alunoId")
+                    .setParameter("alunoId", alunoId)
+                    .executeUpdate();
+
+            em.getTransaction().commit();
+        } catch (Exception e) {
+            if (em.getTransaction().isActive()) {
+                em.getTransaction().rollback();
+            }
+
+            e.printStackTrace();
+        } finally {
+            em.close();
+        }
+    }
+
     public List<NotaModel> buscarNotasPorAlunoETurma(Integer alunoId, Integer turmaId) {
         try (EntityManager em = emf.createEntityManager()) {
             return em.createQuery(

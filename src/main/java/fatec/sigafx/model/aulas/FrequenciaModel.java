@@ -31,6 +31,10 @@ public class FrequenciaModel {
         frequenciaDAO.salvar(request);
     }
 
+    public static void excluirPorAluno(Integer alunoId) {
+        frequenciaDAO.excluirPorAluno(alunoId);
+    }
+
     public static Integer buscarQuantidade(int alunoId, int turmaId){
         return frequenciaDAO.buscarQuantidade(alunoId, turmaId);
     }

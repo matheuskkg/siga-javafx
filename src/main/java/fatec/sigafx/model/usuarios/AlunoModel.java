@@ -2,6 +2,7 @@ package fatec.sigafx.model.usuarios;
 
 import fatec.sigafx.dao.AlunoDAO;
 import fatec.sigafx.model.aulas.NotaModel;
+import fatec.sigafx.model.aulas.TurmaModel;
 import fatec.sigafx.model.usuarios.dto.UsuarioCriarRequest;
 import jakarta.persistence.*;
 import javafx.beans.property.BooleanProperty;
@@ -12,6 +13,9 @@ import java.util.List;
 @Entity
 @Table(name = "alunos")
 public class AlunoModel extends UsuarioModel {
+
+    @ManyToMany(mappedBy = "alunos")
+    private List<TurmaModel> turmas;
 
     @OneToMany(mappedBy = "aluno", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.EAGER)
     private List<NotaModel> notas;
@@ -31,6 +35,14 @@ public class AlunoModel extends UsuarioModel {
 
     public static Integer contarFaltasAlunoTurma(Integer alunoId, Integer turmaId) {
         return alunoDAO.contarFaltasAlunoTurma(alunoId, turmaId);
+    }
+
+    public List<TurmaModel> getTurmas() {
+        return turmas;
+    }
+
+    public void setTurmas(List<TurmaModel> turmas) {
+        this.turmas = turmas;
     }
 
     public List<NotaModel> getNotas() {
