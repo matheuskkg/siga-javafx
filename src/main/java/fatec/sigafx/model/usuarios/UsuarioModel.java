@@ -2,6 +2,7 @@ package fatec.sigafx.model.usuarios;
 
 import fatec.sigafx.dao.UsuarioDAO;
 import fatec.sigafx.model.usuarios.dto.UsuarioCriarRequest;
+import fatec.sigafx.util.UsuariosUtil;
 import jakarta.persistence.*;
 
 import java.util.List;
@@ -36,26 +37,18 @@ public class UsuarioModel {
         this.tipo = request.tipo();
     }
 
-    private static UsuarioModel definirTipoUsuario(UsuarioCriarRequest request) {
-        return switch (request.tipo()) {
-            case ADMINISTRADOR -> new AdminModel(request);
-            case PROFESSOR -> new ProfessorModel(request);
-            case ALUNO -> new AlunoModel(request);
-        };
-    }
-
-    public static void criarUsuario(UsuarioCriarRequest request) {
-        UsuarioModel u = definirTipoUsuario(request);
+    public static void criar(UsuarioCriarRequest request) {
+        UsuarioModel u = UsuariosUtil.definirTipoUsuario(request);
 
         usuarioDAO.salvar(u);
     }
 
-    public static void atualizarUsuario(UsuarioCriarRequest request, Integer id) {
+    public static void atualizar(UsuarioCriarRequest request, Integer id) {
         UsuarioModel usuarioAntigo = usuarioDAO.buscarPorId(id);
 
         if (!usuarioAntigo.getTipo().equals(request.tipo())) {
-            excluirUsuario(usuarioAntigo);
-            UsuarioModel usuarioNovo = definirTipoUsuario(request);
+            excluir(usuarioAntigo);
+            UsuarioModel usuarioNovo = UsuariosUtil.definirTipoUsuario(request);
             usuarioNovo.setId(id);
             usuarioDAO.salvar(usuarioNovo);
         } else {
@@ -66,15 +59,15 @@ public class UsuarioModel {
         }
     }
 
-    public static void excluirUsuario(UsuarioModel request) {
+    public static void excluir(UsuarioModel request) {
         usuarioDAO.excluir(request);
     }
 
-    public static List<UsuarioModel> buscarTodosUsuarios() {
+    public static List<UsuarioModel> buscarTodos() {
         return usuarioDAO.buscarTodos();
     }
 
-    public static UsuarioModel buscarUsuarioPorEmail(String email) {
+    public static UsuarioModel buscarPorEmail(String email) {
         return usuarioDAO.buscarPorEmail(email);
     }
 

@@ -35,10 +35,10 @@ public class TurmaModel {
     )
     private List<AlunoModel> alunos;
 
-    @OneToMany(mappedBy = "turma", cascade = CascadeType.ALL, orphanRemoval = true/*, fetch = FetchType.EAGER*/)
+    @OneToMany(mappedBy = "turma", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<NotaModel> notas;
 
-    @OneToMany(mappedBy = "turma", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.EAGER)
+    @OneToMany(mappedBy = "turma", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<ChamadaModel> chamadas;
 
     @Transient
@@ -50,6 +50,7 @@ public class TurmaModel {
     @Transient
     private static AulasUtil aulasUtil = new AulasUtil();
 
+    @Transient
     private Integer faltas;
 
     public TurmaModel() {}
@@ -61,11 +62,11 @@ public class TurmaModel {
         this.alunos = request.alunos();
     }
 
-    public static void criarTurma(TurmaCriarRequest request) {
+    public static void criar(TurmaCriarRequest request) {
         turmaDAO.salvar(new TurmaModel(request));
     }
 
-    public static void atualizarTurma(TurmaCriarRequest request, TurmaModel turmaAntiga) {
+    public static void atualizar(TurmaCriarRequest request, TurmaModel turmaAntiga) {
         TurmaModel t = new TurmaModel(request);
         t.setId(turmaAntiga.getId());
         t.setNotas(turmaAntiga.getNotas());
@@ -74,11 +75,11 @@ public class TurmaModel {
         turmaDAO.salvar(t);
     }
 
-    public static void excluirTurma(TurmaModel request) {
+    public static void excluir(TurmaModel request) {
         turmaDAO.excluir(request);
     }
 
-    public static List<TurmaModel> buscarTodasTurmas() {
+    public static List<TurmaModel> buscarTodos() {
         return aulasUtil.filtrarNotasAlunosTurmas(turmaDAO.buscarTodos());
     }
 
@@ -132,13 +133,6 @@ public class TurmaModel {
 
     public List<NotaModel> getNotas() {
         return notas;
-    }
-
-    public Double getNotaAlunoPorIndice(int indice) {
-        if (notas != null && notas.size() > indice) {
-            return notas.get(indice).getNota();
-        }
-        return null; // Retorna null se a nota não existir
     }
 
     public void setNotas(List<NotaModel> notas) {

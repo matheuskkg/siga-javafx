@@ -1,6 +1,10 @@
 package fatec.sigafx.util;
 
+import fatec.sigafx.model.usuarios.AdminModel;
+import fatec.sigafx.model.usuarios.AlunoModel;
+import fatec.sigafx.model.usuarios.ProfessorModel;
 import fatec.sigafx.model.usuarios.UsuarioModel;
+import fatec.sigafx.model.usuarios.dto.UsuarioCriarRequest;
 import fatec.sigafx.model.usuarios.dto.UsuarioLoginRequest;
 
 public class UsuariosUtil {
@@ -20,13 +24,21 @@ public class UsuariosUtil {
     }
 
     public static UsuarioModel login(UsuarioLoginRequest request) {
-        UsuarioModel u = UsuarioModel.buscarUsuarioPorEmail(request.email());
+        UsuarioModel u = UsuarioModel.buscarPorEmail(request.email());
 
         if (u != null && u.getSenha().equals(request.senha())) {
             return u;
         } else {
             return null;
         }
+    }
+
+    public static UsuarioModel definirTipoUsuario(UsuarioCriarRequest request) {
+        return switch (request.tipo()) {
+            case ADMINISTRADOR -> new AdminModel(request);
+            case PROFESSOR -> new ProfessorModel(request);
+            case ALUNO -> new AlunoModel(request);
+        };
     }
 
     public boolean verificarCamposVazios() {
@@ -40,7 +52,7 @@ public class UsuariosUtil {
     }
 
     public boolean verificarEmailEmUso() {
-        return UsuarioModel.buscarUsuarioPorEmail(email) != null;
+        return UsuarioModel.buscarPorEmail(email) != null;
     }
 
     public boolean verificarSenhasCoincidem() {

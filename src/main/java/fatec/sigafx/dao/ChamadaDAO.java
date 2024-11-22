@@ -20,7 +20,7 @@ public class ChamadaDAO {
                 em.getTransaction().rollback();
             }
 
-            System.out.println("Falha ao salvar chamada");
+            e.printStackTrace();
         }
     }
 }

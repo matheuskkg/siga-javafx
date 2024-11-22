@@ -167,7 +167,7 @@ public class ProfessorController {
     }
 
     public void configuraSpinners() {
-        List<NotaModel> notas = NotaModel.buscarNotasPorAlunoETurma(alunoSelecionado.getId(), turmaSelecionada.getId());
+        List<NotaModel> notas = NotaModel.buscarPorAlunoTurma(alunoSelecionado.getId(), turmaSelecionada.getId());
 
         NotaModel notaP1 = notas.stream()
                 .filter(nota -> nota.getTipo() == TipoNota.P1)
@@ -258,7 +258,7 @@ public class ProfessorController {
         TableColumn<AlunoModel, Double> colunaP1 = new TableColumn<>("P1");
         colunaP1.setCellValueFactory(cellData -> {
             AlunoModel aluno = cellData.getValue();
-            List<NotaModel> notas = NotaModel.buscarNotasPorAlunoETurma(aluno.getId(), turmaSelecionada.getId());
+            List<NotaModel> notas = NotaModel.buscarPorAlunoTurma(aluno.getId(), turmaSelecionada.getId());
             NotaModel notaP1 = notas.stream()
                     .filter(nota -> nota.getTipo() == TipoNota.P1)
                     .findFirst()
@@ -272,7 +272,7 @@ public class ProfessorController {
         TableColumn<AlunoModel, Double> colunaP2 = new TableColumn<>("P2");
         colunaP2.setCellValueFactory(cellData -> {
             AlunoModel aluno = cellData.getValue();
-            List<NotaModel> notas = NotaModel.buscarNotasPorAlunoETurma(aluno.getId(), turmaSelecionada.getId());
+            List<NotaModel> notas = NotaModel.buscarPorAlunoTurma(aluno.getId(), turmaSelecionada.getId());
             NotaModel notaP2 = notas.stream()
                     .filter(nota -> nota.getTipo() == TipoNota.P2)
                     .findFirst()
@@ -286,7 +286,7 @@ public class ProfessorController {
         TableColumn<AlunoModel, Double> colunaP3 = new TableColumn<>("P3");
         colunaP3.setCellValueFactory(cellData -> {
             AlunoModel aluno = cellData.getValue();
-            List<NotaModel> notas = NotaModel.buscarNotasPorAlunoETurma(aluno.getId(), turmaSelecionada.getId());
+            List<NotaModel> notas = NotaModel.buscarPorAlunoTurma(aluno.getId(), turmaSelecionada.getId());
             NotaModel notaP3 = notas.stream()
                     .filter(nota -> nota.getTipo() == TipoNota.P3)
                     .findFirst()
@@ -508,7 +508,7 @@ public class ProfessorController {
                 }
 
                 // Salva a nota no banco de dados
-                NotaModel.salvarNota(nota);
+                NotaModel.salvar(nota);
             }
 
             // Feedback ao usuário

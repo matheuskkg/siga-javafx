@@ -11,7 +11,8 @@ import java.util.List;
 @Table(name = "professores")
 public class ProfessorModel extends UsuarioModel {
 
-    @OneToMany(mappedBy = "professor")
+    //TODO: estudar a utilização deste atributo para diminuir o número de querys realizadas
+    @OneToMany(mappedBy = "professor", fetch = FetchType.EAGER)
     private List<TurmaModel> turmas;
 
     public ProfessorModel() {}
@@ -25,10 +26,6 @@ public class ProfessorModel extends UsuarioModel {
 
     public static List<ProfessorModel> buscarTodosProfessores() {
         return professorDAO.buscarTodos();
-    }
-
-    public static ProfessorModel buscarProfessorPorEmail(String email) {
-        return professorDAO.buscarPorEmail(email);
     }
 
     @Override

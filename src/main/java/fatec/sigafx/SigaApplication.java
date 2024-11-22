@@ -17,10 +17,10 @@ public class SigaApplication extends Application
 
     @Override
     public void start(Stage stage) {
-        if (UsuarioModel.buscarUsuarioPorEmail("aluno@aluno") == null) {
-            UsuarioModel.criarUsuario(new UsuarioCriarRequest("aluno", "aluno@aluno", "aluno", TipoUsuario.ALUNO));
-            UsuarioModel.criarUsuario(new UsuarioCriarRequest("admin", "admin@admin", "admin", TipoUsuario.ADMINISTRADOR));
-            UsuarioModel.criarUsuario(new UsuarioCriarRequest("professor", "professor@professor", "professor", TipoUsuario.PROFESSOR));
+        if (UsuarioModel.buscarPorEmail("aluno@aluno") == null) {
+            UsuarioModel.criar(new UsuarioCriarRequest("aluno", "aluno@aluno", "aluno", TipoUsuario.ALUNO));
+            UsuarioModel.criar(new UsuarioCriarRequest("admin", "admin@admin", "admin", TipoUsuario.ADMINISTRADOR));
+            UsuarioModel.criar(new UsuarioCriarRequest("professor", "professor@professor", "professor", TipoUsuario.PROFESSOR));
         }
 
         SigaApplication.stage = stage;

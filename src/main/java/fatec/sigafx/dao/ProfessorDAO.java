@@ -20,14 +20,4 @@ public class ProfessorDAO {
             return null;
         }
     }
-
-    public ProfessorModel buscarPorEmail(String email) {
-        try (EntityManager em = emf.createEntityManager()) {
-            return em.createQuery("FROM ProfessorModel WHERE email = :email", ProfessorModel.class)
-                    .setParameter("email", email)
-                    .getSingleResult();
-        } catch (Exception e) {
-            return null;
-        }
-    }
 }
