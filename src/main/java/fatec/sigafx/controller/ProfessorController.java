@@ -505,7 +505,6 @@ public class ProfessorController {
         }
     }
 
-    //Da pra deixar mais funcional e fazer só uma função, mas tô com preguiça
     @FXML
     public void mostrarP1() {
         hAtribuirP1.setDisable(!checkP1.isSelected());
@@ -559,7 +558,6 @@ public class ProfessorController {
         });
     }
 
-    //Acho que tem algo errado em usar isso aqui, mas vou deixar por enquanto
     @FXML
     public void resetarValoresChamada() {
         // Percorre todos os itens da tabela
