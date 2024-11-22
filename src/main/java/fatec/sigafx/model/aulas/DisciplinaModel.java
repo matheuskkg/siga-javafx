@@ -18,7 +18,7 @@ public class DisciplinaModel {
 
     private Integer cargaHoraria;
 
-    @OneToMany(mappedBy = "disciplina", cascade = CascadeType.ALL, orphanRemoval = true)
+    @OneToMany(mappedBy = "disciplina", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.EAGER)
     private List<TurmaModel> turmas;
 
     @Transient

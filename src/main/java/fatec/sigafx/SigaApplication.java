@@ -19,7 +19,13 @@ public class SigaApplication extends Application
     public void start(Stage stage) {
         if (UsuarioModel.buscarPorEmail("aluno@aluno") == null) {
             UsuarioModel.criar(new UsuarioCriarRequest("aluno", "aluno@aluno", "aluno", TipoUsuario.ALUNO));
+        }
+
+        if (UsuarioModel.buscarPorEmail("admin@admin") == null) {
             UsuarioModel.criar(new UsuarioCriarRequest("admin", "admin@admin", "admin", TipoUsuario.ADMINISTRADOR));
+        }
+
+        if (UsuarioModel.buscarPorEmail("professor@professor") == null) {
             UsuarioModel.criar(new UsuarioCriarRequest("professor", "professor@professor", "professor", TipoUsuario.PROFESSOR));
         }
 

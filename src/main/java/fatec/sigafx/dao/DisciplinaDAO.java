@@ -33,11 +33,11 @@ public class DisciplinaDAO {
         try {
             em.getTransaction().begin();
 
+            request.getTurmas().forEach(turma -> TurmaModel.excluir(turma));
+
             if (!em.contains(request)) {
                 request = em.merge(request);
             }
-
-            request.getTurmas().forEach(turma -> TurmaModel.excluir(turma));
 
             em.remove(request);
             em.getTransaction().commit();
