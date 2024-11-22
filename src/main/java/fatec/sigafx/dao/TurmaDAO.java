@@ -1,6 +1,7 @@
 package fatec.sigafx.dao;
 
 import fatec.sigafx.EMF;
+import fatec.sigafx.model.aulas.FrequenciaModel;
 import fatec.sigafx.model.aulas.NotaModel;
 import fatec.sigafx.model.aulas.TurmaModel;
 import fatec.sigafx.model.usuarios.AlunoModel;
@@ -38,6 +39,7 @@ public class TurmaDAO {
             var t = em.find(TurmaModel.class, request.getId());
 
             NotaModel.excluirPorTurma(t.getId());
+            FrequenciaModel.excluirPorTurma(t.getId());
 
             em.getTransaction().begin();
             em.remove(t);

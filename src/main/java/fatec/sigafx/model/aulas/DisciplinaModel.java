@@ -75,6 +75,14 @@ public class DisciplinaModel {
         this.cargaHoraria = cargaHoraria;
     }
 
+    public List<TurmaModel> getTurmas() {
+        return turmas;
+    }
+
+    public void setTurmas(List<TurmaModel> turmas) {
+        this.turmas = turmas;
+    }
+
     @Override
     public String toString() {
         return "Nome: " + nome +

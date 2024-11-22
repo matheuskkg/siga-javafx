@@ -31,6 +31,10 @@ public class FrequenciaModel {
         frequenciaDAO.salvar(request);
     }
 
+    public static void excluirPorTurma(Integer turmaId) {
+        frequenciaDAO.excluirPorTurma(turmaId);
+    }
+
     public static void excluirPorAluno(Integer alunoId) {
         frequenciaDAO.excluirPorAluno(alunoId);
     }

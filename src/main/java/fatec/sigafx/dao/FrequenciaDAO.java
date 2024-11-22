@@ -26,6 +26,28 @@ public class FrequenciaDAO {
         }
     }
 
+    public void excluirPorTurma(Integer turmaId) {
+        EntityManager em = emf.createEntityManager();
+
+        try {
+            em.getTransaction().begin();
+
+            em.createQuery("DELETE FROM FrequenciaModel f WHERE f.chamada.turma.id = :turmaId")
+                    .setParameter("turmaId", turmaId)
+                    .executeUpdate();
+
+            em.getTransaction().commit();
+        } catch (Exception e) {
+            if (em.getTransaction().isActive()) {
+                em.getTransaction().rollback();
+            }
+
+            e.printStackTrace();
+        } finally {
+            em.close();
+        }
+    }
+
     public void excluirPorAluno(Integer alunoId) {
         EntityManager em = emf.createEntityManager();
 

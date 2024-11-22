@@ -2,6 +2,7 @@ package fatec.sigafx.dao;
 
 import fatec.sigafx.EMF;
 import fatec.sigafx.model.aulas.DisciplinaModel;
+import fatec.sigafx.model.aulas.TurmaModel;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.EntityManagerFactory;
 
@@ -35,6 +36,8 @@ public class DisciplinaDAO {
             if (!em.contains(request)) {
                 request = em.merge(request);
             }
+
+            request.getTurmas().forEach(turma -> TurmaModel.excluir(turma));
 
             em.remove(request);
             em.getTransaction().commit();
