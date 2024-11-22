@@ -19,10 +19,14 @@ public class UsuariosUtil {
         this.tipo = tipo;
     }
 
-    public static boolean login(UsuarioLoginRequest request) {
+    public static UsuarioModel login(UsuarioLoginRequest request) {
         UsuarioModel u = UsuarioModel.buscarUsuarioPorEmail(request.email());
 
-        return request.senha().equals(u.getSenha());
+        if (u != null && u.getSenha().equals(request.senha())) {
+            return u;
+        } else {
+            return null;
+        }
     }
 
     public boolean verificarCamposVazios() {
