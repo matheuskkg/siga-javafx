@@ -95,6 +95,49 @@ public class AlunoController {
             return new SimpleObjectProperty<>(notaP3 != null ? notaP3.getNota() : null);
         });
 
+        alunoSituacaoNotas.setCellValueFactory(param -> {
+            TurmaModel turma = param.getValue();
+            List<NotaModel> notas = NotaModel.buscarNotasPorAlunoETurma(usuarioLogado.getId(), turma.getId());
+
+            // Busca as notas de P1, P2 e P3
+            NotaModel notaP1 = notas.stream()
+                    .filter(nota -> nota.getTipo() == TipoNota.P1)
+                    .findFirst()
+                    .orElse(null);
+
+            NotaModel notaP2 = notas.stream()
+                    .filter(nota -> nota.getTipo() == TipoNota.P2)
+                    .findFirst()
+                    .orElse(null);
+
+            NotaModel notaP3 = notas.stream()
+                    .filter(nota -> nota.getTipo() == TipoNota.P3)
+                    .findFirst()
+                    .orElse(null);
+
+            // Garante valores seguros para as notas
+            double p1 = (notaP1 != null && notaP1.getNota() != null) ? notaP1.getNota() : 0.0;
+            double p2 = (notaP2 != null && notaP2.getNota() != null) ? notaP2.getNota() : 0.0;
+            double p3 = (notaP3 != null && notaP3.getNota() != null) ? notaP3.getNota() : 0.0;
+
+            // Calcula a média inicial com P1 e P2
+            double media = (p1 + p2) / 2.0;
+
+            // Determina a situação do aluno
+            String situacao;
+            if (media >= 6.0) {
+                situacao = "Aprovado";
+            } else {
+                // Se necessário, inclui P3 no cálculo
+                media = (p1 + p2 + p3) / 3.0;
+                situacao = (media >= 6.0) ? "Aprovado" : "Reprovado";
+            }
+
+            return new SimpleStringProperty(situacao);
+        });
+
+
+
         // Associa as turmas ao TableView
         tabelaNotas.setItems(turmasObs);
     }
@@ -119,6 +162,22 @@ public class AlunoController {
         // Configurar a coluna de faltas
         alunoFaltas.setCellValueFactory(param ->
                 new SimpleObjectProperty<>(param.getValue().getFaltas()));
+
+        alunoSituacaoFaltas.setCellValueFactory(param -> {
+            TurmaModel turma = param.getValue();
+            Integer faltas = turma.getFaltas();
+            Integer cargaHoraria = turma.getDisciplina().getCargaHoraria();
+
+            String situacao;
+            if ((cargaHoraria == 40 && faltas > 5) || (cargaHoraria == 80 && faltas > 10)) {
+                situacao = "Reprovado";
+            } else {
+                situacao = "Aprovado";
+            }
+
+            return new SimpleStringProperty(situacao);
+        });
+
 
         tabelaFaltas.setItems(turmasObs);
     }
