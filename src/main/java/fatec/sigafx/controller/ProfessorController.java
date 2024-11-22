@@ -20,6 +20,7 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Priority;
 import javafx.scene.layout.VBox;
+import javafx.util.Callback;
 import javafx.util.Duration;
 import org.hibernate.internal.build.AllowSysOut;
 
@@ -95,6 +96,26 @@ public class ProfessorController {
     public void initialize() {
         lBoasVindas.setText("Bem vindo(a), " + usuarioLogado.getNome() + "!");
         carregarComboBoxTurmas();
+        configurarDatePickerRestrito(dpRealizarChamada);
+    }
+
+    // Função para configurar o DatePicker
+    private void configurarDatePickerRestrito(DatePicker datePicker) {
+        Callback<DatePicker, DateCell> dayCellFactory = picker -> new DateCell() {
+            @Override
+            public void updateItem(LocalDate date, boolean empty) {
+                super.updateItem(date, empty);
+
+                // Desativa dias posteriores ao dia atual
+                if (date.isAfter(LocalDate.now())) {
+                    setDisable(true);
+                    setStyle("-fx-background-color: #ffc0cb;"); // Estilo visual para os dias desativados
+                }
+            }
+        };
+
+        // Aplica a configuração ao DatePicker
+        datePicker.setDayCellFactory(dayCellFactory);
     }
 
     private SpinnerValueFactory<Double> montaSpinners(Double nota) {
@@ -505,7 +526,6 @@ public class ProfessorController {
         }
     }
 
-    //Da pra deixar mais funcional e fazer só uma função, mas tô com preguiça
     @FXML
     public void mostrarP1() {
         hAtribuirP1.setDisable(!checkP1.isSelected());
@@ -559,7 +579,6 @@ public class ProfessorController {
         });
     }
 
-    //Acho que tem algo errado em usar isso aqui, mas vou deixar por enquanto
     @FXML
     public void resetarValoresChamada() {
         // Percorre todos os itens da tabela

@@ -44,7 +44,7 @@
             </VBox>
         </VBox>
         <VBox fx:id="gNotas" alignment="TOP_CENTER" spacing="20" styleClass="vBox" visible="false">
-            <Label styleClass="admin-header" text="Suas Notas">
+            <Label styleClass="admin-header" text="Notas">
                 <font>
                     <Font size="28.0" />
                 </font>
@@ -64,7 +64,7 @@
                   </columnResizePolicy>
                </TableView>
                <VBox.margin>
-                  <Insets left="20.0" right="20.0" />
+                  <Insets bottom="10.0" left="20.0" right="20.0" top="20.0" />
                </VBox.margin>
              </VBox>
             <StackPane.margin>
@@ -72,7 +72,7 @@
             </StackPane.margin>
         </VBox>
         <VBox fx:id="gFaltas" alignment="TOP_CENTER" spacing="20" styleClass="vBox" visible="false">
-            <Label styleClass="admin-header" text="Suas Faltas">
+            <Label styleClass="admin-header" text="Faltas">
                 <font>
                     <Font size="28.0" />
                 </font>
@@ -90,7 +90,7 @@
                     </columnResizePolicy>
                 </TableView>
                <VBox.margin>
-                  <Insets left="20.0" right="20.0" />
+                  <Insets bottom="10.0" left="20.0" right="20.0" top="20.0" />
                </VBox.margin>
             </VBox>
         </VBox>

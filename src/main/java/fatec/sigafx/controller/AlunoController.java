@@ -1,6 +1,7 @@
 package fatec.sigafx.controller;
 
 import fatec.sigafx.model.aulas.NotaModel;
+import fatec.sigafx.model.aulas.TipoNota;
 import fatec.sigafx.model.aulas.TurmaModel;
 import fatec.sigafx.model.usuarios.AlunoModel;
 import fatec.sigafx.util.AulasUtil;
@@ -50,23 +51,51 @@ public class AlunoController {
     }
 
     private void carregarTabelaNotas() {
+        // Busca as turmas associadas ao aluno logado
         List<TurmaModel> turmas = TurmaModel.buscarPorAluno((AlunoModel) usuarioLogado);
 
-        for (TurmaModel turma : turmas) {
-            List<NotaModel> notas = NotaModel.buscarNotasPorAlunoETurma(usuarioLogado.getId(), turma.getId());
-            turma.setNotas(notas);
-        }
-
+        // Transforma as turmas em uma ObservableList para a TableView
         ObservableList<TurmaModel> turmasObs = FXCollections.observableArrayList(turmas);
 
-        turmaDisciplinaNotas.setCellValueFactory(param -> new SimpleStringProperty(param.getValue().getDisciplina().getNome()));
+        // Configura a coluna da disciplina
+        turmaDisciplinaNotas.setCellValueFactory(param ->
+                new SimpleStringProperty(param.getValue().getDisciplina().getNome())
+        );
 
-        alunoP1.setCellValueFactory(param -> new SimpleObjectProperty<>(param.getValue().getNotaAlunoPorIndice(0)));
+        // Configura a coluna da P1
+        alunoP1.setCellValueFactory(param -> {
+            TurmaModel turma = param.getValue();
+            List<NotaModel> notas = NotaModel.buscarNotasPorAlunoETurma(usuarioLogado.getId(), turma.getId());
+            NotaModel notaP1 = notas.stream()
+                    .filter(nota -> nota.getTipo() == TipoNota.P1)
+                    .findFirst()
+                    .orElse(null);
+            return new SimpleObjectProperty<>(notaP1 != null ? notaP1.getNota() : null);
+        });
 
-        alunoP2.setCellValueFactory(param -> new SimpleObjectProperty<>(param.getValue().getNotaAlunoPorIndice(1)));
+        // Configura a coluna da P2
+        alunoP2.setCellValueFactory(param -> {
+            TurmaModel turma = param.getValue();
+            List<NotaModel> notas = NotaModel.buscarNotasPorAlunoETurma(usuarioLogado.getId(), turma.getId());
+            NotaModel notaP2 = notas.stream()
+                    .filter(nota -> nota.getTipo() == TipoNota.P2)
+                    .findFirst()
+                    .orElse(null);
+            return new SimpleObjectProperty<>(notaP2 != null ? notaP2.getNota() : null);
+        });
 
-        alunoP3.setCellValueFactory(param -> new SimpleObjectProperty<>(param.getValue().getNotaAlunoPorIndice(2)));
+        // Configura a coluna da P3
+        alunoP3.setCellValueFactory(param -> {
+            TurmaModel turma = param.getValue();
+            List<NotaModel> notas = NotaModel.buscarNotasPorAlunoETurma(usuarioLogado.getId(), turma.getId());
+            NotaModel notaP3 = notas.stream()
+                    .filter(nota -> nota.getTipo() == TipoNota.P3)
+                    .findFirst()
+                    .orElse(null);
+            return new SimpleObjectProperty<>(notaP3 != null ? notaP3.getNota() : null);
+        });
 
+        // Associa as turmas ao TableView
         tabelaNotas.setItems(turmasObs);
     }
 
@@ -93,7 +122,6 @@ public class AlunoController {
 
         tabelaFaltas.setItems(turmasObs);
     }
-
 
     // Esconder todos os painéis
     private void esconderPaineis() {

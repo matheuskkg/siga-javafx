@@ -8,6 +8,7 @@ import fatec.sigafx.model.usuarios.AlunoModel;
 import fatec.sigafx.model.usuarios.ProfessorModel;
 import fatec.sigafx.model.usuarios.UsuarioModel;
 import fatec.sigafx.model.usuarios.dto.UsuarioCriarRequest;
+import fatec.sigafx.util.AdminControllerUtil;
 import fatec.sigafx.util.UsuariosUtil;
 import fatec.sigafx.view.LoginView;
 import javafx.beans.property.SimpleStringProperty;
@@ -35,7 +36,6 @@ import static fatec.sigafx.controller.LoginController.usuarioLogado;
 
 public class AdminController
 {
-
     // Início
     @FXML
     private VBox gPrincipal;
@@ -174,7 +174,6 @@ public class AdminController
     private TableColumn<TurmaModel, DisciplinaModel> turmaDisciplina;
     @FXML
     private TableColumn<TurmaModel, ProfessorModel> turmaProfessor;
-    
 
     public TableView<AlunoModel> tAdicionarAlunos;
 
@@ -859,7 +858,6 @@ public class AdminController
             cbCursoAdicionarTurma.setValue(turmaSelecionada.getCurso());
             cbDisciplinaAdicionarTurma.setValue(turmaSelecionada.getDisciplina());
             cbProfResponAdicionarTurma.setValue(turmaSelecionada.getProfessor());
-            removerTableViewAlunos();
         }
     }
 
@@ -905,6 +903,8 @@ public class AdminController
         gBotaoTurmas.setVisible(false);
         gAdicionarTurmas.setVisible(false);
         gAlterarExcluirTurmas.setVisible(false);
+
+        removerTableViewAlunos();
     }
 
     @FXML

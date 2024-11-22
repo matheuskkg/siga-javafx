@@ -53,7 +53,6 @@
                         <Font size="28.0" />
                     </font>
                 </Label>
-                 <Label text="Total de Alunos: ??" />
                 <StackPane>
                     <VBox fx:id="gAlunosTurma" alignment="TOP_CENTER" spacing="20.0">
                         <StackPane.margin>
@@ -183,6 +182,9 @@
                             </Button>
                         </HBox>
                     </VBox>
+               <VBox.margin>
+                  <Insets top="20.0" />
+               </VBox.margin>
                 </StackPane>
                 <StackPane.margin>
                     <Insets />
@@ -194,7 +196,6 @@
                         <Font size="28.0" />
                     </font>
                 </Label>
-                 <Label text="Total de Alunos: ??" />
                 <StackPane>
                     <VBox fx:id="gRealizarAlterar" alignment="TOP_CENTER" spacing="20.0">
                         <HBox alignment="TOP_CENTER" maxWidth="800.0" spacing="10.0">
@@ -300,6 +301,9 @@
                             <Button alignment="CENTER" minHeight="50.0" minWidth="100.0" mnemonicParsing="false" onAction="#mostrarAlunosFaltas" text="Voltar" />
                         </HBox>
                     </VBox>
+               <VBox.margin>
+                  <Insets top="20.0" />
+               </VBox.margin>
                 </StackPane>
             </VBox>
               <VBox fx:id="gMensagemSucesso" maxHeight="150.0" maxWidth="400.0" visible="false" StackPane.alignment="CENTER">
