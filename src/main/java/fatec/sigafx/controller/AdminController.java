@@ -195,7 +195,7 @@ public class AdminController
 
     private void atualizarTableViewUsuarios() {
         ObservableList<UsuarioModel> usuarios = FXCollections.observableArrayList();
-        usuarios.addAll(UsuarioModel.buscarTodosUsuarios());
+        usuarios.addAll(UsuarioModel.buscarTodos());
 
         tableViewAlterarExcluirUsuario.setItems(usuarios);
 
@@ -282,7 +282,7 @@ public class AdminController
 
     private void atualizarTableViewTurmas() {
         ObservableList<TurmaModel> turmas = FXCollections.observableArrayList();
-        turmas.addAll(TurmaModel.buscarTodasTurmas());
+        turmas.addAll(TurmaModel.buscarTodos());
 
         tableViewAlterarExcluirTurma.setItems(turmas);
 
@@ -519,9 +519,9 @@ public class AdminController
                 TipoUsuario.fromTipo(tipo));
 
         if (usuarioSelecionado == null) {
-            UsuarioModel.criarUsuario(request);
+            UsuarioModel.criar(request);
         } else {
-            UsuarioModel.atualizarUsuario(request, usuarioSelecionado.getId());
+            UsuarioModel.atualizar(request, usuarioSelecionado.getId());
         }
 
         limparCampos();
@@ -590,7 +590,7 @@ public class AdminController
         String textoBotao = ((Button) event.getSource()).getText();
         switch (textoBotao) {
             case "Sim":
-                UsuarioModel.excluirUsuario(usuarioSelecionado);
+                UsuarioModel.excluir(usuarioSelecionado);
                 initialize();
                 break;
             case "Não":
@@ -812,13 +812,13 @@ public class AdminController
                     cbDisciplinaAdicionarTurma.getSelectionModel().getSelectedItem(),
                     cbProfResponAdicionarTurma.getSelectionModel().getSelectedItem(),
                     tAdicionarAlunos.getSelectionModel().getSelectedItems());
-            TurmaModel.criarTurma(request);
+            TurmaModel.criar(request);
         } else {
             request = new TurmaCriarRequest(cbCursoAdicionarTurma.getSelectionModel().getSelectedItem(),
                     cbDisciplinaAdicionarTurma.getSelectionModel().getSelectedItem(),
                     cbProfResponAdicionarTurma.getSelectionModel().getSelectedItem(),
                     turmaSelecionada.getAlunos());
-            TurmaModel.atualizarTurma(request, turmaSelecionada);
+            TurmaModel.atualizar(request, turmaSelecionada);
         }
 
         limparCampos();
@@ -878,7 +878,7 @@ public class AdminController
         String textoBotao = ((Button) event.getSource()).getText();
         switch (textoBotao) {
             case "Sim":
-                TurmaModel.excluirTurma(turmaSelecionada);
+                TurmaModel.excluir(turmaSelecionada);
                 initialize();
                 break;
             case "Não":

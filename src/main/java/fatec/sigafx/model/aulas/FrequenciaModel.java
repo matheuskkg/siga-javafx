@@ -27,6 +27,18 @@ public class FrequenciaModel {
 
     private static FrequenciaDAO frequenciaDAO = new FrequenciaDAO();
 
+    public static void salvar(FrequenciaModel request){
+        frequenciaDAO.salvar(request);
+    }
+
+    public static Integer buscarQuantidade(int alunoId, int turmaId){
+        return frequenciaDAO.buscarQuantidade(alunoId, turmaId);
+    }
+
+    public static List<FrequenciaModel> listagemAulas(int alunoId, int turmaId){
+        return frequenciaDAO.listagemAulas(alunoId, turmaId);
+    }
+
     public Integer getId() {
         return id;
     }
@@ -63,17 +75,5 @@ public class FrequenciaModel {
     public String toString() {
         return "Aluno: " + aluno +
                 ", Status: " + status;
-    }
-
-    public static Integer buscarQuantidade(int alunoId, int turmaId){
-        return frequenciaDAO.buscarQuantidade(alunoId, turmaId);
-    }
-
-    public static List<FrequenciaModel> listagemAulas(int alunoId, int turmaId){
-        return frequenciaDAO.listagemAulas(alunoId, turmaId);
-    }
-
-    public static void salvar(FrequenciaModel request){
-        frequenciaDAO.salvar(request);
     }
 }

@@ -24,8 +24,8 @@ public class TurmaDAO {
             if (em.getTransaction().isActive()) {
                 em.getTransaction().rollback();
             }
+
             e.printStackTrace();
-            System.out.println("Falha ao salvar turma.");
         } finally {
             em.close();
         }
@@ -47,7 +47,6 @@ public class TurmaDAO {
                 em.getTransaction().rollback();
             }
 
-            System.out.println("Falha ao excluir turma.");
             e.printStackTrace();
         } finally {
             em.close();
@@ -78,9 +77,7 @@ public class TurmaDAO {
     }
 
     public List<TurmaModel> buscarPorAluno(AlunoModel aluno) {
-        EntityManager em = emf.createEntityManager();
-
-        try {
+        try (EntityManager em = emf.createEntityManager()) {
             return em.createQuery(
                             "SELECT t FROM TurmaModel t JOIN t.alunos a WHERE a.id = :alunoId", TurmaModel.class)
                     .setParameter("alunoId", aluno.getId())
@@ -88,8 +85,6 @@ public class TurmaDAO {
         } catch (Exception e) {
             e.printStackTrace();
             return List.of();
-        } finally {
-            em.close();
         }
     }
 

@@ -39,19 +39,15 @@ public class NotaModel {
         this.turma = request.turma();
     }
 
+    public static void salvar(NotaModel nota){
+        notaDAO.salvar(nota);
+    }
+
     public static void excluirPorTurma(Integer turmaId) {
         notaDAO.excluirPorTurma(turmaId);
     }
 
-    public static void salvarNota(NotaModel nota){
-        notaDAO.salvarNota(nota);
-    }
-
-    public static NotaModel buscarNotaPorId(Integer id) {
-        return notaDAO.buscarNotaPorId(id);
-    }
-
-    public static List<NotaModel> buscarNotasPorAlunoETurma(Integer alunoId, Integer turmaId){
+    public static List<NotaModel> buscarPorAlunoTurma(Integer alunoId, Integer turmaId){
         return notaDAO.buscarNotasPorAlunoETurma(alunoId, turmaId);
     }
 

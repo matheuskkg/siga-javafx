@@ -4,7 +4,6 @@ import fatec.sigafx.model.aulas.NotaModel;
 import fatec.sigafx.model.aulas.TipoNota;
 import fatec.sigafx.model.aulas.TurmaModel;
 import fatec.sigafx.model.usuarios.AlunoModel;
-import fatec.sigafx.util.AulasUtil;
 import fatec.sigafx.view.LoginView;
 import javafx.beans.property.SimpleObjectProperty;
 import javafx.beans.property.SimpleStringProperty;
@@ -65,7 +64,7 @@ public class AlunoController {
         // Configura a coluna da P1
         alunoP1.setCellValueFactory(param -> {
             TurmaModel turma = param.getValue();
-            List<NotaModel> notas = NotaModel.buscarNotasPorAlunoETurma(usuarioLogado.getId(), turma.getId());
+            List<NotaModel> notas = NotaModel.buscarPorAlunoTurma(usuarioLogado.getId(), turma.getId());
             NotaModel notaP1 = notas.stream()
                     .filter(nota -> nota.getTipo() == TipoNota.P1)
                     .findFirst()
@@ -76,7 +75,7 @@ public class AlunoController {
         // Configura a coluna da P2
         alunoP2.setCellValueFactory(param -> {
             TurmaModel turma = param.getValue();
-            List<NotaModel> notas = NotaModel.buscarNotasPorAlunoETurma(usuarioLogado.getId(), turma.getId());
+            List<NotaModel> notas = NotaModel.buscarPorAlunoTurma(usuarioLogado.getId(), turma.getId());
             NotaModel notaP2 = notas.stream()
                     .filter(nota -> nota.getTipo() == TipoNota.P2)
                     .findFirst()
@@ -87,7 +86,7 @@ public class AlunoController {
         // Configura a coluna da P3
         alunoP3.setCellValueFactory(param -> {
             TurmaModel turma = param.getValue();
-            List<NotaModel> notas = NotaModel.buscarNotasPorAlunoETurma(usuarioLogado.getId(), turma.getId());
+            List<NotaModel> notas = NotaModel.buscarPorAlunoTurma(usuarioLogado.getId(), turma.getId());
             NotaModel notaP3 = notas.stream()
                     .filter(nota -> nota.getTipo() == TipoNota.P3)
                     .findFirst()
@@ -97,7 +96,7 @@ public class AlunoController {
 
         alunoSituacaoNotas.setCellValueFactory(param -> {
             TurmaModel turma = param.getValue();
-            List<NotaModel> notas = NotaModel.buscarNotasPorAlunoETurma(usuarioLogado.getId(), turma.getId());
+            List<NotaModel> notas = NotaModel.buscarPorAlunoTurma(usuarioLogado.getId(), turma.getId());
 
             // Busca as notas de P1, P2 e P3
             NotaModel notaP1 = notas.stream()

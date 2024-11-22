@@ -22,7 +22,7 @@ public class DisciplinaDAO {
                 em.getTransaction().rollback();
             }
 
-            System.out.println("Falha ao salvar disciplina");
+            e.printStackTrace();
         }
     }
 
@@ -43,7 +43,6 @@ public class DisciplinaDAO {
                 em.getTransaction().rollback();
             }
 
-            System.out.println("Falha ao excluir disciplina.");
             e.printStackTrace();
         } finally {
             em.close();
@@ -52,10 +51,8 @@ public class DisciplinaDAO {
 
     public List<DisciplinaModel> buscarTodos() {
         try (EntityManager em = emf.createEntityManager()) {
-            List<DisciplinaModel> res = em.createQuery("FROM DisciplinaModel ", DisciplinaModel.class)
+            return em.createQuery("FROM DisciplinaModel ", DisciplinaModel.class)
                     .getResultList();
-
-            return res;
         } catch (Exception e) {
             e.printStackTrace();
             return null;
@@ -68,6 +65,7 @@ public class DisciplinaDAO {
                     .setParameter("id", id)
                     .getSingleResult();
         } catch (Exception e) {
+            e.printStackTrace();
             return null;
         }
     }
