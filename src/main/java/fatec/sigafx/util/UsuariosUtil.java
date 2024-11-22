@@ -1,7 +1,5 @@
 package fatec.sigafx.util;
 
-import fatec.sigafx.model.usuarios.AdminModel;
-import fatec.sigafx.model.usuarios.AlunoModel;
 import fatec.sigafx.model.usuarios.UsuarioModel;
 import fatec.sigafx.model.usuarios.dto.UsuarioLoginRequest;
 
@@ -21,18 +19,10 @@ public class UsuariosUtil {
         this.tipo = tipo;
     }
 
-    public static String login(UsuarioLoginRequest request) {
+    public static boolean login(UsuarioLoginRequest request) {
         UsuarioModel u = UsuarioModel.buscarUsuarioPorEmail(request.email());
 
-        if (u == null || !request.senha().equals(u.getSenha())) {
-            return null;
-        } else if (u instanceof AdminModel) {
-            return "ADMIN";
-        } else if (u instanceof AlunoModel) {
-            return "ALUNO";
-        } else {
-            return "PROFESSOR";
-        }
+        return request.senha().equals(u.getSenha());
     }
 
     public boolean verificarCamposVazios() {

@@ -25,23 +25,19 @@ public class LoginController {
 
     @FXML
     private void confirmarLogin() {
-        String login = UsuariosUtil.login(new UsuarioLoginRequest(usuarioEmail.getText(), usuarioSenha.getText()));
+        boolean login = UsuariosUtil.login(new UsuarioLoginRequest(usuarioEmail.getText(), usuarioSenha.getText()));
 
-        if (login == null) {
+        if (!login) {
             mensagemErroLogin.setVisible(true);
             return;
         }
+
         usuarioLogado = UsuarioModel.buscarUsuarioPorEmail(usuarioEmail.getText());
-        if (login.equals("ADMIN")) {
-            AdminView.mostrarHomeAdmin();
-        }
 
-        if (login.equals("ALUNO")) {
-            AlunoView.mostrarHomeAluno();
-        }
-
-        if (login.equals("PROFESSOR")) {
-            ProfessorView.mostrarHomeProf();
+        switch (usuarioLogado.getTipo()) {
+            case ADMINISTRADOR -> AdminView.mostrarHomeAdmin();
+            case ALUNO -> AlunoView.mostrarHomeAluno();
+            case PROFESSOR -> ProfessorView.mostrarHomeProf();
         }
     }
 }

@@ -21,11 +21,8 @@ public class UsuarioModel {
 
     private String senha;
 
-    private enum tipo{
-        Administrador,
-        Professor,
-        Aluno
-    }
+    @Enumerated(EnumType.STRING)
+    private TipoUsuario tipo;
 
     @Transient
     private static UsuarioDAO usuarioDAO = new UsuarioDAO();
@@ -36,42 +33,29 @@ public class UsuarioModel {
         this.nome = request.nome();
         this.email = request.email();
         this.senha = request.senha();
+        this.tipo = request.tipo();
     }
 
-    public static String definirTipoUsuario(UsuarioModel u) {
-        if (u instanceof AdminModel) return "Administrador";
-        if (u instanceof AlunoModel) return "Aluno";
-        if (u instanceof ProfessorModel) return "Professor";
-
-        return null;
-    }
-
-    private static UsuarioModel definirTipoUsuario(UsuarioCriarRequest request, String tipo) {
-        //TODO: Utilizar enum p/ definir a role
-        return switch (tipo) {
-            case "Administrador" -> new AdminModel(request);
-            case "Professor" -> new ProfessorModel(request);
-            case "Aluno" -> new AlunoModel(request);
-            default -> null;
+    private static UsuarioModel definirTipoUsuario(UsuarioCriarRequest request) {
+        return switch (request.tipo()) {
+            case ADMINISTRADOR -> new AdminModel(request);
+            case PROFESSOR -> new ProfessorModel(request);
+            case ALUNO -> new AlunoModel(request);
         };
     }
 
-    public static void criarUsuario(UsuarioCriarRequest request, String tipo) {
-        UsuarioModel u = definirTipoUsuario(request, tipo);
+    public static void criarUsuario(UsuarioCriarRequest request) {
+        UsuarioModel u = definirTipoUsuario(request);
 
         usuarioDAO.salvar(u);
     }
 
-    public static void atualizarUsuario(UsuarioModel request) {
-        usuarioDAO.salvar(request);
-    }
-
-    public static void atualizarUsuario(UsuarioCriarRequest request, String tipo, Integer id) {
+    public static void atualizarUsuario(UsuarioCriarRequest request, Integer id) {
         UsuarioModel usuarioAntigo = usuarioDAO.buscarPorId(id);
 
-        if (!definirTipoUsuario(usuarioAntigo).equals(tipo)) {
+        if (!usuarioAntigo.getTipo().equals(request.tipo())) {
             excluirUsuario(usuarioAntigo);
-            UsuarioModel usuarioNovo = definirTipoUsuario(request, tipo);
+            UsuarioModel usuarioNovo = definirTipoUsuario(request);
             usuarioNovo.setId(id);
             usuarioDAO.salvar(usuarioNovo);
         } else {
@@ -124,6 +108,14 @@ public class UsuarioModel {
 
     public void setSenha(String senha) {
         this.senha = senha;
+    }
+
+    public TipoUsuario getTipo() {
+        return tipo;
+    }
+
+    public void setTipo(TipoUsuario tipo) {
+        this.tipo = tipo;
     }
 
     @Override
