@@ -25,14 +25,14 @@ public class LoginController {
 
     @FXML
     private void confirmarLogin() {
-        boolean login = UsuariosUtil.login(new UsuarioLoginRequest(usuarioEmail.getText(), usuarioSenha.getText()));
+        UsuarioModel u = UsuariosUtil.login(new UsuarioLoginRequest(usuarioEmail.getText(), usuarioSenha.getText()));
 
-        if (!login) {
+        if (u == null) {
             mensagemErroLogin.setVisible(true);
             return;
         }
 
-        usuarioLogado = UsuarioModel.buscarUsuarioPorEmail(usuarioEmail.getText());
+        usuarioLogado = u;
 
         switch (usuarioLogado.getTipo()) {
             case ADMINISTRADOR -> AdminView.mostrarHomeAdmin();
