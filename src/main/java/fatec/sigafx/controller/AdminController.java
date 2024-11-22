@@ -6,9 +6,9 @@ import fatec.sigafx.model.aulas.dto.DisciplinaCriarRequest;
 import fatec.sigafx.model.aulas.dto.TurmaCriarRequest;
 import fatec.sigafx.model.usuarios.AlunoModel;
 import fatec.sigafx.model.usuarios.ProfessorModel;
+import fatec.sigafx.model.usuarios.TipoUsuario;
 import fatec.sigafx.model.usuarios.UsuarioModel;
 import fatec.sigafx.model.usuarios.dto.UsuarioCriarRequest;
-import fatec.sigafx.util.AdminControllerUtil;
 import fatec.sigafx.util.UsuariosUtil;
 import fatec.sigafx.view.LoginView;
 import javafx.beans.property.SimpleStringProperty;
@@ -210,15 +210,17 @@ public class AdminController
         usuarioEmail.setCellValueFactory(new PropertyValueFactory<>("email"));
         usuarioTipo.setCellValueFactory(cellData -> {
             UsuarioModel usuario = cellData.getValue();
-            String tipo = UsuarioModel.definirTipoUsuario(usuario);
-            return new SimpleStringProperty(tipo);
+            return new SimpleStringProperty(usuario.getTipo().getTipoString());
         });
         atualizarTableViewUsuarios();
     }
 
     private void carregarComboBoxTipoUsuario(){
         ObservableList<String> obsUsuarios = FXCollections.observableArrayList();
-        obsUsuarios.addAll(List.of("Administrador", "Professor", "Aluno"));
+        obsUsuarios.addAll(List.of(
+                TipoUsuario.ADMINISTRADOR.getTipoString(),
+                TipoUsuario.PROFESSOR.getTipoString(),
+                TipoUsuario.ALUNO.getTipoString()));
 
         cbTipoAdicionarUsuario.setItems(obsUsuarios);
     }
@@ -511,25 +513,25 @@ public class AdminController
         }
 
         UsuarioCriarRequest request = new UsuarioCriarRequest(
-                nomeAdicionarUsuario.getText(),
-                emailAdicionarUsuario.getText(),
-                senhaAdicionarUsuario.getText());
+                nome,
+                email,
+                senha,
+                TipoUsuario.fromTipo(tipo));
 
         if (usuarioSelecionado == null) {
-            UsuarioModel.criarUsuario(request, tipo);
+            UsuarioModel.criarUsuario(request);
         } else {
-            UsuarioModel.atualizarUsuario(request, tipo, usuarioSelecionado.getId());
+            UsuarioModel.atualizarUsuario(request, usuarioSelecionado.getId());
         }
 
         limparCampos();
         initialize();
 
+        usuarioSelecionado = null;
         gAdicionarAlterarUsuario.setVisible(false);
-        mostrarGerenciarUsuarios();
-
         exibirMensagemTemporaria(gMensagemSucesso, mSucesso, "Usuário salvo com sucesso.");
 
-        usuarioSelecionado = null;
+        mostrarGerenciarUsuarios();
     }
 
     private void mostrarAlterarExcluirUsuario() {
@@ -563,7 +565,7 @@ public class AdminController
             emailAdicionarUsuario.setText(usuarioSelecionado.getEmail());
             senhaAdicionarUsuario.setText(usuarioSelecionado.getSenha());
             confirmarSenhaAdicionarUsuario.setText(usuarioSelecionado.getSenha());
-            cbTipoAdicionarUsuario.setValue(UsuarioModel.definirTipoUsuario(usuarioSelecionado));
+            cbTipoAdicionarUsuario.setValue(usuarioSelecionado.getTipo().getTipoString());
         }
     }
 
