@@ -20,11 +20,11 @@ public class TurmaModel {
     private String curso;
 
     @ManyToOne
-    @JoinColumn(name = "disciplina_id", nullable = false)
+    @JoinColumn(name = "disciplina_id")
     private DisciplinaModel disciplina;
 
     @ManyToOne
-    @JoinColumn(name = "professor_id", nullable = false)
+    @JoinColumn(name = "professor_id")
     private ProfessorModel professor;
 
     @ManyToMany(fetch = FetchType.EAGER)
