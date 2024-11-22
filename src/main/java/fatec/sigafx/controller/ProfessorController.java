@@ -1,6 +1,5 @@
 package fatec.sigafx.controller;
 
-import fatec.sigafx.dao.FrequenciaDAO;
 import fatec.sigafx.model.aulas.*;
 import fatec.sigafx.model.aulas.dto.NotaCriarRequest;
 import fatec.sigafx.model.usuarios.AlunoModel;
@@ -22,7 +21,6 @@ import javafx.scene.layout.Priority;
 import javafx.scene.layout.VBox;
 import javafx.util.Callback;
 import javafx.util.Duration;
-import org.hibernate.internal.build.AllowSysOut;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
@@ -36,8 +34,8 @@ public class ProfessorController {
     private VBox gPrincipal;
     public Label lBoasVindas;
 
-    public VBox gMensagemSucesso; //TODO: Daniel, aqui é a Vbox onde tem a mensagem
-    public Label mSucesso;        //TODO: E aqui é a mensagem em si
+    public VBox gMensagemSucesso;
+    public Label mSucesso;
 
     @FXML
     private VBox gNotas;

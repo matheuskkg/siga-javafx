@@ -8,7 +8,6 @@ import fatec.sigafx.model.usuarios.AlunoModel;
 import fatec.sigafx.model.usuarios.ProfessorModel;
 import fatec.sigafx.model.usuarios.UsuarioModel;
 import fatec.sigafx.model.usuarios.dto.UsuarioCriarRequest;
-import fatec.sigafx.util.AdminControllerUtil;
 import fatec.sigafx.util.UsuariosUtil;
 import fatec.sigafx.view.LoginView;
 import javafx.beans.property.SimpleStringProperty;
