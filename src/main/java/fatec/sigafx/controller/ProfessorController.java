@@ -32,87 +32,117 @@ public class ProfessorController {
 
     @FXML
     private VBox gPrincipal;
-    public Label lBoasVindas;
+    @FXML
+    private Label lBoasVindas;
 
-    public VBox gMensagemSucesso;
-    public Label mSucesso;
+    @FXML
+    private VBox gMensagemSucesso;
+    @FXML
+    private Label mSucesso;
 
     @FXML
     private VBox gNotas;
-    public VBox gAlunosTurma;
-    public HBox hAtribuirNotasTurma;
-    public ComboBox<TurmaModel> cbAtribuirNotasTurma;
-    public Label mAtribuirNotas;
-    public Button bConfirmarAluno;
+    @FXML
+    private VBox gAlunosTurma;
+    @FXML
+    private HBox hAtribuirNotasTurma;
+    @FXML
+    private ComboBox<TurmaModel> cbAtribuirNotasTurma;
+    @FXML
+    private Label mAtribuirNotas;
 
-    public VBox gAtribuirNotas;
-    public TextField nomeAlunoNota;
-    public CheckBox checkP1;
-    public HBox hAtribuirP1;
-    public Spinner<Double> sP1;
-    public CheckBox checkP2;
-    public HBox hAtribuirP2;
-    public Spinner<Double> sP2;
-    public CheckBox checkP3;
-    public HBox hAtribuirP3;
-    public Spinner<Double> sP3;
-    public Label mAtribuirNotasAluno;
-    public Button bAtribuirNotas;
+    @FXML
+    private VBox gAtribuirNotas;
+    @FXML
+    private TextField nomeAlunoNota;
+    @FXML
+    private CheckBox checkP1;
+    @FXML
+    private HBox hAtribuirP1;
+    @FXML
+    private Spinner<Double> sP1;
+    @FXML
+    private CheckBox checkP2;
+    @FXML
+    private HBox hAtribuirP2;
+    @FXML
+    private Spinner<Double> sP2;
+    @FXML
+    private CheckBox checkP3;
+    @FXML
+    private HBox hAtribuirP3;
+    @FXML
+    private Spinner<Double> sP3;
+    @FXML
+    private Label mAtribuirNotasAluno;
 
     @FXML
     private VBox gFaltas;
-    public VBox gRealizarAlterar;
+    @FXML
+    private VBox gRealizarAlterar;
 
-    public VBox gRealizarChamada;
-    public HBox hTurmaRealizarChamada;
-    public ComboBox<TurmaModel> cbTurmaRealizarChamada;
-    public HBox hDataRealizarChamada;
-    public DatePicker dpRealizarChamada;
-    public Label mRealizarChamada;
-    public Button bFinalizarChamada;
+    @FXML
+    private VBox gRealizarChamada;
+    @FXML
+    private HBox hTurmaRealizarChamada;
+    @FXML
+    private ComboBox<TurmaModel> cbTurmaRealizarChamada;
+    @FXML
+    private HBox hDataRealizarChamada;
+    @FXML
+    private DatePicker dpRealizarChamada;
+    @FXML
+    private Label mRealizarChamada;
 
-    public VBox gAlunosFaltas;
-    public HBox hAtribuirFaltasTurma;
-    public ComboBox<TurmaModel> cbAtribuirFaltasTurma;
-    public Label mAlunosFaltas;
-    public Button bConfirmarFaltas;
+    @FXML
+    private VBox gAlunosFaltas;
+    @FXML
+    private HBox hAtribuirFaltasTurma;
+    @FXML
+    private ComboBox<TurmaModel> cbAtribuirFaltasTurma;
+    @FXML
+    private Label mAlunosFaltas;
 
-    public VBox gAlterarFaltas;
-    public TextField tfTurmaAlterarFaltas;
-    public TextField tfAlunoAlterarFaltas;
-    public Spinner<Integer> sFaltas;
-    public Label mAlterarFaltas;
+    @FXML
+    private VBox gAlterarFaltas;
+    @FXML
+    private TextField tfTurmaAlterarFaltas;
+    @FXML
+    private TextField tfAlunoAlterarFaltas;
+    @FXML
+    private Spinner<Integer> sFaltas;
+    @FXML
+    private Label mAlterarFaltas;
 
-    public TableView<AlunoModel> tAtribuirNotasAlunos;
-    public TableView<AlunoModel> tRealizarChamada;
-    public TableView<AlunoModel> tAtribuirFaltasAlunos;
+
+    private TableView<AlunoModel> tAtribuirNotasAlunos;
+
+    private TableView<AlunoModel> tRealizarChamada;
+
+    private TableView<AlunoModel> tAtribuirFaltasAlunos;
 
     private TurmaModel turmaSelecionada;
     private AlunoModel alunoSelecionado;
 
     @FXML
-    public void initialize() {
+    private void initialize() {
         lBoasVindas.setText("Bem vindo(a), " + usuarioLogado.getNome() + "!");
         carregarComboBoxTurmas();
         configurarDatePickerRestrito(dpRealizarChamada);
     }
 
-    // Função para configurar o DatePicker
     private void configurarDatePickerRestrito(DatePicker datePicker) {
         Callback<DatePicker, DateCell> dayCellFactory = picker -> new DateCell() {
             @Override
             public void updateItem(LocalDate date, boolean empty) {
                 super.updateItem(date, empty);
 
-                // Desativa dias posteriores ao dia atual
                 if (date.isAfter(LocalDate.now())) {
                     setDisable(true);
-                    setStyle("-fx-background-color: #ffc0cb;"); // Estilo visual para os dias desativados
+                    setStyle("-fx-background-color: #ffc0cb;");
                 }
             }
         };
-
-        // Aplica a configuração ao DatePicker
         datePicker.setDayCellFactory(dayCellFactory);
     }
 
@@ -166,7 +196,7 @@ public class ProfessorController {
         return valueFactory;
     }
 
-    public void configuraSpinners() {
+    private void configuraSpinners() {
         List<NotaModel> notas = NotaModel.buscarPorAlunoTurma(alunoSelecionado.getId(), turmaSelecionada.getId());
 
         NotaModel notaP1 = notas.stream()
@@ -254,7 +284,6 @@ public class ProfessorController {
     private List<TableColumn<AlunoModel, ?>> criarColunasNotas() {
         List<TableColumn<AlunoModel, ?>> colunas = new ArrayList<>(criarColunasPadrao());
 
-        // Configura coluna para P1
         TableColumn<AlunoModel, Double> colunaP1 = new TableColumn<>("P1");
         colunaP1.setCellValueFactory(cellData -> {
             AlunoModel aluno = cellData.getValue();
@@ -268,7 +297,6 @@ public class ProfessorController {
         colunaP1.setMinWidth(50);
         colunaP1.setMaxWidth(90);
 
-        // Configura coluna para P2
         TableColumn<AlunoModel, Double> colunaP2 = new TableColumn<>("P2");
         colunaP2.setCellValueFactory(cellData -> {
             AlunoModel aluno = cellData.getValue();
@@ -282,7 +310,6 @@ public class ProfessorController {
         colunaP2.setMinWidth(50);
         colunaP2.setMaxWidth(90);
 
-        // Configura coluna para P3
         TableColumn<AlunoModel, Double> colunaP3 = new TableColumn<>("P3");
         colunaP3.setCellValueFactory(cellData -> {
             AlunoModel aluno = cellData.getValue();
@@ -296,7 +323,6 @@ public class ProfessorController {
         colunaP3.setMinWidth(50);
         colunaP3.setMaxWidth(90);
 
-        // Adiciona todas as colunas criadas
         colunas.addAll(List.of(colunaP1, colunaP2, colunaP3));
         return colunas;
     }
@@ -304,12 +330,10 @@ public class ProfessorController {
     private List<TableColumn<AlunoModel, ?>> criarColunasChamada() {
         List<TableColumn<AlunoModel, ?>> colunas = new ArrayList<>(criarColunasPadrao());
 
-        // Criar coluna de presença com checkboxes
         TableColumn<AlunoModel, Boolean> colunaPresente = new TableColumn<>("Presente");
         colunaPresente.setMinWidth(80);
         colunaPresente.setMaxWidth(120);
 
-        // Vincular a propriedade transiente
         colunaPresente.setCellValueFactory(cellData -> cellData.getValue().presenteProperty());
         colunaPresente.setCellFactory(CheckBoxTableCell.forTableColumn(colunaPresente::getCellObservableValue));
 
@@ -377,6 +401,7 @@ public class ProfessorController {
         gPrincipal.setVisible(false);
         gNotas.setVisible(false);
         gFaltas.setVisible(false);
+        gMensagemSucesso.setVisible(false);
 
         gAlunosTurma.setVisible(false);
         gAtribuirNotas.setVisible(false);
@@ -395,6 +420,7 @@ public class ProfessorController {
         mRealizarChamada.setText("");
         mAlunosFaltas.setText("");
         mAlterarFaltas.setText("");
+        mSucesso.setText("");
 
         checkP1.setSelected(false);
         mostrarP1();
@@ -424,7 +450,7 @@ public class ProfessorController {
 
     // Mostrar *Início*
     @FXML
-    public void mostrarInicio() {
+    private void mostrarInicio() {
         esconderPaineis();
         gPrincipal.setVisible(true);
         turmaSelecionada = null;
@@ -433,7 +459,7 @@ public class ProfessorController {
 
     // Mostrar *Notas*
     @FXML
-    public void mostrarNotas() {
+    private void mostrarNotas() {
         esconderPaineis();
         gNotas.setVisible(true);
         gAlunosTurma.setVisible(true);
@@ -450,7 +476,7 @@ public class ProfessorController {
     }
 
     @FXML
-    public void mostrarAtribuirNotas() {
+    private void mostrarAtribuirNotas() {
         if (alunoSelecionado == null) {
             mAtribuirNotas.setText("Selecione uma turma e um aluno para prosseguir.");
         } else {
@@ -472,17 +498,15 @@ public class ProfessorController {
     }
 
     @FXML
-    public void atribuirNotas() {
+    private void atribuirNotas() {
         mAtribuirNotasAluno.setText("");
 
-        // Verifica se os campos estão vazios
         if (verificarCamposVaziosAtribuirNotas()) {
             mAtribuirNotasAluno.setText("Selecione alguma nota e atribua um valor a ela para prosseguir.");
             return;
         }
 
         try {
-            // Processa as notas P1, P2 e P3 com base no tipo
             for (TipoNota tipoNota : TipoNota.values()) {
                 Double valorNota = switch (tipoNota) {
                     case P1 -> sP1.getValue();
@@ -490,28 +514,21 @@ public class ProfessorController {
                     case P3 -> sP3.getValue();
                 };
 
-                // Busca a nota existente para o tipo e atualiza, ou cria uma nova
                 NotaModel nota = alunoSelecionado.getNotas().stream()
                         .filter(n -> n.getTipo() == tipoNota && n.getTurma().equals(turmaSelecionada))
                         .findFirst()
                         .orElse(null);
 
                 if (nota == null) {
-                    // Cria uma nova nota se não existir
                     NotaCriarRequest request = new NotaCriarRequest(valorNota, alunoSelecionado, turmaSelecionada);
                     nota = new NotaModel(request);
                     nota.setTipo(tipoNota);
                     alunoSelecionado.getNotas().add(nota);
                 } else {
-                    // Atualiza o valor da nota existente
                     nota.setNota(valorNota);
                 }
-
-                // Salva a nota no banco de dados
                 NotaModel.salvar(nota);
             }
-
-            // Feedback ao usuário
 
             esconderPaineis();
             mostrarNotas();
@@ -525,23 +542,23 @@ public class ProfessorController {
     }
 
     @FXML
-    public void mostrarP1() {
+    private void mostrarP1() {
         hAtribuirP1.setDisable(!checkP1.isSelected());
     }
 
     @FXML
-    public void mostrarP2() {
+    private void mostrarP2() {
         hAtribuirP2.setDisable(!checkP2.isSelected());
     }
 
     @FXML
-    public void mostrarP3() {
+    private void mostrarP3() {
         hAtribuirP3.setDisable(!checkP3.isSelected());
     }
 
     // Mostrar *Faltas*
     @FXML
-    public void mostrarFaltas() {
+    private void mostrarFaltas() {
         esconderPaineis();
         gFaltas.setVisible(true);
         gRealizarAlterar.setVisible(true);
@@ -550,7 +567,7 @@ public class ProfessorController {
     }
 
     @FXML
-    public void mostrarRealizarChamada() {
+    private void mostrarRealizarChamada() {
         esconderPaineis();
         gFaltas.setVisible(true);
         gRealizarChamada.setVisible(true);
@@ -578,22 +595,16 @@ public class ProfessorController {
     }
 
     @FXML
-    public void resetarValoresChamada() {
-        // Percorre todos os itens da tabela
+    private void resetarValoresChamada() {
         for (AlunoModel aluno : tRealizarChamada.getItems()) {
-            // Obtém a propriedade associada à coluna "Presente"
             BooleanProperty presenteProperty = aluno.presenteProperty();
-
-            // Reseta o valor para `false` (ou outro valor padrão)
             presenteProperty.set(false);
         }
-
-        // Atualiza a tabela visualmente
         tRealizarChamada.refresh();
     }
 
     @FXML
-    public void mostrarAlunosFaltas() {
+    private void mostrarAlunosFaltas() {
         esconderPaineis();
         gFaltas.setVisible(true);
         gAlunosFaltas.setVisible(true);
@@ -611,7 +622,7 @@ public class ProfessorController {
     }
 
     @FXML
-    public void mostrarAlterarFaltas() {
+    private void mostrarAlterarFaltas() {
         if (turmaSelecionada != null && alunoSelecionado != null) {
             esconderPaineis();
             gFaltas.setVisible(true);
@@ -630,7 +641,7 @@ public class ProfessorController {
     }
 
     @FXML
-    public void finalizarChamada() {
+    private void finalizarChamada() {
         mRealizarChamada.setText("");
 
         if (cbTurmaRealizarChamada.getSelectionModel().getSelectedItem() == null || dpRealizarChamada.getValue() == null) {
@@ -664,9 +675,7 @@ public class ProfessorController {
     }
 
     @FXML
-    public void atribuirFaltas() {
-        // Validar a seleção de um aluno e turma
-
+    private void atribuirFaltas() {
         if (sFaltas.getValue() == null) {
             mAlterarFaltas.setText("Atribua um valor a Faltas.");
             return;
@@ -708,9 +717,7 @@ public class ProfessorController {
     }
 
     @FXML
-    public void onLogoutClicked(ActionEvent event) {
-        // Redireciona para a página de login
+    private void onLogoutClicked(ActionEvent event) {
         LoginView.mostrarLogin();
-
     }
 }

@@ -71,15 +71,13 @@ public class UsuarioDAO {
         }
     }
 
-    /**
-     * Caso deseje retornar especificamente alunos, admins ou professores, utilizar seus respectivos DAOs.
-     */
+
+    //Caso deseje retornar especificamente alunos, admins ou professores, utilizar seus respectivos DAOs.
+
     public List<UsuarioModel> buscarTodos() {
         try (EntityManager em = emf.createEntityManager()) {
-            List<UsuarioModel> res = em.createQuery("FROM UsuarioModel", UsuarioModel.class)
+            return em.createQuery("FROM UsuarioModel", UsuarioModel.class)
                     .getResultList();
-
-            return res;
         } catch (Exception e) {
             e.printStackTrace();
             return null;

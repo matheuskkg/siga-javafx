@@ -11,7 +11,6 @@ import java.util.List;
 @Table(name = "professores")
 public class ProfessorModel extends UsuarioModel {
 
-    //TODO: estudar a utilização deste atributo para diminuir o número de querys realizadas
     @OneToMany(mappedBy = "professor", fetch = FetchType.EAGER)
     private List<TurmaModel> turmas;
 

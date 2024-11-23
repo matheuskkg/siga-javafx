@@ -24,44 +24,50 @@ public class AlunoController {
 
     @FXML
     private VBox gPrincipal;
-    public Label lBoasVindas;
+    @FXML
+    private Label lBoasVindas;
 
     @FXML
     private VBox gNotas;
-    public TableView<TurmaModel> tabelaNotas;
-    public TableColumn<TurmaModel, String> turmaDisciplinaNotas;
-    public TableColumn<TurmaModel, Double> alunoP1;
-    public TableColumn<TurmaModel, Double> alunoP2;
-    public TableColumn<TurmaModel, Double> alunoP3;
-    public TableColumn<TurmaModel, String> alunoSituacaoNotas;
+    @FXML
+    private TableView<TurmaModel> tabelaNotas;
+    @FXML
+    private TableColumn<TurmaModel, String> turmaDisciplinaNotas;
+    @FXML
+    private TableColumn<TurmaModel, Double> alunoP1;
+    @FXML
+    private TableColumn<TurmaModel, Double> alunoP2;
+    @FXML
+    private TableColumn<TurmaModel, Double> alunoP3;
+    @FXML
+    private TableColumn<TurmaModel, String> alunoSituacaoNotas;
 
     @FXML
     private VBox gFaltas;
-    public TableView<TurmaModel> tabelaFaltas;
-    public TableColumn<TurmaModel, String> turmaDisciplinaFaltas;
-    public TableColumn<TurmaModel, Integer> alunoFaltas;
-    public TableColumn<TurmaModel, String> alunoSituacaoFaltas;
+    @FXML
+    private TableView<TurmaModel> tabelaFaltas;
+    @FXML
+    private TableColumn<TurmaModel, String> turmaDisciplinaFaltas;
+    @FXML
+    private TableColumn<TurmaModel, Integer> alunoFaltas;
+    @FXML
+    private TableColumn<TurmaModel, String> alunoSituacaoFaltas;
 
     @FXML
-    public void initialize() {
+    private void initialize() {
         lBoasVindas.setText("Bem vindo(a), " + usuarioLogado.getNome() + "!");
         carregarTabelaNotas();
         carregarTabelaFaltas();
     }
 
     private void carregarTabelaNotas() {
-        // Busca as turmas associadas ao aluno logado
         List<TurmaModel> turmas = TurmaModel.buscarPorAluno((AlunoModel) usuarioLogado);
-
-        // Transforma as turmas em uma ObservableList para a TableView
         ObservableList<TurmaModel> turmasObs = FXCollections.observableArrayList(turmas);
 
-        // Configura a coluna da disciplina
         turmaDisciplinaNotas.setCellValueFactory(param ->
                 new SimpleStringProperty(param.getValue().getDisciplina().getNome())
         );
 
-        // Configura a coluna da P1
         alunoP1.setCellValueFactory(param -> {
             TurmaModel turma = param.getValue();
             List<NotaModel> notas = NotaModel.buscarPorAlunoTurma(usuarioLogado.getId(), turma.getId());
@@ -72,7 +78,6 @@ public class AlunoController {
             return new SimpleObjectProperty<>(notaP1 != null ? notaP1.getNota() : null);
         });
 
-        // Configura a coluna da P2
         alunoP2.setCellValueFactory(param -> {
             TurmaModel turma = param.getValue();
             List<NotaModel> notas = NotaModel.buscarPorAlunoTurma(usuarioLogado.getId(), turma.getId());
@@ -83,7 +88,6 @@ public class AlunoController {
             return new SimpleObjectProperty<>(notaP2 != null ? notaP2.getNota() : null);
         });
 
-        // Configura a coluna da P3
         alunoP3.setCellValueFactory(param -> {
             TurmaModel turma = param.getValue();
             List<NotaModel> notas = NotaModel.buscarPorAlunoTurma(usuarioLogado.getId(), turma.getId());
@@ -98,7 +102,6 @@ public class AlunoController {
             TurmaModel turma = param.getValue();
             List<NotaModel> notas = NotaModel.buscarPorAlunoTurma(usuarioLogado.getId(), turma.getId());
 
-            // Busca as notas de P1, P2 e P3
             NotaModel notaP1 = notas.stream()
                     .filter(nota -> nota.getTipo() == TipoNota.P1)
                     .findFirst()
@@ -114,20 +117,16 @@ public class AlunoController {
                     .findFirst()
                     .orElse(null);
 
-            // Garante valores seguros para as notas
             double p1 = (notaP1 != null && notaP1.getNota() != null) ? notaP1.getNota() : 0.0;
             double p2 = (notaP2 != null && notaP2.getNota() != null) ? notaP2.getNota() : 0.0;
             double p3 = (notaP3 != null && notaP3.getNota() != null) ? notaP3.getNota() : 0.0;
 
-            // Calcula a média inicial com P1 e P2
             double media = (p1 + p2) / 2.0;
 
-            // Determina a situação do aluno
             String situacao;
             if (media >= 6.0) {
                 situacao = "Aprovado";
             } else {
-                // Se necessário, inclui P3 no cálculo
                 media = (p1 + p2 + p3) / 3.0;
                 situacao = (media >= 6.0) ? "Aprovado" : "Reprovado";
             }
@@ -135,30 +134,22 @@ public class AlunoController {
             return new SimpleStringProperty(situacao);
         });
 
-
-
-        // Associa as turmas ao TableView
         tabelaNotas.setItems(turmasObs);
     }
 
     private void carregarTabelaFaltas() {
-        // Obter as turmas em que o aluno logado está registrado
         List<TurmaModel> turmas = TurmaModel.buscarPorAluno((AlunoModel) usuarioLogado);
 
-        // Para cada turma, buscar o número de faltas e associar
         for (TurmaModel turma : turmas) {
             Integer faltas = AlunoModel.contarFaltasAlunoTurma(usuarioLogado.getId(), turma.getId());
             turma.setFaltas(faltas);
         }
 
-        // Converter para ObservableList
         ObservableList<TurmaModel> turmasObs = FXCollections.observableArrayList(turmas);
 
-        // Configurar a coluna de disciplina
         turmaDisciplinaFaltas.setCellValueFactory(param ->
                 new SimpleStringProperty(param.getValue().getDisciplina().getNome()));
 
-        // Configurar a coluna de faltas
         alunoFaltas.setCellValueFactory(param ->
                 new SimpleObjectProperty<>(param.getValue().getFaltas()));
 
@@ -186,33 +177,34 @@ public class AlunoController {
         gPrincipal.setVisible(false);
         gNotas.setVisible(false);
         gFaltas.setVisible(false);
+
+        tabelaNotas.getSelectionModel().clearSelection();
+        tabelaFaltas.getSelectionModel().clearSelection();
     }
 
     // Mostrar "Início"
     @FXML
-    public void mostrarInicio() {
+    private void mostrarInicio() {
         esconderPaineis();
         gPrincipal.setVisible(true);
     }
 
     // Mostrar "Notas"
     @FXML
-    public void mostarNotas() {
+    private void mostarNotas() {
         esconderPaineis();
         gNotas.setVisible(true);
     }
 
     // Mostrar "Início"
     @FXML
-    public void mostarFaltas() {
+    private void mostarFaltas() {
         esconderPaineis();
         gFaltas.setVisible(true);
     }
 
     @FXML
-    public void onLogoutClicked(ActionEvent event) {
-        // Redireciona para a página de login
+    private void onLogoutClicked() {
         LoginView.mostrarLogin();
-
     }
 }

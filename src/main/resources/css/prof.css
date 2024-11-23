@@ -9,7 +9,7 @@
     -fx-background-color: #3c607a;
 }
 
-.admin-header {
+.prof-header {
     -fx-font-size: 32px;
     -fx-text-fill: #333;
 }
@@ -30,6 +30,6 @@
     -fx-padding: 20px;
 }
 #gMensagemSucesso{
-    -fx-background-color: #3B5998;
+    -fx-background-color: #2e4a5f;
     -fx-background-radius: 10px;
 }

@@ -9,11 +9,11 @@ import fatec.sigafx.model.usuarios.dto.UsuarioLoginRequest;
 
 public class UsuariosUtil {
 
-    private String nome;
-    private String email;
-    private String senha;
-    private String confirmarSenha;
-    private String tipo;
+    private final String nome;
+    private final String email;
+    private final String senha;
+    private final String confirmarSenha;
+    private final String tipo;
 
     public UsuariosUtil(String nome, String email, String senha, String confirmarSenha, String tipo) {
         this.nome = nome;

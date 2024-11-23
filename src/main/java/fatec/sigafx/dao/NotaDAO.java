@@ -17,9 +17,9 @@ public class NotaDAO {
             em.getTransaction().begin();
 
             if (nota.getId() == null) {
-                em.persist(nota); // Salva uma nova nota
+                em.persist(nota);
             } else {
-                em.merge(nota); // Atualiza uma nota existente
+                em.merge(nota);
             }
 
             em.getTransaction().commit();

@@ -38,7 +38,7 @@
     <center>
         <StackPane stylesheets="@../css/prof.css">
             <VBox fx:id="gPrincipal" alignment="TOP_CENTER" spacing="20" styleClass="vBox">
-                <Label fx:id="lBoasVindas" styleClass="admin-header" text="Bem-vindo, Professor!">
+                <Label fx:id="lBoasVindas" styleClass="prof-header" text="Bem-vindo, Professor!">
                     <font>
                         <Font size="28.0" />
                     </font>
@@ -48,7 +48,7 @@
                 </VBox>
             </VBox>
             <VBox fx:id="gNotas" alignment="TOP_CENTER" spacing="20" styleClass="vBox" visible="false">
-                <Label styleClass="admin-header" text="Gerenciador de Notas">
+                <Label styleClass="prof-header" text="Gerenciador de Notas">
                     <font>
                         <Font size="28.0" />
                     </font>
@@ -74,7 +74,7 @@
                         </HBox>
                         <HBox alignment="TOP_RIGHT" maxWidth="800.0" spacing="10.0">
                             <Label fx:id="mAtribuirNotas" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" textFill="RED" HBox.hgrow="ALWAYS" />
-                            <Button fx:id="bConfirmarAluno" alignment="CENTER" minHeight="50.0" minWidth="100.0" mnemonicParsing="false" onAction="#mostrarAtribuirNotas" text="Confirmar">
+                            <Button alignment="CENTER" minHeight="50.0" minWidth="100.0" mnemonicParsing="false" onAction="#mostrarAtribuirNotas" text="Confirmar">
                                 <font>
                                     <Font size="12.0" />
                                 </font>
@@ -175,7 +175,7 @@
                                 <Insets left="20.0" right="20.0" />
                             </VBox.margin>
                             <Label fx:id="mAtribuirNotasAluno" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" textFill="RED" HBox.hgrow="ALWAYS" />
-                            <Button fx:id="bAtribuirNotas" alignment="CENTER" minHeight="50.0" minWidth="100.0" mnemonicParsing="false" onAction="#atribuirNotas" text="Atribuir">
+                            <Button alignment="CENTER" minHeight="50.0" minWidth="100.0" mnemonicParsing="false" onAction="#atribuirNotas" text="Atribuir">
                                 <font>
                                     <Font size="12.0" />
                                 </font>
@@ -191,7 +191,7 @@
                 </StackPane.margin>
             </VBox>
             <VBox fx:id="gFaltas" alignment="TOP_CENTER" spacing="20" styleClass="vBox" visible="false">
-                <Label styleClass="admin-header" text="Gerenciador de Faltas">
+                <Label styleClass="prof-header" text="Gerenciador de Faltas">
                     <font>
                         <Font size="28.0" />
                     </font>
@@ -222,7 +222,7 @@
                         </HBox>
                         <HBox alignment="TOP_RIGHT" maxWidth="800.0" spacing="10.0">
                             <Label fx:id="mRealizarChamada" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" textFill="RED" HBox.hgrow="ALWAYS" />
-                            <Button fx:id="bFinalizarChamada" alignment="CENTER" minHeight="50.0" minWidth="100.0" mnemonicParsing="false" onAction="#finalizarChamada" text="Finalizar">
+                            <Button alignment="CENTER" minHeight="50.0" minWidth="100.0" mnemonicParsing="false" onAction="#finalizarChamada" text="Finalizar">
                                 <font>
                                     <Font size="12.0" />
                                 </font>
@@ -248,7 +248,7 @@
                         </HBox>
                         <HBox alignment="TOP_RIGHT" maxWidth="800.0" spacing="10.0">
                             <Label fx:id="mAlunosFaltas" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" textFill="RED" HBox.hgrow="ALWAYS" />
-                            <Button fx:id="bConfirmarFaltas" alignment="CENTER" minHeight="50.0" minWidth="100.0" mnemonicParsing="false" onAction="#mostrarAlterarFaltas" text="Confirmar">
+                            <Button alignment="CENTER" minHeight="50.0" minWidth="100.0" mnemonicParsing="false" onAction="#mostrarAlterarFaltas" text="Confirmar">
                                 <font>
                                     <Font size="12.0" />
                                 </font>

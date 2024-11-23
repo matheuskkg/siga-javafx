@@ -34,7 +34,7 @@
 <center>
     <StackPane stylesheets="@../css/aluno.css">
         <VBox fx:id="gPrincipal" alignment="TOP_CENTER" spacing="20" styleClass="vBox">
-            <Label fx:id="lBoasVindas" styleClass="admin-header" text="Bem-vindo, Aluno!">
+            <Label fx:id="lBoasVindas" styleClass="aluno-header" text="Bem-vindo, Aluno!">
                 <font>
                     <Font size="28.0" />
                 </font>
@@ -44,7 +44,7 @@
             </VBox>
         </VBox>
         <VBox fx:id="gNotas" alignment="TOP_CENTER" spacing="20" styleClass="vBox" visible="false">
-            <Label styleClass="admin-header" text="Notas">
+            <Label styleClass="aluno-header" text="Notas">
                 <font>
                     <Font size="28.0" />
                 </font>
@@ -72,7 +72,7 @@
             </StackPane.margin>
         </VBox>
         <VBox fx:id="gFaltas" alignment="TOP_CENTER" spacing="20" styleClass="vBox" visible="false">
-            <Label styleClass="admin-header" text="Faltas">
+            <Label styleClass="aluno-header" text="Faltas">
                 <font>
                     <Font size="28.0" />
                 </font>

@@ -39,10 +39,13 @@ public class AdminController
     // Início
     @FXML
     private VBox gPrincipal;
-    public Label lBoasVindas;
+    @FXML
+    private Label lBoasVindas;
 
-    public VBox gMensagemSucesso;
-    public Label mSucesso;
+    @FXML
+    private VBox gMensagemSucesso;
+    @FXML
+    private Label mSucesso;
 
     // Gerenciar Usuários
     @FXML
@@ -78,9 +81,9 @@ public class AdminController
     @FXML
     private Button botaoLimparAdicionarAlterarUsuario;
     @FXML
-    public VBox gConfirmaExclusao;
+    private VBox gConfirmaExclusao;
     @FXML
-    public Label mAlterarExcluirUsuario;
+    private Label mAlterarExcluirUsuario;
 
     @FXML
     private TableView<UsuarioModel> tableViewAlterarExcluirUsuario;
@@ -91,7 +94,7 @@ public class AdminController
     @FXML
     private TableColumn<UsuarioModel, String> usuarioEmail;
     @FXML
-    public TableColumn<UsuarioModel, String> usuarioTipo;
+    private TableColumn<UsuarioModel, String> usuarioTipo;
 
     // Gerenciar Disciplinas
     @FXML
@@ -111,15 +114,15 @@ public class AdminController
     @FXML
     private VBox gAlterarExcluirDisciplinas;
     @FXML
-    public Label mAlterarExcluirDisciplina;
+    private Label mAlterarExcluirDisciplina;
     @FXML
-    public Label mAdicionarAlterarDisciplina;
+    private Label mAdicionarAlterarDisciplina;
     @FXML
-    public Button bAdicionarAlterarDisciplina;
+    private Button bAdicionarAlterarDisciplina;
     @FXML
-    public VBox gConfirmaExclusaoDisciplina;
+    private VBox gConfirmaExclusaoDisciplina;
     @FXML
-    public Button bLimparDisciplina;
+    private Button bLimparDisciplina;
 
     @FXML
     private TableView<DisciplinaModel> tableViewAlterarExcluirDisciplina;
@@ -138,7 +141,7 @@ public class AdminController
     @FXML
     private VBox gAdicionarTurmas;
     @FXML
-    public Label mAdicionarAlterarTurma;
+    private Label mAdicionarAlterarTurma;
     @FXML
     private ComboBox<String> cbCursoAdicionarTurma;
     @FXML
@@ -148,21 +151,21 @@ public class AdminController
     @FXML
     private Label mTurmas;
     @FXML
-    public Button bAdicionarAlterarTurma;
+    private Button bAdicionarAlterarTurma;
     @FXML
     private VBox gAlterarExcluirTurmas;
     @FXML
-    public HBox hCursoAdicionarTurma;
+    private HBox hCursoAdicionarTurma;
     @FXML
-    public HBox hDisciplinaAdicionarTurma;
+    private HBox hDisciplinaAdicionarTurma;
     @FXML
-    public HBox hProfAdicionarTurma;
+    private HBox hProfAdicionarTurma;
     @FXML
-    public Button bLimparAdicionarTurma;
+    private Button bLimparAdicionarTurma;
     @FXML
-    public VBox gConfirmaExclusaoTurma;
+    private VBox gConfirmaExclusaoTurma;
     @FXML
-    public Label mAlterarExcluirTurma;
+    private Label mAlterarExcluirTurma;
 
     @FXML
     private TableView<TurmaModel> tableViewAlterarExcluirTurma;
@@ -175,10 +178,10 @@ public class AdminController
     @FXML
     private TableColumn<TurmaModel, ProfessorModel> turmaProfessor;
 
-    public TableView<AlunoModel> tAdicionarAlunos;
+    private TableView<AlunoModel> tAdicionarAlunos;
 
     @FXML
-    public void initialize() {
+    private void initialize() {
         lBoasVindas.setText("Bem vindo(a), " + usuarioLogado.getNome() + "!");
         carregarTableViewUsuarios();
         carregarComboBoxTipoUsuario();
@@ -350,7 +353,7 @@ public class AdminController
     }
 
     @FXML
-    public void limparCampos(){
+    private void limparCampos(){
         nomeAdicionarUsuario.clear();
         senhaAdicionarUsuario.clear();
         confirmarSenhaAdicionarUsuario.clear();
@@ -544,12 +547,11 @@ public class AdminController
     private void definirUsuarioSelecionado() {
         tableViewAlterarExcluirUsuario.setOnMouseClicked((MouseEvent) -> {
             usuarioSelecionado = tableViewAlterarExcluirUsuario.getSelectionModel().getSelectedItem();
-            System.out.println(usuarioSelecionado);
         });
     }
 
     @FXML
-    public void mostrarAlterarUsuario(){
+    private void mostrarAlterarUsuario(){
         if (usuarioSelecionado == null) {
             mAlterarExcluirUsuario.setText("Selecione um usuário a ser alterado!");
         } else {
@@ -570,7 +572,7 @@ public class AdminController
     }
 
     @FXML
-    public void mostrarExcluirUsuario(){
+    private void mostrarExcluirUsuario(){
         if (usuarioSelecionado == null) {
             mAlterarExcluirUsuario.setText("Selecione um usuário a ser excluído!");
         }
@@ -585,7 +587,7 @@ public class AdminController
     }
 
     @FXML
-    public void confirmaExclusao(ActionEvent event){
+    private void confirmaExclusao(ActionEvent event){
 
         String textoBotao = ((Button) event.getSource()).getText();
         switch (textoBotao) {
@@ -602,7 +604,7 @@ public class AdminController
 
     // Disciplinas
     @FXML
-    public void mostrarGerenciarDisciplinas() {
+    private void mostrarGerenciarDisciplinas() {
         gDisciplinas.setVisible(true);
         gBotaoDisciplinas.setVisible(true);
     }
@@ -677,7 +679,6 @@ public class AdminController
     private void definirDisciplinaSelecionada() {
         tableViewAlterarExcluirDisciplina.setOnMouseClicked((MouseEvent) -> {
             disciplinaSelecionada = tableViewAlterarExcluirDisciplina.getSelectionModel().getSelectedItem();
-            System.out.println(disciplinaSelecionada);
         });
     }
 
@@ -840,7 +841,6 @@ public class AdminController
     private void definirTurmaSelecionada() {
         tableViewAlterarExcluirTurma.setOnMouseClicked((MouseEvent) -> {
             turmaSelecionada = tableViewAlterarExcluirTurma.getSelectionModel().getSelectedItem();
-            System.out.println(turmaSelecionada);
         });
     }
 
@@ -889,6 +889,7 @@ public class AdminController
 
     private void esconderPaineis() {
         gPrincipal.setVisible(false);
+        gMensagemSucesso.setVisible(false);
 
         gUsuarios.setVisible(false);
         gBotaoUsuario.setVisible(false);
@@ -905,6 +906,8 @@ public class AdminController
         gBotaoTurmas.setVisible(false);
         gAdicionarTurmas.setVisible(false);
         gAlterarExcluirTurmas.setVisible(false);
+
+        mSucesso.setText("");
 
         removerTableViewAlunos();
     }
