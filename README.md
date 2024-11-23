@@ -68,7 +68,7 @@ Este é um projeto acadêmico desenvolvido na disciplina de Linguagem de Program
       - **resources/**: Contém códigos.
         - **css/**: Arquivos de estilização da interface visual.
         - **fxml/**: Arquivos de construção da interface visual, semelhante ao html.
-        - **libs/**: Jar de importação para logo na tela de Login
+        - **icons/**: Imagens utilizadas na interface.
         - **META-INF/**: Arquivo para conexão com banco de dados.
 <br/>
 
@@ -89,7 +89,7 @@ Com todos os programas acima instalados, siga o passo-a-passo abaixo:
 + Abra o arquivo persistence.xml (../siga-javafx/src/main/resources/META-INF/persistence.xml)
 + Dentro do arquivo procure as tags abaixo e preencha com suas informações:
 + ```
-              <property name="jakarta.persistence.jdbc.user" value="seuUsuario"/>
+            <property name="jakarta.persistence.jdbc.user" value="seuUsuario"/>
             <property name="jakarta.persistence.jdbc.password" value="suaSenha"/>
 + Após esses passos rode o programa indo no arquivo SigaApplication (../siga-javafx/src/main/java/fatec.sigafx/SigaApplication)
 + Em caso de erro, sinta-se a vontade para notificar qualquer um dos integrantes, estamos dispostos a te ajudar.
